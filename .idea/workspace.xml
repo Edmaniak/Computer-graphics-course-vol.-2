@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc529237-f753-4bfa-b431-245cd6eb32c8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/app/App.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/Axis.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/Cube.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/Parts.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/Solid.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/Vertex.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/objects/Solid.java" afterPath="$PROJECT_DIR$/src/model/objects/Solid.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,12 +14,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Cube.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/model/Cube.java">
+      <file leaf-file-name="Solid.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/model/objects/Solid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="45" column="59" lean-forward="true" selection-start-line="45" selection-start-column="59" selection-end-line="45" selection-end-column="59" />
-              <folding />
+            <state relative-caret-position="425">
+              <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+              <folding>
+                <marker date="1511515850572" expanded="true" signature="72:143" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -51,11 +47,14 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/app/App.java" />
-        <option value="$PROJECT_DIR$/src/model/Axis.java" />
         <option value="$PROJECT_DIR$/src/model/Parts.java" />
         <option value="$PROJECT_DIR$/src/model/Vertex.java" />
         <option value="$PROJECT_DIR$/src/model/Solid.java" />
         <option value="$PROJECT_DIR$/src/model/Cube.java" />
+        <option value="$PROJECT_DIR$/src/model/Axis.java" />
+        <option value="$PROJECT_DIR$/src/model/objects/Axis.java" />
+        <option value="$PROJECT_DIR$/src/model/objects/Cube.java" />
+        <option value="$PROJECT_DIR$/src/model/objects/Solid.java" />
       </list>
     </option>
   </component>
@@ -104,6 +103,13 @@
               <item name="3D1" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="3D1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="3D1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="objects" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="3D1" type="b2602c69:ProjectViewProjectNode" />
@@ -314,29 +320,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Parts.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="27" lean-forward="true" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
-          <folding>
-            <marker date="1511513688546" expanded="true" signature="58:87" ph="{...}" />
-            <marker date="1511513688546" expanded="false" signature="183:194" ph=" { " />
-            <marker date="1511513688546" expanded="false" signature="206:212" ph=" }" />
-            <marker date="1511513688546" expanded="true" signature="264:353" ph="{...}" />
-            <marker date="1511513688546" expanded="false" signature="389:400" ph=" { " />
-            <marker date="1511513688546" expanded="false" signature="417:423" ph=" }" />
-            <marker date="1511513688546" expanded="false" signature="450:461" ph=" { " />
-            <marker date="1511513688546" expanded="false" signature="474:480" ph=" }" />
-            <marker date="1511513688546" expanded="false" signature="517:528" ph=" { " />
-            <marker date="1511513688546" expanded="false" signature="547:553" ph=" }" />
-            <marker date="1511513688546" expanded="false" signature="580:591" ph=" { " />
-            <marker date="1511513688546" expanded="false" signature="604:610" ph=" }" />
-            <marker date="1511513688546" expanded="false" signature="647:658" ph=" { " />
-            <marker date="1511513688546" expanded="false" signature="677:683" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Vertex.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -349,14 +332,6 @@
             <marker date="1511514235554" expanded="true" signature="312:323" ph=" { " />
             <marker date="1511514235554" expanded="true" signature="339:345" ph=" }" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Axis.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -437,28 +412,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Solid.java">
+    <entry file="file://$PROJECT_DIR$/src/model/objects/Cube.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="22" lean-forward="false" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+        <state relative-caret-position="85">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <marker date="1511514235684" expanded="true" signature="23:94" ph="..." />
-            <marker date="1511514235684" expanded="true" signature="274:414" ph="{...}" />
-            <marker date="1511514235684" expanded="false" signature="457:468" ph=" { " />
-            <marker date="1511514235684" expanded="false" signature="488:494" ph=" }" />
-            <marker date="1511514235684" expanded="false" signature="537:548" ph=" { " />
-            <marker date="1511514235684" expanded="false" signature="567:573" ph=" }" />
-            <marker date="1511514235684" expanded="false" signature="608:619" ph=" { " />
-            <marker date="1511514235684" expanded="false" signature="632:638" ph=" }" />
+            <marker date="1511515382071" expanded="false" signature="31:90" ph="..." />
+            <marker date="1511515382071" expanded="true" signature="556:592" ph="//..." />
+            <marker date="1511515382071" expanded="true" signature="1063:1265" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Cube.java">
+    <entry file="file://$PROJECT_DIR$/src/model/objects/Axis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="45" column="59" lean-forward="true" selection-start-line="45" selection-start-column="59" selection-end-line="45" selection-end-column="59" />
-          <folding />
+        <state relative-caret-position="561">
+          <caret line="52" column="5" lean-forward="true" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+          <folding>
+            <marker date="1511515382008" expanded="true" signature="31:90" ph="..." />
+            <marker date="1511515382008" expanded="true" signature="1119:1320" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Parts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding>
+            <marker date="1511513688546" expanded="true" signature="58:87" ph="{...}" />
+            <marker date="1511513688546" expanded="false" signature="183:194" ph=" { " />
+            <marker date="1511513688546" expanded="false" signature="206:212" ph=" }" />
+            <marker date="1511513688546" expanded="true" signature="264:353" ph="{...}" />
+            <marker date="1511513688546" expanded="false" signature="389:400" ph=" { " />
+            <marker date="1511513688546" expanded="false" signature="417:423" ph=" }" />
+            <marker date="1511513688546" expanded="false" signature="450:461" ph=" { " />
+            <marker date="1511513688546" expanded="false" signature="474:480" ph=" }" />
+            <marker date="1511513688546" expanded="false" signature="517:528" ph=" { " />
+            <marker date="1511513688546" expanded="false" signature="547:553" ph=" }" />
+            <marker date="1511513688546" expanded="false" signature="580:591" ph=" { " />
+            <marker date="1511513688546" expanded="false" signature="604:610" ph=" }" />
+            <marker date="1511513688546" expanded="false" signature="647:658" ph=" { " />
+            <marker date="1511513688546" expanded="false" signature="677:683" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/objects/Solid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding>
+            <marker date="1511515850572" expanded="true" signature="72:143" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

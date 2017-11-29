@@ -30,4 +30,10 @@ public abstract class Solid {
     public List<Parts> getParts() {
         return parts;
     }
+
+    @Override
+    public String toString() {
+        String out = getClass().toString();
+
+    }
 }
