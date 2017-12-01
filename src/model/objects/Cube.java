@@ -40,7 +40,7 @@ public class Cube extends Solid {
             4, 5, 6,
             4, 7, 5
     };
-    private Parts[] parts_definition = {new Parts(Parts.Type.TRIANGLE, 0, indexes_definiton.length)};
+    private Parts[] parts_definition = {new Parts(Parts.Type.TRIANGLE, 12,0)};
 
     public Cube() {
         getVertexBuffer().addAll(Arrays.asList(vertex_definition));
