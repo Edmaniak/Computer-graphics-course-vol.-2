@@ -21,4 +21,9 @@ public class Vertex {
     public Vertex mul(Mat4 m) {
         return new Vertex(new Point3D(position).mul(m));
     }
+
+    @Override
+    public String toString() {
+        return position.toString();
+    }
 }

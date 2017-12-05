@@ -19,7 +19,7 @@ public abstract class Solid {
         this.parts = new ArrayList<>();
     }
 
-    public List<Vertex> getVertexBuffer() {
+    public List<Vertex> getVertices() {
         return vertexBuffer;
     }
 
@@ -31,9 +31,5 @@ public abstract class Solid {
         return parts;
     }
 
-    @Override
-    public String toString() {
-        String out = getClass().toString();
 
-    }
 }

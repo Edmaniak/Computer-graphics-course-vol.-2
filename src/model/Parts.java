@@ -1,9 +1,11 @@
 package model;
 
 public class Parts {
+
     public enum Type {
         LINE,TRIANGLE
     }
+
     private Type type;
     private int count;
     private int start;

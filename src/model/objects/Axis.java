@@ -47,7 +47,7 @@ public class Axis extends Solid {
     };
 
     public Axis() {
-        getVertexBuffer().addAll(Arrays.asList(vertex_definition));
+        getVertices().addAll(Arrays.asList(vertex_definition));
         getIndexBuffer().addAll(Arrays.asList(index_definition));
         getParts().addAll(Arrays.asList(parts_definition));
     }
