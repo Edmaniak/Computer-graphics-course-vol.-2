@@ -19,11 +19,11 @@ public abstract class Solid {
         this.parts = new ArrayList<>();
     }
 
-    public List<Vertex> getVertices() {
+    public List<Vertex> vertices() {
         return vertexBuffer;
     }
 
-    public List<Integer> getIndexBuffer() {
+    public List<Integer> indexes() {
         return indexBuffer;
     }
 

@@ -19,30 +19,34 @@ public class Renderer {
     public void render(Solid solid) {
         // Transformace
         Mat4 matMVP = model.mul(view).mul(projection);
-        for (Vertex v : solid.getVertices())
+
+        for (Vertex v : solid.vertices())
             vb.add(v.mul(matMVP));
         for (Parts p : solid.getParts()) {
 
             switch (p.getType()) {
+
                 case LINE: {
-                    for (int i = p.getStart(); i < p.getCount() * 2; i += 2) {
+                    for (int i = p.getStart(); i < ((p.getCount() * 2) + p.getStart()); i += 2) {
                         line(
-                                solid.getVertices().get(solid.getIndexBuffer().get(i)),
-                                solid.getVertices().get(solid.getIndexBuffer().get(i + 1))
+                                solid.vertices().get(solid.indexes().get(i)),
+                                solid.vertices().get(solid.indexes().get(i + 1))
                         );
                     }
+                    break;
                 }
+
                 case TRIANGLE: {
-                    for (int i = p.getStart(); i < p.getCount() * 3; i += 3) {
+                    for (int i = p.getStart(); i < ((p.getCount() * 3) + p.getStart()); i += 3) {
                         triangle(
-                                solid.getVertices().get(solid.getIndexBuffer().get(i)),
-                                solid.getVertices().get(solid.getIndexBuffer().get(i+1)),
-                                solid.getVertices().get(solid.getIndexBuffer().get(i+2))
+                                solid.vertices().get(solid.indexes().get(i)),
+                                solid.vertices().get(solid.indexes().get(i + 1)),
+                                solid.vertices().get(solid.indexes().get(i + 2))
                         );
                     }
+                    break;
                 }
             }
-
         }
     }
 

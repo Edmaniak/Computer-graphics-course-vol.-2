@@ -43,8 +43,8 @@ public class Cube extends Solid {
     private Parts[] parts_definition = {new Parts(Parts.Type.TRIANGLE, 12,0)};
 
     public Cube() {
-        getVertices().addAll(Arrays.asList(vertex_definition));
-        getIndexBuffer().addAll(Arrays.asList(indexes_definiton));
+        vertices().addAll(Arrays.asList(vertex_definition));
+        indexes().addAll(Arrays.asList(indexes_definiton));
         getParts().addAll(Arrays.asList(parts_definition));
     }
 }
