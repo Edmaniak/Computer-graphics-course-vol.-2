@@ -17,6 +17,7 @@ public class Renderer {
     private Mat4 projection = new Mat4();
 
     public void render(Solid solid) {
+
         // Transformace
         Mat4 matMVP = model.mul(view).mul(projection);
 
