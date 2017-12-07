@@ -16,22 +16,22 @@ public class Renderer {
     private Mat4 view = new Mat4();
     private Mat4 projection = new Mat4();
 
-    public void render(Solid solid) {
+    public void render(Solid sld) {
 
         // Transformace
         Mat4 matMVP = model.mul(view).mul(projection);
 
-        for (Vertex v : solid.vertices())
+        for (Vertex v : sld.vertices())
             vb.add(v.mul(matMVP));
-        for (Parts p : solid.getParts()) {
+        for (Parts p : sld.getParts()) {
 
             switch (p.getType()) {
 
                 case LINE: {
                     for (int i = p.getStart(); i < ((p.getCount() * 2) + p.getStart()); i += 2) {
                         line(
-                                solid.vertices().get(solid.indexes().get(i)),
-                                solid.vertices().get(solid.indexes().get(i + 1))
+                                sld.vertices().get(sld.indexes().get(i)),
+                                sld.vertices().get(sld.indexes().get(i + 1))
                         );
                     }
                     break;
@@ -40,9 +40,9 @@ public class Renderer {
                 case TRIANGLE: {
                     for (int i = p.getStart(); i < ((p.getCount() * 3) + p.getStart()); i += 3) {
                         triangle(
-                                solid.vertices().get(solid.indexes().get(i)),
-                                solid.vertices().get(solid.indexes().get(i + 1)),
-                                solid.vertices().get(solid.indexes().get(i + 2))
+                                sld.vertices().get(sld.indexes().get(i)),
+                                sld.vertices().get(sld.indexes().get(i + 1)),
+                                sld.vertices().get(sld.indexes().get(i + 2))
                         );
                     }
                     break;
