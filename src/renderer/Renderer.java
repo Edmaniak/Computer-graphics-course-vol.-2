@@ -57,6 +57,7 @@ public class Renderer {
 
 	private void line(Vertex origin, Vertex end) {
 		// clipp
+		
 		// dehomogenizace
 		if (!origin.getPosition().dehomog().isPresent())
 			return;
