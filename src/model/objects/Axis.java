@@ -42,8 +42,8 @@ public class Axis extends Solid {
     };
 
     private Parts[] parts_definition = {
-            new Parts(Parts.Type.LINE, 3, 0),
-            new Parts(Parts.Type.TRIANGLE, 3, 6)
+            new Parts(Parts.Type.LINE, 6, 0),
+            new Parts(Parts.Type.TRIANGLE, 9, 6)
     };
 
     public Axis() {

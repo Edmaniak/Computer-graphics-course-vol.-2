@@ -3,99 +3,116 @@ package renderer;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.App;
 import model.Parts;
 import model.Vertex;
 import model.objects.Solid;
 import transforms.Mat4;
+import transforms.Mat4Identity;
 import transforms.Vec3D;
 
 public class Renderer {
 
-	public List<Vertex> vb = new ArrayList<>();
+    public List<Vertex> vb = new ArrayList<>();
 
-	private Mat4 model = new Mat4();
-	private Mat4 view = new Mat4();
-	private Mat4 projection = new Mat4();
-	private RasterizerLine rl;
-	
-	public Renderer(RasterizerLine rl) {
-		this.rl = rl;
-	}
+    private Mat4 model = new Mat4Identity();
+    private Mat4 view;
+    private Mat4 projection;
+    private RasterizerLine rl;
+    private RasterizerTriangle rt;
 
-	public void render(Solid sld) {
 
-		// Transformace
-		Mat4 matMVP = model.mul(view).mul(projection);
+    public Renderer(RasterizerLine rl, RasterizerTriangle rt) {
+        this.rl = rl;
+        this.rt = rt;
+    }
 
-		for (Vertex v : sld.vertices())
-			vb.add(v.mul(matMVP));
-		for (Parts p : sld.getParts()) {
+    public void render(Solid sld) {
 
-			switch (p.getType()) {
+        // Transformace
+        Mat4 matMVP = model.mul(view).mul(projection);
 
-			case LINE: {
-				for (int i = p.getStart(); i < ((p.getCount() * 2) + p.getStart()); i += 2) {
-					line(sld.vertices().get(sld.indexes().get(i)), sld.vertices().get(sld.indexes().get(i + 1)));
-				}
-				break;
-			}
+        for (Vertex v : sld.vertices())
+            vb.add(v.mul(matMVP));
+        for (Parts p : sld.getParts()) {
 
-			case TRIANGLE: {
-				for (int i = p.getStart(); i < ((p.getCount() * 3) + p.getStart()); i += 3) {
-					triangle(sld.vertices().get(sld.indexes().get(i)), sld.vertices().get(sld.indexes().get(i + 1)),
-							sld.vertices().get(sld.indexes().get(i + 2)));
-				}
-				break;
-			}
-			}
-		}
-	}
+            switch (p.getType()) {
 
-	private void triangle(Vertex v1, Vertex v2, Vertex v3) {
-		System.out.println("v1: " + v1 + " v2: " + v2 + " v3 " + v3);
-	}
+                case LINE: {
+                    for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 2) {
+                        line(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)));
+                    }
+                    break;
+                }
 
-	private void line(Vertex origin, Vertex end) {
-		// clipp
-		
-		// dehomogenizace
-		if (!origin.getPosition().dehomog().isPresent())
-			return;
-		Vec3D vo = origin.getPosition().dehomog().get();
-		// zahodit z
-		double y = (-vo.getY() + 1)*vyska/2;
-		double x = (vo.getX() + 1)*sirka/2;
-		Vec3D v1, v2;
-		rl.draw(v1,v2);
-		
+                case TRIANGLE: {
+                    for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
+                        triangle(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)),
+                                vb.get(sld.indexes().get(i + 2)));
+                    }
+                    break;
+                }
+            }
+        }
+    }
 
-		System.out.println("O: " + origin + " " + "E: " + end);
-	}
+    private void line(Vertex origin, Vertex end) {
+        // clipp
 
-	public Mat4 getModel() {
-		return model;
-	}
+        // dehomogenizace
+        if (!isDehomogenizable(origin) || !isDehomogenizable(end))
+            return;
 
-	public void setModel(Mat4 model) {
-		this.model = model;
-	}
+        Vec3D vo = project2D(origin.getDehomog());
+        Vec3D ve = project2D(end.getDehomog());
 
-	public Mat4 getView() {
-		return view;
-	}
+        Vec3D v1 = project2D(vo);
+        Vec3D v2 = project2D(ve);
 
-	public void setView(Mat4 view) {
-		this.view = view;
-	}
+        rl.draw(v1, v2);
 
-	public Mat4 getProjection() {
-		return projection;
-	}
+        System.out.println("O: " + origin + " " + "E: " + end);
+    }
 
-	public void setProjection(Mat4 projection) {
-		this.projection = projection;
-	}
-	
-	
+    private void triangle(Vertex v1, Vertex v2, Vertex v3) {
+        //clip
+
+        //dehomogenizace
+        if (!isDehomogenizable(v1) || !isDehomogenizable(v2) || !isDehomogenizable(v3))
+            return;
+
+        Vec3D vec1 = project2D(v1.getDehomog());
+        Vec3D vec2 = project2D(v2.getDehomog());
+        Vec3D vec3 = project2D(v3.getDehomog());
+
+        rt.draw(vec1, vec2,vec3);
+
+
+       // System.out.println("v1: " + v1 + " v2: " + v2 + " v3 " + v3);
+    }
+
+
+    private boolean isDehomogenizable(Vertex v) {
+        return v.getPosition().dehomog().isPresent();
+    }
+
+    private Vec3D project2D(Vec3D v) {
+        double y = (-v.getY() + 1) * App.HEIGHT / 2;
+        double x = (v.getX() + 1) * App.WIDTH / 2;
+        return new Vec3D(x, y, 0);
+    }
+
+
+    public void setModel(Mat4 model) {
+        this.model = model;
+    }
+
+    public void setView(Mat4 view) {
+        this.view = view;
+    }
+
+    public void setProjection(Mat4 projection) {
+        this.projection = projection;
+    }
 
 }

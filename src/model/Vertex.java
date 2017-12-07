@@ -2,6 +2,7 @@ package model;
 
 import transforms.Mat4;
 import transforms.Point3D;
+import transforms.Vec3D;
 
 public class Vertex {
     private final Point3D position;
@@ -20,6 +21,10 @@ public class Vertex {
 
     public Vertex mul(Mat4 m) {
         return new Vertex(new Point3D(position).mul(m));
+    }
+
+    public Vec3D getDehomog() {
+        return new Vec3D(position.dehomog().get());
     }
 
     @Override

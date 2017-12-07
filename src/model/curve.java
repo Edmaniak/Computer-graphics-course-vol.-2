@@ -4,7 +4,7 @@ import transforms.Cubic;
 import transforms.Point3D;
 
 public class curve {
-	public Curve() {
+	/*public Curve() {
 		int numbeOf = 10;
 		Point3D p1 = new Point3D(-1,-1,-1);
 		Point3D p1 = new Point3D(-1,-1,-1);
@@ -18,5 +18,5 @@ public class curve {
 			indexBuffer.add();
 		}
 		parts.add(new Part(Part.Type.Lines,0,numberof))
-	}
+	}*/
 }
