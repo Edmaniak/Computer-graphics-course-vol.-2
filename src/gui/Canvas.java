@@ -11,23 +11,13 @@ public class Canvas extends JPanel {
     private Color bgColor;
     private Dimension dimensions;
 
-    /**
-     * Constructor with default color
-     *
-     * @param d
-     */
     public Canvas(Dimension d) {
         setDimensions(d);
         mainBuffer = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_RGB);
         setPreferredSize(d);
     }
 
-    /**
-     * Constructor with custom color
-     *
-     * @param d
-     * @param bgColor
-     */
+
     public Canvas(Dimension d, Color bgColor) {
         this(d);
         setBgColor(bgColor);
@@ -40,7 +30,6 @@ public class Canvas extends JPanel {
     }
 
     public void clear(Color c) {
-        mainBuffer = new BufferedImage(dimensions.width, dimensions.height, BufferedImage.TYPE_INT_RGB);
         setBgColor(c);
         repaint();
     }
@@ -57,20 +46,6 @@ public class Canvas extends JPanel {
         newBgCol.fillRect(0, 0, dimensions.width, dimensions.height);
         repaint();
     }
-
-
-    /**
-     * Main method for drawing pixel into the canvas
-     */
-    public void putPixel(int x, int y, Color color) {
-        if (canDrawAt(x, y))
-            mainBuffer.setRGB(x, y, color.hashCode());
-    }
-
-    public boolean canDrawAt(int x, int y) {
-        return x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
-    }
-
 
     public Dimension getDimensions() {
         return dimensions;

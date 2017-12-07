@@ -23,7 +23,7 @@ public class Vertex {
         return new Vertex(new Point3D(position).mul(m));
     }
 
-    public Vec3D getDehomog() {
+    public Vec3D dehomog() {
         return new Vec3D(position.dehomog().get());
     }
 

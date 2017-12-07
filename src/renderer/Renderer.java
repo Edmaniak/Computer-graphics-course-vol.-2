@@ -15,7 +15,7 @@ public class Renderer {
 
     public List<Vertex> vb = new ArrayList<>();
 
-    private Mat4 model = new Mat4Identity();
+    private Mat4 model;
     private Mat4 view;
     private Mat4 projection;
     private RasterizerLine rl;
@@ -63,11 +63,8 @@ public class Renderer {
         if (!isDehomogenizable(origin) || !isDehomogenizable(end))
             return;
 
-        Vec3D vo = project2D(origin.getDehomog());
-        Vec3D ve = project2D(end.getDehomog());
-
-        Vec3D v1 = project2D(vo);
-        Vec3D v2 = project2D(ve);
+        Vec3D v1 = project2D(origin.dehomog());
+        Vec3D v2 = project2D(end.dehomog());
 
         rl.draw(v1, v2);
 
@@ -81,14 +78,13 @@ public class Renderer {
         if (!isDehomogenizable(v1) || !isDehomogenizable(v2) || !isDehomogenizable(v3))
             return;
 
-        Vec3D vec1 = project2D(v1.getDehomog());
-        Vec3D vec2 = project2D(v2.getDehomog());
-        Vec3D vec3 = project2D(v3.getDehomog());
+        Vec3D vec1 = project2D(v1.dehomog());
+        Vec3D vec2 = project2D(v2.dehomog());
+        Vec3D vec3 = project2D(v3.dehomog());
 
-        rt.draw(vec1, vec2,vec3);
+        rt.draw(vec1, vec2, vec3);
 
-
-       // System.out.println("v1: " + v1 + " v2: " + v2 + " v3 " + v3);
+         System.out.println("v1: " + v1 + " v2: " + v2 + " v3 " + v3);
     }
 
 
