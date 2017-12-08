@@ -1,6 +1,8 @@
 package renderer;
 
+
 import java.awt.image.BufferedImage;
+
 
 public abstract class Rasterizer {
 
@@ -9,5 +11,6 @@ public abstract class Rasterizer {
     public Rasterizer(BufferedImage img) {
         this.img = img;
     }
+
 
 }

@@ -1,5 +1,6 @@
 package app;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -29,7 +30,7 @@ public class Panel {
 	
 	public void draw() {
 		//clear();
-		Cube cube = new Cube(); 
+		Cube cube = new Cube(Color.WHITE);
 		renderer.render(cube);
 	}
 }

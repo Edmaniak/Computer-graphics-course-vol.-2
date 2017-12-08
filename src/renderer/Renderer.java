@@ -9,6 +9,7 @@ import model.Vertex;
 import model.objects.Solid;
 import transforms.Mat4;
 import transforms.Mat4Identity;
+import transforms.Mat4RotY;
 import transforms.Vec3D;
 
 public class Renderer {
@@ -28,6 +29,9 @@ public class Renderer {
     }
 
     public void render(Solid sld) {
+
+        // Modelovaci transformace definovana vlastnostmi solidu
+        setModel(new Mat4Identity().mul(new Mat4RotY(sld.getRotY())));
 
         // Transformace
         Mat4 matMVP = model.mul(view).mul(projection);
@@ -54,6 +58,7 @@ public class Renderer {
                 }
             }
         }
+        vb.clear();
     }
 
     private void line(Vertex origin, Vertex end) {

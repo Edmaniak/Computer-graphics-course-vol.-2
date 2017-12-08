@@ -3,30 +3,31 @@ package model.objects;
 import model.Parts;
 import model.Vertex;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public class Axis extends Solid {
     private Vertex[] vertex_definition = {
             // Axis
-            new Vertex(0, 0, 0),
-            new Vertex(1, 0, 0),
-            new Vertex(0, 0, 1),
-            new Vertex(0, 1, 0),
+            new Vertex(0, 0, 0, color),
+            new Vertex(1, 0, 0, color),
+            new Vertex(0, 0, 1, color),
+            new Vertex(0, 1, 0, color),
 
             // End triangle X
-            new Vertex(1, 0, -0.5),
-            new Vertex(1, 0, 0.5),
-            new Vertex(1.5, 0, 0),
+            new Vertex(1, 0, -0.2, color),
+            new Vertex(1, 0, 0.2, color),
+            new Vertex(1.2, 0, 0, color),
 
             // End triangle Z
-            new Vertex(-0.5, 0, 1),
-            new Vertex(0.5, 0, 1),
-            new Vertex(0, 0, 1.5),
+            new Vertex(-0.2, 0, 1, color),
+            new Vertex(0.2, 0, 1, color),
+            new Vertex(0, 0, 1.2, color),
 
             // End triangle Y
-            new Vertex(-0.5, 1, 0),
-            new Vertex(0.5, 1, 0),
-            new Vertex(0, 1.5, 0),
+            new Vertex(-0.2, 1, 0, color),
+            new Vertex(0.2, 1, 0, color),
+            new Vertex(0, 1.2, 0, color),
 
     };
 
@@ -46,7 +47,8 @@ public class Axis extends Solid {
             new Parts(Parts.Type.TRIANGLE, 9, 6)
     };
 
-    public Axis() {
+    public Axis(Color color) {
+        super(color);
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(index_definition));
         getParts().addAll(Arrays.asList(parts_definition));

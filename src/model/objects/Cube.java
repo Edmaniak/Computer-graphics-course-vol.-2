@@ -3,21 +3,22 @@ package model.objects;
 import model.Parts;
 import model.Vertex;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public class Cube extends Solid {
 
     private Vertex[] vertex_definition = {
             // dolní podstava
-            new Vertex(0, 0, 0),
-            new Vertex(1, 0, 0),
-            new Vertex(1, 0, 1),
-            new Vertex(0, 0, 1),
+            new Vertex(0, 0, 0, color),
+            new Vertex(1, 0, 0, color),
+            new Vertex(1, 0, 1, color),
+            new Vertex(0, 0, 1, color),
             // horní podstava
-            new Vertex(0, 1, 0),
-            new Vertex(1, 1, 0),
-            new Vertex(1, 1, 1),
-            new Vertex(0, 1, 1)
+            new Vertex(0, 1, 0, color),
+            new Vertex(1, 1, 0, color),
+            new Vertex(1, 1, 1, color),
+            new Vertex(0, 1, 1, color)
     };
     private Integer[] indexes_definiton = {
             // triangles
@@ -40,11 +41,13 @@ public class Cube extends Solid {
             4, 5, 6,
             4, 7, 5
     };
-    private Parts[] parts_definition = {new Parts(Parts.Type.TRIANGLE, 36,0)};
+    private Parts[] parts_definition = {new Parts(Parts.Type.TRIANGLE, 36, 0)};
 
-    public Cube() {
+    public Cube(Color color) {
+        super(color);
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(indexes_definiton));
         getParts().addAll(Arrays.asList(parts_definition));
     }
+
 }

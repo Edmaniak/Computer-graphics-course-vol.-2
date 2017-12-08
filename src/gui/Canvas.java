@@ -8,18 +8,13 @@ import java.awt.image.BufferedImage;
 public class Canvas extends JPanel {
 
     private BufferedImage mainBuffer;
-    private Color bgColor;
+    private final Color bgColor = new Color(70,73,76);
     private Dimension dimensions;
 
     public Canvas(Dimension d) {
         setDimensions(d);
         mainBuffer = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_RGB);
         setPreferredSize(d);
-    }
-
-
-    public Canvas(Dimension d, Color bgColor) {
-        this(d);
         setBgColor(bgColor);
     }
 
@@ -40,7 +35,6 @@ public class Canvas extends JPanel {
     }
 
     public void setBgColor(Color bgColor) {
-        this.bgColor = bgColor;
         Graphics newBgCol = mainBuffer.getGraphics();
         newBgCol.setColor(bgColor);
         newBgCol.fillRect(0, 0, dimensions.width, dimensions.height);
