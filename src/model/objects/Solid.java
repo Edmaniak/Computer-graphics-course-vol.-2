@@ -15,11 +15,11 @@ public abstract class Solid {
     private final List<Integer> indexBuffer;
     private final List<Parts> parts;
     protected Color color;
-    private Vec3D position;
-    private double rotY;
-    private double rotX;
-    private double rotZ;
-    private double size;
+    private Vec3D position = new Vec3D();
+    private double rotY = 0;
+    private double rotX = 0;
+    private double rotZ = 0;
+    private double size = 0;
 
     public Solid(Color color) {
         this.vertexBuffer = new ArrayList<>();
@@ -45,6 +45,10 @@ public abstract class Solid {
     }
 
     public void setPosition(Vec3D position) {
+        if(position.getY() < 0) {
+            this.position = new Vec3D(position.getX(), 0, position.getZ());
+            return;
+        }
         this.position = position;
     }
 

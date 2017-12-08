@@ -7,16 +7,13 @@ import app.App;
 import model.Parts;
 import model.Vertex;
 import model.objects.Solid;
-import transforms.Mat4;
-import transforms.Mat4Identity;
-import transforms.Mat4RotY;
-import transforms.Vec3D;
+import transforms.*;
 
 public class Renderer {
 
     public List<Vertex> vb = new ArrayList<>();
 
-    private Mat4 model;
+    private Mat4 model = new Mat4Identity();
     private Mat4 view;
     private Mat4 projection;
     private RasterizerLine rl;
@@ -31,7 +28,7 @@ public class Renderer {
     public void render(Solid sld) {
 
         // Modelovaci transformace definovana vlastnostmi solidu
-        setModel(new Mat4Identity().mul(new Mat4RotY(sld.getRotY())));
+        setModel(new Mat4RotY(sld.getRotY()).mul(new Mat4Transl(sld.getPosition().getX(), sld.getPosition().getY(), sld.getPosition().getZ())));
 
         // Transformace
         Mat4 matMVP = model.mul(view).mul(projection);
@@ -89,7 +86,7 @@ public class Renderer {
 
         rt.draw(vec1, vec2, vec3);
 
-         System.out.println("v1: " + v1 + " v2: " + v2 + " v3 " + v3);
+        System.out.println("v1: " + v1 + " v2: " + v2 + " v3 " + v3);
     }
 
 

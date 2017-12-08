@@ -1,21 +1,28 @@
 package gui;
 
+import transforms.Point2D;
+
 import javax.swing.*;
 import java.awt.*;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferedImage;
 
 public class Canvas extends JPanel {
 
     private BufferedImage mainBuffer;
-    private final Color bgColor = new Color(70,73,76);
+    private final Color bgColor;
     private Dimension dimensions;
+    private Point2D clickPoint;
 
-    public Canvas(Dimension d) {
+    public Canvas(Dimension d, Color color) {
         setDimensions(d);
         mainBuffer = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_RGB);
         setPreferredSize(d);
-        setBgColor(bgColor);
+        setBgColor(color);
+        bgColor = color;
     }
 
     @Override
@@ -24,8 +31,8 @@ public class Canvas extends JPanel {
         g.drawImage(mainBuffer, 0, 0, null);
     }
 
-    public void clear(Color c) {
-        setBgColor(c);
+    public void clear() {
+        setBgColor(bgColor);
         repaint();
     }
 
@@ -64,6 +71,7 @@ public class Canvas extends JPanel {
         repaint();
         super.remove(comp);
     }
+
 
 }
 

@@ -1,29 +1,19 @@
 package gui;
 
 import app.App;
-import javafx.scene.input.KeyCode;
-import model.objects.Axis;
-import model.objects.Cube;
-import model.objects.Solid;
-import model.objects.TetraHedron;
-import renderer.RasterizerLine;
-import renderer.RasterizerTriangle;
-import renderer.Renderer;
-import renderer.Scene;
-import transforms.Mat4PerspRH;
-import transforms.Mat4RotY;
-import transforms.Mat4ViewRH;
-import transforms.Vec3D;
+import transforms.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 public class MainFrame extends JFrame {
 
     private final Canvas canvas;
-    private final Dimension dimension;
+    private final App app = App.app;
+    private Point2D clickPoint;
+    private static double MOUSE_SPEED = 0.005;
+
 
     public MainFrame(int width, int height) {
 
@@ -32,39 +22,9 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(App.title);
 
-        dimension = new Dimension(width, height);
+        canvas = new Canvas(new Dimension(width, height), new Color(70, 73, 76));
 
-        // app reference
-
-        // Canvas
-        canvas = new Canvas(dimension);
-
-
-/*
-        RasterizerLine rl = new RasterizerLine(canvas.getMainBuffer());
-        RasterizerTriangle rt = new RasterizerTriangle(canvas.getMainBuffer());
-
-        renderer = new Renderer(rl, rt);
-        renderer.setModel(new Mat4RotY(Math.PI/2.5));
-        renderer.setProjection(new Mat4PerspRH(Math.PI / 4, 1, 0.001, 100));
-        renderer.setView(new Mat4ViewRH(new Vec3D(0, 2, 8), new Vec3D(0, -0.05, -1), new Vec3D(0, 1, 0)));
-
-        Solid s = new Cube(Color.WHITE);
-        renderer.render(s);
-        System.out.println("-------------");
-*/
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_D) {
-                    /*canvas.clear(Color.BLACK);
-                    renderer.setModel(new Mat4RotY(Math.PI));
-                    renderer.render(s);*/
-
-                }
-            }
-        });
-
+        controlInit();
         // Adding everything to the frame
         add(canvas, BorderLayout.CENTER);
 
@@ -75,6 +35,65 @@ public class MainFrame extends JFrame {
     public Canvas getCanvas() {
         return canvas;
     }
+
+    private void controlInit() {
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                    System.out.println("Camera right");
+                }
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    System.out.println("Camera left");
+                }
+                if (e.getKeyCode() == KeyEvent.VK_W) {
+                    System.out.println("Camera up");
+                }
+                if (e.getKeyCode() == KeyEvent.VK_S) {
+                    System.out.println("Camera down");
+                }
+            }
+        });
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                clickPoint = new Point2D(e.getX(), e.getY());
+                app.getActiveSolid().setRotY(Math.PI / 5);
+                app.renderScene();
+            }
+        });
+
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    double deltaY = (clickPoint.getY() - e.getY()) * MOUSE_SPEED;
+                    double deltaX = (clickPoint.getX() - e.getX()) * MOUSE_SPEED;
+                    app.getActiveSolid().setRotY(deltaX);
+                    app.renderScene();
+                }
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    double deltaX = (clickPoint.getX() - e.getX()) * MOUSE_SPEED;
+                    double deltaY = (clickPoint.getY() - e.getY()) * MOUSE_SPEED;
+                    app.getActiveSolid().setPosition(new Vec3D(-deltaX, deltaY, 0));
+                    app.renderScene();
+                }
+
+            }
+
+        });
+
+        addMouseWheelListener(new MouseAdapter() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                super.mouseWheelMoved(e);
+            }
+        });
+
+    }
+
 }
 
 
