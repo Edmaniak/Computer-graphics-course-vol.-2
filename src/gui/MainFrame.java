@@ -11,8 +11,8 @@ public class MainFrame extends JFrame {
 
     private final Canvas canvas;
     private final App app = App.app;
-    private Point2D clickPoint;
-    private static double MOUSE_SPEED = 0.005;
+    private Point2D cp;
+    private static double MOUSE_SPEED = 0.05;
 
 
     public MainFrame(int width, int height) {
@@ -59,25 +59,23 @@ public class MainFrame extends JFrame {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                clickPoint = new Point2D(e.getX(), e.getY());
-                app.getActiveSolid().setRotY(Math.PI / 5);
-                app.renderScene();
+                cp = new Point2D(e.getX(), e.getY());
             }
         });
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    double deltaY = (clickPoint.getY() - e.getY()) * MOUSE_SPEED;
-                    double deltaX = (clickPoint.getX() - e.getX()) * MOUSE_SPEED;
-                    app.getActiveSolid().setRotY(deltaX);
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    Vec2D delta = new Vec2D(cp.getX() - e.getX(), cp.getY() - e.getY()).normalized().get();
+                    app.getActiveSolid().transform.rotate(delta.getY()* MOUSE_SPEED,delta.getX()* MOUSE_SPEED,0);
+                    app.getSingleAxis().transform.rotate(delta.getY()* MOUSE_SPEED,delta.getX()* MOUSE_SPEED,0);
                     app.renderScene();
                 }
-                if (SwingUtilities.isRightMouseButton(e)) {
-                    double deltaX = (clickPoint.getX() - e.getX()) * MOUSE_SPEED;
-                    double deltaY = (clickPoint.getY() - e.getY()) * MOUSE_SPEED;
-                    app.getActiveSolid().setPosition(new Vec3D(-deltaX, deltaY, 0));
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    Vec2D delta = new Vec2D(cp.getX() - e.getX(), cp.getY() - e.getY()).normalized().get();
+                    app.getActiveSolid().transform.translate(-delta.getX()* MOUSE_SPEED,delta.getY()* MOUSE_SPEED,0);
+                    app.getSingleAxis().transform.translate(-delta.getX()* MOUSE_SPEED,delta.getY()* MOUSE_SPEED,0);
                     app.renderScene();
                 }
 

@@ -2,6 +2,7 @@ package model.objects;
 
 import model.Parts;
 import model.Vertex;
+import transforms.Vec3D;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class TetraHedron extends Solid {
     private Parts[] parts_definition = {new Parts(Parts.Type.TRIANGLE, 12, 0)};
 
     public TetraHedron(Color color) {
-        super(color);
+        super(color, new Vec3D(0, 0, 0));
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(indexes_definiton));
         getParts().addAll(Arrays.asList(parts_definition));

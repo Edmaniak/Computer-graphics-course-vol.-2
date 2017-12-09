@@ -2,6 +2,7 @@ package model.objects;
 
 import model.Parts;
 import model.Vertex;
+import transforms.Vec3D;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class Plane extends Solid {
     };
 
     public Plane(Color color) {
-        super(color);
+        super(color, new Vec3D(0,0,0));
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(index_definition));
         getParts().addAll(Arrays.asList(parts_definition));

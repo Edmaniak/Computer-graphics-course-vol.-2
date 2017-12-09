@@ -1,8 +1,10 @@
 package model.objects;
 
 import model.Parts;
+import model.Transform;
 import model.Vertex;
 import transforms.Point2D;
+import transforms.Point3D;
 import transforms.Vec3D;
 
 import java.awt.*;
@@ -15,17 +17,16 @@ public abstract class Solid {
     private final List<Integer> indexBuffer;
     private final List<Parts> parts;
     protected Color color;
-    private Vec3D position = new Vec3D();
-    private double rotY = 0;
-    private double rotX = 0;
-    private double rotZ = 0;
-    private double size = 0;
+    public final Transform transform;
+    private Vec3D pivotPoint;
 
-    public Solid(Color color) {
+    protected Solid(Color color, Vec3D pivotPoint) {
         this.vertexBuffer = new ArrayList<>();
         this.indexBuffer = new ArrayList<>();
         this.parts = new ArrayList<>();
         this.color = color;
+        this.pivotPoint = pivotPoint;
+        this.transform = new Transform(pivotPoint);
     }
 
     public List<Vertex> vertices() {
@@ -35,52 +36,23 @@ public abstract class Solid {
     public List<Integer> indexes() {
         return indexBuffer;
     }
-
     public List<Parts> getParts() {
         return parts;
     }
 
-    public Vec3D getPosition() {
-        return position;
+    public Color getColor() {
+        return color;
     }
 
-    public void setPosition(Vec3D position) {
-        if(position.getY() < 0) {
-            this.position = new Vec3D(position.getX(), 0, position.getZ());
-            return;
-        }
-        this.position = position;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
-    public double getRotY() {
-        return rotY;
+    public Vec3D getDefaultPivotPoint() {
+        return pivotPoint;
     }
 
-    public void setRotY(double rotY) {
-        this.rotY = rotY;
-    }
-
-    public double getRotX() {
-        return rotX;
-    }
-
-    public void setRotX(double rotX) {
-        this.rotX = rotX;
-    }
-
-    public double getRotZ() {
-        return rotZ;
-    }
-
-    public void setRotZ(double rotZ) {
-        this.rotZ = rotZ;
-    }
-
-    public double getSize() {
-        return size;
-    }
-
-    public void setSize(double size) {
-        this.size = size;
+    public void setPivotPoint(Vec3D pivotPoint) {
+        this.pivotPoint = pivotPoint;
     }
 }

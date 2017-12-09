@@ -1,5 +1,7 @@
 package gui;
 
+import app.App;
+import transforms.Mat4;
 import transforms.Point2D;
 
 import javax.swing.*;
@@ -15,7 +17,6 @@ public class Canvas extends JPanel {
     private BufferedImage mainBuffer;
     private final Color bgColor;
     private Dimension dimensions;
-    private Point2D clickPoint;
 
     public Canvas(Dimension d, Color color) {
         setDimensions(d);
@@ -28,6 +29,7 @@ public class Canvas extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         g.drawImage(mainBuffer, 0, 0, null);
     }
 
@@ -70,6 +72,15 @@ public class Canvas extends JPanel {
     public void remove(Component comp) {
         repaint();
         super.remove(comp);
+    }
+
+    public void debug(Mat4 model) {
+       drawString(model.toString(),App.WIDTH-200,10);
+    }
+
+    void drawString(String text, int x, int y) {
+        for (String line : text.split("\n"))
+            mainBuffer.getGraphics().drawString(line, x, y += mainBuffer.getGraphics().getFontMetrics().getHeight());
     }
 
 

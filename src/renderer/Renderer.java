@@ -1,5 +1,6 @@
 package renderer;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Renderer {
     public void render(Solid sld) {
 
         // Modelovaci transformace definovana vlastnostmi solidu
-        setModel(new Mat4RotY(sld.getRotY()).mul(new Mat4Transl(sld.getPosition().getX(), sld.getPosition().getY(), sld.getPosition().getZ())));
+        setModel(sld.transform.getModel());
 
         // Transformace
         Mat4 matMVP = model.mul(view).mul(projection);
@@ -41,7 +42,7 @@ public class Renderer {
 
                 case LINE: {
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 2) {
-                        line(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)));
+                        line(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)), sld.getColor());
                     }
                     break;
                 }
@@ -49,7 +50,7 @@ public class Renderer {
                 case TRIANGLE: {
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
                         triangle(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)),
-                                vb.get(sld.indexes().get(i + 2)));
+                                vb.get(sld.indexes().get(i + 2)), sld.getColor());
                     }
                     break;
                 }
@@ -58,7 +59,7 @@ public class Renderer {
         vb.clear();
     }
 
-    private void line(Vertex origin, Vertex end) {
+    private void line(Vertex origin, Vertex end, Color color) {
         // clipp
 
         // dehomogenizace
@@ -68,12 +69,12 @@ public class Renderer {
         Vec3D v1 = project2D(origin.dehomog());
         Vec3D v2 = project2D(end.dehomog());
 
-        rl.draw(v1, v2);
+        rl.draw(v1, v2, color);
 
-        System.out.println("O: " + origin + " " + "E: " + end);
+        // System.out.println("O: " + origin + " " + "E: " + end);
     }
 
-    private void triangle(Vertex v1, Vertex v2, Vertex v3) {
+    private void triangle(Vertex v1, Vertex v2, Vertex v3, Color color) {
         //clip
 
         //dehomogenizace
@@ -84,9 +85,9 @@ public class Renderer {
         Vec3D vec2 = project2D(v2.dehomog());
         Vec3D vec3 = project2D(v3.dehomog());
 
-        rt.draw(vec1, vec2, vec3);
+        rt.draw(vec1, vec2, vec3, color);
 
-        System.out.println("v1: " + v1 + " v2: " + v2 + " v3 " + v3);
+        // System.out.println("v1: " + v1 + " v2: " + v2 + " v3 " + v3);
     }
 
 
