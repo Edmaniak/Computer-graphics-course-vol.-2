@@ -20,14 +20,16 @@ public abstract class Solid {
     public final Transform transform;
     private Vec3D pivotPoint;
 
-    protected Solid(Color color, Vec3D pivotPoint) {
+    protected Solid(Color color, Vec3D pivotPoint,Vec3D initialPosition) {
         this.vertexBuffer = new ArrayList<>();
         this.indexBuffer = new ArrayList<>();
         this.parts = new ArrayList<>();
         this.color = color;
         this.pivotPoint = pivotPoint;
         this.transform = new Transform(pivotPoint);
+        transform.translate(initialPosition);
     }
+
 
     public List<Vertex> vertices() {
         return vertexBuffer;

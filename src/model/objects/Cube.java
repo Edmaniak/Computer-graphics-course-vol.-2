@@ -44,8 +44,8 @@ public class Cube extends Solid {
     };
     private Parts[] parts_definition = {new Parts(Parts.Type.TRIANGLE, 36, 0)};
 
-    public Cube(Color color) {
-        super(color, new Vec3D(0.5, 0.5, 0.5));
+    public Cube(Color color,Vec3D initialPosition) {
+        super(color, new Vec3D(0.5, 0.5, 0.5),initialPosition);
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(indexes_definiton));
         getParts().addAll(Arrays.asList(parts_definition));

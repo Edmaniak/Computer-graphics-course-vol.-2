@@ -39,12 +39,12 @@ public class Canvas3D extends Canvas {
                 delta = new Vec2D(delta).normalized().get();
                 if (SwingUtilities.isRightMouseButton(e)) {
                     App.app.getActiveSolid().transform.rotate(delta.getY() * MOUSE_SPEED, delta.getX() * MOUSE_SPEED, 0);
-                    App.app.getSingleAxis().transform.rotate(delta.getY() * MOUSE_SPEED, delta.getX() * MOUSE_SPEED, 0);
+                    App.app.getObjectAxis().transform.rotate(delta.getY() * MOUSE_SPEED, delta.getX() * MOUSE_SPEED, 0);
                     App.app.renderScene();
                 }
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     App.app.getActiveSolid().transform.translate(-delta.getX() * MOUSE_SPEED, delta.getY() * MOUSE_SPEED, 0);
-                    App.app.getSingleAxis().transform.translate(-delta.getX() * MOUSE_SPEED, delta.getY() * MOUSE_SPEED, 0);
+                    App.app.getObjectAxis().transform.translate(-delta.getX() * MOUSE_SPEED, delta.getY() * MOUSE_SPEED, 0);
                     App.app.renderScene();
                 }
                 if(SwingUtilities.isMiddleMouseButton(e)) {

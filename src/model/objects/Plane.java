@@ -27,8 +27,8 @@ public class Plane extends Solid {
             new Parts(Parts.Type.TRIANGLE, 6, 0)
     };
 
-    public Plane(Color color) {
-        super(color, new Vec3D(0,0,0));
+    public Plane(Color color, Vec3D initialPosition) {
+        super(color, new Vec3D(0,0,0), initialPosition);
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(index_definition));
         getParts().addAll(Arrays.asList(parts_definition));

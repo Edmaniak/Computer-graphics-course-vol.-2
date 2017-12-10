@@ -3,6 +3,7 @@ package app;
 import gui.MainFrame;
 import model.objects.*;
 import renderer.Scene;
+import transforms.Vec3D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class App {
     public static final int WIDTH = 1055;
     public static final int HEIGHT = 800;
     public static final int RATIO = WIDTH / HEIGHT;
-    private Axis singleObjectAxis;
+    private SceneObjectAxis objectAxis;
     private Solid activeSolid;
 
 
@@ -35,17 +36,17 @@ public class App {
         scene = new Scene(gui.getCanvas3D(), Scene.Projection.PERSPECTIVE);
 
         // Models
-        TetraHedron th = new TetraHedron(App.IDLE_COLOR);
-        Plane p = new Plane(Color.BLACK);
-        Cube c = new Cube(App.IDLE_COLOR);
-        c.transform.translate(-1.9, 0, -1.9);
-        singleObjectAxis = new Axis(Color.GREEN);
-        scene.addSolid(singleObjectAxis);
-        scene.addSolid(th);
-        scene.addSolid(p);
-        scene.addSolid(c);
+        TetraHedron th = new TetraHedron(App.IDLE_COLOR, new Vec3D());
+        Plane p = new Plane(Color.BLACK, new Vec3D());
+        Cube c = new Cube(App.IDLE_COLOR, new Vec3D(-1.9, 0, -1.9));
+        objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
 
-        setActiveSolid(c);
+        scene.addSolid("axis", objectAxis);
+        scene.addSolid("tetrahedron", th);
+        scene.addSolid("plane", p);
+        scene.addSolid("cube", c);
+        c.transform.translateToOrigin();
+        setActiveSolid(th);
 
         renderScene();
 
@@ -63,7 +64,7 @@ public class App {
     public void switchTo(Solid solid) {
         if (activeSolid != null) {
             activeSolid.setColor(App.IDLE_COLOR);
-            activeSolid = solid;
+            setActiveSolid(solid);
         }
         renderScene();
     }
@@ -71,17 +72,24 @@ public class App {
     public void renderScene() {
         gui.getCanvas3D().clear();
         scene.render();
-        gui.getCanvas3D().debug(activeSolid.transform.getModel());
-
+        gui.getCanvas3D().debug(activeSolid);
     }
 
     public void setActiveSolid(Solid activeSolid) {
         this.activeSolid = activeSolid;
-        singleObjectAxis.transform.translate(activeSolid.transform.getWorldPosition());
+        objectAxis.alignFor(activeSolid);
         activeSolid.setColor(App.ACTIVE_COLOR);
     }
 
-    public Axis getSingleAxis() {
-        return singleObjectAxis;
+    public SceneObjectAxis getObjectAxis() {
+        return objectAxis;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public Solid getSolid(String name) {
+        return scene.getSolid(name);
     }
 }

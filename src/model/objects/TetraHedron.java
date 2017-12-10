@@ -24,8 +24,8 @@ public class TetraHedron extends Solid {
     };
     private Parts[] parts_definition = {new Parts(Parts.Type.TRIANGLE, 12, 0)};
 
-    public TetraHedron(Color color) {
-        super(color, new Vec3D(0, 0, 0));
+    public TetraHedron(Color color, Vec3D initialPosition) {
+        super(color, new Vec3D(0, 0, 0), initialPosition);
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(indexes_definiton));
         getParts().addAll(Arrays.asList(parts_definition));

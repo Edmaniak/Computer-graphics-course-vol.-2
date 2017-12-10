@@ -1,6 +1,7 @@
 package gui;
 
 import app.App;
+import model.objects.Solid;
 import transforms.Mat4;
 import transforms.Point2D;
 
@@ -17,7 +18,6 @@ public class Canvas extends JPanel {
     private BufferedImage mainBuffer;
     private final Color bgColor;
     private Dimension dimensions;
-    private ToolBar toolBar;
 
     public Canvas(Dimension d, Color color) {
         setLayout(new BorderLayout());
@@ -26,8 +26,6 @@ public class Canvas extends JPanel {
         setPreferredSize(d);
         setBgColor(color);
         bgColor = color;
-        toolBar = new ToolBar();
-        add(toolBar,BorderLayout.WEST);
     }
 
     @Override
@@ -78,8 +76,9 @@ public class Canvas extends JPanel {
         super.remove(comp);
     }
 
-    public void debug(Mat4 model) {
-       drawString(model.toString(),App.WIDTH-200,10);
+    public void debug(Solid activeSolid) {
+       drawString(activeSolid.transform.getModel().toString(),App.WIDTH-200,10);
+       drawString(activeSolid.transform.toString(),20,10);
     }
 
     void drawString(String text, int x, int y) {

@@ -48,10 +48,12 @@ public class Axis extends Solid {
             new Parts(Parts.Type.TRIANGLE, 9, 6)
     };
 
-    public Axis(Color color) {
-        super(color, new Vec3D(0,0,0));
+
+    public Axis(Color color, Vec3D initialPosition) {
+        super(color, new Vec3D(0, 0, 0), initialPosition);
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(index_definition));
         getParts().addAll(Arrays.asList(parts_definition));
     }
+
 }

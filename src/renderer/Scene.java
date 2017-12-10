@@ -7,7 +7,9 @@ import transforms.*;
 import utilities.Angle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Scene {
 
@@ -15,7 +17,7 @@ public class Scene {
         ORTOGRAPHIC, PERSPECTIVE
     }
 
-    private List<Solid> solids;
+    private Map<String, Solid> solids;
     private Renderer renderer;
     private Canvas canvas;
     private Projection projection;
@@ -32,27 +34,27 @@ public class Scene {
 
     public Scene(Canvas canvas, Projection projection) {
         this.projection = projection;
-        solids = new ArrayList<>();
+        solids = new HashMap<>();
 
         RasterizerLine rl = new RasterizerLine(canvas.getMainBuffer());
         RasterizerTriangle rt = new RasterizerTriangle(canvas.getMainBuffer());
 
         renderer = new Renderer(rl, rt);
         setProjection(projection);
-        camera = new Camera(new Vec3D(0,2,2),Math.PI/2, 0,0,true);
+        camera = new Camera(new Vec3D(0, 2, 2), Math.PI / 2, 0, 0, true);
         System.out.println(camera.getViewVector());
         renderer.setView(new Mat4ViewRH(new Vec3D(0, 2, 8), new Vec3D(0, -0.05, -1), new Vec3D(0, 1, 0)));
 
     }
 
     public void render() {
-        for (Solid solid : solids) {
+        for (Solid solid : solids.values()) {
             renderer.render(solid);
         }
     }
 
-    public void addSolid(Solid solid) {
-        solids.add(solid);
+    public void addSolid(String name, Solid solid) {
+        solids.put(name, solid);
     }
 
     public void setProjection(Projection projection) {
@@ -65,5 +67,9 @@ public class Scene {
                 renderer.setProjection(new Mat4OrthoRH(ORTH_VIEW_CUBOID_WIDTH, ORTH_VIEW_CUBOID_HEIGHT, ORTH_NEAR_CLIPPING_PLANE, ORTH_FAR_CLIPPING_PLANE));
                 break;
         }
+    }
+
+    public Solid getSolid(String name) {
+        return solids.get(name);
     }
 }
