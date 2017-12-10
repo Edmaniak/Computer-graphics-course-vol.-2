@@ -15,22 +15,31 @@ public class Transform {
 
     public Transform(Vec3D pivotPoint) {
         pivot = pivotPoint;
+        position = new Vec3D(0, 0, 0);
     }
 
     public void rotate(double x, double y, double z) {
         rotX = x;
         rotY = y;
         rotZ = z;
-        model = new Mat4(model).mul(new Mat4RotY(y).mul(new Mat4RotX(x)));
+        Vec3D p = getWorldPosition();
+        Mat4 translMat = new Mat4Transl(-p.getX(), -p.getY(), -p.getZ());
+        Mat4 rotMat = new Mat4(new Mat4RotX(x).mul(new Mat4RotY(y)));
+        Mat4 transBack = new Mat4Transl(p.getX(), p.getY(), p.getZ());
+        model = new Mat4(model).mul(translMat).mul(rotMat).mul(transBack);
     }
 
     public void translate(double x, double y, double z) {
-        position = new Vec3D(x, y, z);
+        position = new Vec3D(position).add(new Vec3D(x,y,z));
         model = new Mat4(model).mul(new Mat4Transl(x, y, z));
     }
 
     public void translate(Vec3D translation) {
-        translate(translation.getX(),translation.getY(),translation.getZ());
+        translate(translation.getX(), translation.getY(), translation.getZ());
+    }
+
+    public void scale(double s) {
+        model = new Mat4(model).mul(new Mat4Scale(s,s,s));
     }
 
     public Vec3D getWorldPosition() {
@@ -52,4 +61,6 @@ public class Transform {
     public Mat4 getModel() {
         return model;
     }
+
+
 }

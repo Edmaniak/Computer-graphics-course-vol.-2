@@ -32,7 +32,7 @@ public class App {
             gui = new MainFrame(WIDTH, HEIGHT);
 
         // Scene init
-        scene = new Scene(gui.getCanvas(), Scene.Projection.PERSPECTIVE);
+        scene = new Scene(gui.getCanvas3D(), Scene.Projection.PERSPECTIVE);
 
         // Models
         TetraHedron th = new TetraHedron(App.IDLE_COLOR);
@@ -69,9 +69,9 @@ public class App {
     }
 
     public void renderScene() {
-        gui.getCanvas().clear();
+        gui.getCanvas3D().clear();
         scene.render();
-        gui.getCanvas().debug(activeSolid.transform.getModel());
+        gui.getCanvas3D().debug(activeSolid.transform.getModel());
 
     }
 

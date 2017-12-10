@@ -9,7 +9,8 @@ import java.awt.event.*;
 
 public class MainFrame extends JFrame {
 
-    private final Canvas canvas;
+    private final Canvas3D canvas3D;
+    private final Canvas canvasCurve;
     private final App app = App.app;
     private Point2D cp;
     private static double MOUSE_SPEED = 0.05;
@@ -22,18 +23,25 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(App.title);
 
-        canvas = new Canvas(new Dimension(width, height), new Color(70, 73, 76));
+        JTabbedPane tabs = new JTabbedPane();
+        canvas3D = new Canvas3D(new Dimension(width, height), new Color(70, 73, 76));
+        canvasCurve = new Canvas(new Dimension(width, height), new Color(70, 73, 76));
+
+        tabs.addTab("3D", canvas3D);
+        tabs.addTab("Curves", canvasCurve);
 
         controlInit();
+
         // Adding everything to the frame
-        add(canvas, BorderLayout.CENTER);
+        add(tabs, BorderLayout.CENTER);
+
 
         pack();
         setVisible(true);
     }
 
-    public Canvas getCanvas() {
-        return canvas;
+    public Canvas getCanvas3D() {
+        return canvas3D;
     }
 
     private void controlInit() {
@@ -56,39 +64,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                cp = new Point2D(e.getX(), e.getY());
-            }
-        });
 
-        addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
-                    Vec2D delta = new Vec2D(cp.getX() - e.getX(), cp.getY() - e.getY()).normalized().get();
-                    app.getActiveSolid().transform.rotate(delta.getY()* MOUSE_SPEED,delta.getX()* MOUSE_SPEED,0);
-                    app.getSingleAxis().transform.rotate(delta.getY()* MOUSE_SPEED,delta.getX()* MOUSE_SPEED,0);
-                    app.renderScene();
-                }
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    Vec2D delta = new Vec2D(cp.getX() - e.getX(), cp.getY() - e.getY()).normalized().get();
-                    app.getActiveSolid().transform.translate(-delta.getX()* MOUSE_SPEED,delta.getY()* MOUSE_SPEED,0);
-                    app.getSingleAxis().transform.translate(-delta.getX()* MOUSE_SPEED,delta.getY()* MOUSE_SPEED,0);
-                    app.renderScene();
-                }
-
-            }
-
-        });
-
-        addMouseWheelListener(new MouseAdapter() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                super.mouseWheelMoved(e);
-            }
-        });
 
     }
 

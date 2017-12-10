@@ -17,13 +17,17 @@ public class Canvas extends JPanel {
     private BufferedImage mainBuffer;
     private final Color bgColor;
     private Dimension dimensions;
+    private ToolBar toolBar;
 
     public Canvas(Dimension d, Color color) {
+        setLayout(new BorderLayout());
         setDimensions(d);
         mainBuffer = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_RGB);
         setPreferredSize(d);
         setBgColor(color);
         bgColor = color;
+        toolBar = new ToolBar();
+        add(toolBar,BorderLayout.WEST);
     }
 
     @Override
