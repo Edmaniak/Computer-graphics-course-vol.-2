@@ -23,14 +23,14 @@ public class Transform {
         scale = 1;
     }
 
-    public void rotate(double x, double y, double z) {
-        rotX += Math.toDegrees(x);
-        rotY += Math.toDegrees(y);
-        rotZ += Math.toDegrees(z);
+    public void rotate(double angX, double angY, double angZ) {
+        rotX += Math.toDegrees(angX);
+        rotY += Math.toDegrees(angY);
+        rotZ += Math.toDegrees(angZ);
         rotVec = new Vec3D(rotX, rotY, rotZ);
         Vec3D p = getWorldPosition();
         Mat4 translMat = new Mat4Transl(-p.getX(), -p.getY(), -p.getZ());
-        Mat4 rotMat = new Mat4(new Mat4RotX(x).mul(new Mat4RotY(y)));
+        Mat4 rotMat = new Mat4(new Mat4RotX(angX).mul(new Mat4RotY(angY)));
         Mat4 transBack = new Mat4Transl(p.getX(), p.getY(), p.getZ());
         model = new Mat4(model).mul(translMat).mul(rotMat).mul(transBack);
     }

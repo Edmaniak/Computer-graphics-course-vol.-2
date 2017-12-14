@@ -23,6 +23,7 @@ public class MainFrame extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(App.title);
+        setFocusable(true);
 
         JTabbedPane tabs = new JTabbedPane();
         canvas3D = new Canvas3D(new Dimension(width, height), new Color(70, 73, 76));
@@ -30,6 +31,7 @@ public class MainFrame extends JFrame {
         toolBar = new JToolBar(JToolBar.VERTICAL);
         toolBar.setFloatable(false);
         toolBar.setPreferredSize(new Dimension(30, 100));
+        
         controlInit();
         initButtons();
 

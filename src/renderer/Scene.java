@@ -43,9 +43,12 @@ public class Scene {
 
         renderer = new Renderer(rl, rt);
         setProjection(projection);
-        //camera = new Camera(new Vec3D(0, 0, 8), 1.5315, 0, 0, true);
-        //renderer.setView(camera.getViewMatrix());
-         renderer.setView(new Mat4ViewRH(new Vec3D(0, 2, 8), new Vec3D(0, -0.05, -1), new Vec3D(0, 1, 0)));
+        camera = new Camera();
+        camera = camera.withPosition(new Vec3D(-30,0,0));
+        camera = camera.withZenith(Math.toRadians(0));
+      
+        renderer.setView(camera.getViewMatrix());
+        //renderer.setView(new Mat4ViewRH(new Vec3D(0, 2, 8), new Vec3D(0, -0.05, -1), new Vec3D(0, 0, 0)));
 
     }
 
@@ -83,11 +86,10 @@ public class Scene {
     public Camera getCamera() {
         return camera;
     }
-
-    public void setCamera(double a, double z) {
-        a += camera.getAzimuth();
-        this.camera = new Camera(camera, a, z);
-    }
+    
+    public Map<String, Solid> getSolids() {
+		return solids;
+	}
 
 
     public Renderer getRenderer() {

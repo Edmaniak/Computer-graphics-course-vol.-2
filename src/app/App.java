@@ -54,7 +54,7 @@ public class App {
         scene.addSolid("cube", c);
         c.transform.translateToOrigin();
         setActiveSolid(th);
-
+        resetToCamera();
         renderScene();
 
     }
@@ -94,6 +94,12 @@ public class App {
 
     public Scene getScene() {
         return scene;
+    }
+    
+    public void resetToCamera() {
+    	for(Solid s : scene.getSolids().values()) {
+    		s.transform.rotate(0, 0, 45);
+    	}
     }
 
     public Solid getSolid(String name) {
