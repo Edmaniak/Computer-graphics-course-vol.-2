@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.App;
-import model.Parts;
+import model.Part;
 import model.Vertex;
 import model.objects.Solid;
 import transforms.*;
@@ -36,7 +36,7 @@ public class Renderer {
 
         for (Vertex v : sld.vertices())
             vb.add(v.mul(matMVP));
-        for (Parts p : sld.getParts()) {
+        for (Part p : sld.getParts()) {
 
             switch (p.getType()) {
 
@@ -114,4 +114,7 @@ public class Renderer {
         this.projection = projection;
     }
 
+    public Mat4 getView() {
+        return view;
+    }
 }

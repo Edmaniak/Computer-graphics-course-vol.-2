@@ -1,8 +1,10 @@
 package app;
 
 import gui.MainFrame;
+import model.BezierCurve;
 import model.objects.*;
 import renderer.Scene;
+import transforms.Point3D;
 import transforms.Vec3D;
 
 import javax.swing.*;
@@ -39,6 +41,11 @@ public class App {
         TetraHedron th = new TetraHedron(App.IDLE_COLOR, new Vec3D());
         Plane p = new Plane(Color.BLACK, new Vec3D());
         Cube c = new Cube(App.IDLE_COLOR, new Vec3D(-1.9, 0, -1.9));
+        BezierCurve bc = new BezierCurve(Color.CYAN,new Vec3D(0,0,0),
+                new Point3D(-2,0,-2),
+                new Point3D(-1,0,-1),
+                new Point3D(1,0,1),
+                new Point3D(2,0,2));
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
 
         scene.addSolid("axis", objectAxis);

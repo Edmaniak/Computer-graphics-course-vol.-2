@@ -1,6 +1,6 @@
 package model.objects;
 
-import model.Parts;
+import model.Part;
 import model.Vertex;
 import transforms.Vec3D;
 
@@ -23,8 +23,8 @@ public class Plane extends Solid {
             2, 3, 1,
     };
 
-    private Parts[] parts_definition = {
-            new Parts(Parts.Type.TRIANGLE, 6, 0)
+    private Part[] parts_definition = {
+            new Part(Part.Type.TRIANGLE, 6, 0)
     };
 
     public Plane(Color color, Vec3D initialPosition) {

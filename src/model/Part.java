@@ -1,6 +1,6 @@
 package model;
 
-public class Parts {
+public class Part {
 
     public enum Type {
         LINE,TRIANGLE
@@ -14,7 +14,7 @@ public class Parts {
         return type;
     }
 
-    public Parts(Type type, int count, int start) {
+    public Part(Type type, int count, int start) {
         this.type = type;
         this.count = count;
         this.start = start;

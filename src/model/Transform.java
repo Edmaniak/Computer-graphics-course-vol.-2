@@ -1,7 +1,7 @@
 package model;
 
-import com.sun.javafx.geom.Vec3d;
 import transforms.*;
+import utilities.Util;
 
 public class Transform {
 
@@ -10,7 +10,9 @@ public class Transform {
     double rotX;
     double rotY;
     double rotZ;
+    double scale;
     Vec3D pivot;
+    public static double SCALE_FACTOR = 0.01;
     Mat4 model = new Mat4Identity();
 
 
@@ -18,6 +20,7 @@ public class Transform {
         pivot = pivotPoint;
         position = new Vec3D();
         rotVec = new Vec3D();
+        scale = 1;
     }
 
     public void rotate(double x, double y, double z) {
@@ -46,7 +49,14 @@ public class Transform {
     }
 
     public void scale(double s) {
-        model = new Mat4(model).mul(new Mat4Scale(s, s, s));
+        if (s != 0) {
+            scale = SCALE_FACTOR * Math.signum(s);
+            Vec3D p = getWorldPosition();
+            Mat4 translMat = new Mat4Transl(-p.getX(), -p.getY(), -p.getZ());
+            Mat4 sizeMat = new Mat4Scale(1+SCALE_FACTOR * Math.signum(s));
+            Mat4 transBack = new Mat4Transl(p.getX(), p.getY(), p.getZ());
+            model = new Mat4(model).mul(translMat).mul(sizeMat).mul(transBack);
+        }
     }
 
     public Vec3D getWorldPosition() {
@@ -94,6 +104,18 @@ public class Transform {
         return rotZ;
     }
 
+    public void setRotX(double rotX) {
+        this.rotX = rotX % 360;
+    }
+
+    public void setRotY(double rotY) {
+        this.rotY = rotY % 360;
+    }
+
+    public void setRotZ(double rotZ) {
+        this.rotZ = rotZ % 360;
+    }
+
     public Mat4 getModel() {
         return model;
     }
@@ -104,8 +126,8 @@ public class Transform {
 
     @Override
     public String toString() {
-        String out = "Position: x: " +  position.getX() + " y: " +  position.getY() + " z: " +  position.getZ() + "\n";
-        out += "Rotation: x: " + rotX + " y: " + rotY + " z: " + rotZ;
+        String out = "Position: x: " + Util.round(position.getX()) + " y: " + Util.round(position.getY()) + " z: " + Util.round(position.getZ()) + "\n";
+        out += "Rotation: x: " + Util.round(rotX) + " y: " + Util.round(rotY) + " z: " + Util.round(rotZ);
         return out;
     }
 }

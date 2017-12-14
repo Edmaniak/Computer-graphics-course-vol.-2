@@ -2,6 +2,7 @@ package renderer;
 
 import app.App;
 import gui.Canvas;
+import model.objects.SceneCamera;
 import model.objects.Solid;
 import transforms.*;
 import utilities.Angle;
@@ -22,6 +23,7 @@ public class Scene {
     private Canvas canvas;
     private Projection projection;
     private Camera camera;
+    double i = 0;
 
     public static double PERSP_VIEW_ANGLE = Math.PI / 4;
     public static double PERSP_NEAR_CLIPPING_PLANE = 0.001;
@@ -41,13 +43,18 @@ public class Scene {
 
         renderer = new Renderer(rl, rt);
         setProjection(projection);
-        camera = new Camera(new Vec3D(0, 2, 2), Math.PI / 2, 0, 0, true);
-        System.out.println(camera.getViewVector());
-        renderer.setView(new Mat4ViewRH(new Vec3D(0, 2, 8), new Vec3D(0, -0.05, -1), new Vec3D(0, 1, 0)));
+        //camera = new Camera(new Vec3D(0, 0, 8), 1.5315, 0, 0, true);
+        //renderer.setView(camera.getViewMatrix());
+         renderer.setView(new Mat4ViewRH(new Vec3D(0, 2, 8), new Vec3D(0, -0.05, -1), new Vec3D(0, 1, 0)));
 
     }
 
     public void render() {
+        //camera = camera.addAzimuth(1.534);
+        //Mat4 mat = new Mat4(camera.getViewMatrix());
+        //System.out.println(mat);
+        //renderer.setView(new Mat4(camera.getViewMatrix()));
+        //renderer.setView(new Mat4ViewRH(new Vec3D(0, 2, 8), new Vec3D(0, -0.05, -1), new Vec3D(0, 1, 0)));
         for (Solid solid : solids.values()) {
             renderer.render(solid);
         }
@@ -71,5 +78,19 @@ public class Scene {
 
     public Solid getSolid(String name) {
         return solids.get(name);
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public void setCamera(double a, double z) {
+        a += camera.getAzimuth();
+        this.camera = new Camera(camera, a, z);
+    }
+
+
+    public Renderer getRenderer() {
+        return renderer;
     }
 }

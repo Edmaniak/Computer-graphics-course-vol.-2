@@ -56,7 +56,14 @@ public class MainFrame extends JFrame {
         cube.addActionListener(e ->
                 App.app.switchTo(App.app.getScene().getSolid("cube")));
 
+        ToolButton rot = new ToolButton("Rot");
+        rot.addActionListener(e ->
+        {
+            System.out.println(App.app.getScene().getCamera().getAzimuth());
+            App.app.renderScene();
+        });
         toolBar.add(cube);
+        toolBar.add(rot);
 
 
     }
@@ -66,8 +73,10 @@ public class MainFrame extends JFrame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
+                System.out.println("FFF");
                 if (e.getKeyCode() == KeyEvent.VK_D) {
-                    System.out.println("Camera right");
+                    App.app.getScene().getCamera().addAzimuth(Math.toRadians(1));
+                    System.out.println("ddd");
                 }
                 if (e.getKeyCode() == KeyEvent.VK_A) {
                     System.out.println("Camera left");
@@ -83,6 +92,7 @@ public class MainFrame extends JFrame {
 
 
     }
+
 
 }
 

@@ -7,9 +7,7 @@ import transforms.Vec3D;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
+import java.awt.event.*;
 import java.util.Optional;
 
 public class Canvas3D extends Canvas {
@@ -56,6 +54,7 @@ public class Canvas3D extends Canvas {
             }
 
         });
+
 
     }
 

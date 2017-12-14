@@ -1,10 +1,8 @@
 package model.objects;
 
-import model.Parts;
+import model.Part;
 import model.Transform;
 import model.Vertex;
-import transforms.Point2D;
-import transforms.Point3D;
 import transforms.Vec3D;
 
 import java.awt.*;
@@ -15,7 +13,7 @@ public abstract class Solid {
 
     private final List<Vertex> vertexBuffer;
     private final List<Integer> indexBuffer;
-    private final List<Parts> parts;
+    private final List<Part> parts;
     protected Color color;
     public final Transform transform;
     private Vec3D pivotPoint;
@@ -38,7 +36,7 @@ public abstract class Solid {
     public List<Integer> indexes() {
         return indexBuffer;
     }
-    public List<Parts> getParts() {
+    public List<Part> getParts() {
         return parts;
     }
 

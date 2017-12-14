@@ -77,8 +77,10 @@ public class Canvas extends JPanel {
     }
 
     public void debug(Solid activeSolid) {
-       drawString(activeSolid.transform.getModel().toString(),App.WIDTH-200,10);
-       drawString(activeSolid.transform.toString(),20,10);
+        drawString(activeSolid.transform.getModel().toString(), App.WIDTH - 125, 10);
+        drawString(activeSolid.transform.toString(), 20, 10);
+        //drawString(App.app.getScene().getCamera().toString(), 20, 50);
+        drawString(App.app.getScene().getRenderer().getView().toString(), App.WIDTH - 125, 100);
     }
 
     void drawString(String text, int x, int y) {

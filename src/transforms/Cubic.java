@@ -88,12 +88,12 @@ public class Cubic {
 	}
 
 	/**
-	 * Compute the coordinates of a point on the cubic curve corresponding
+	 * Compute the coordinates of a point on the cubic BezierCurve corresponding
 	 * to the parameter from [0,1]
 	 * 
 	 * @param param
 	 *            parameter from [0,1]
-	 * @return new Point3D on the curve
+	 * @return new Point3D on the BezierCurve
 	 */
 	public Point3D compute(final double param) {
 		final double t = param > 0 ? param < 1 ? param : 1 : 0; 
