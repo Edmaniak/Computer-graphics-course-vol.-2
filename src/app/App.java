@@ -73,7 +73,7 @@ public class App {
 
     public void switchTo(Solid solid) {
         if (activeSolid != null) {
-            activeSolid.setColor(App.IDLE_COLOR);
+            activeSolid.setRenderColor(activeSolid.getDefaultColor());
             setActiveSolid(solid);
         }
         renderScene();
@@ -88,7 +88,7 @@ public class App {
     public void setActiveSolid(Solid activeSolid) {
         this.activeSolid = activeSolid;
         objectAxis.alignFor(activeSolid);
-        activeSolid.setColor(App.ACTIVE_COLOR);
+        activeSolid.setRenderColor(App.ACTIVE_COLOR);
     }
 
     public SceneObjectAxis getObjectAxis() {

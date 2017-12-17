@@ -11,10 +11,10 @@ public class TetraHedron extends Solid {
 
 
     private Vertex[] vertex_definition = {
-            new Vertex(0, 0, 0, color),
-            new Vertex(0.5, 0, 1, color),
-            new Vertex(1, 0, 0, color),
-            new Vertex(0.5, 1, 0.5, color)
+            new Vertex(0, 0, 0, renderColor),
+            new Vertex(0.5, 0, 1, renderColor),
+            new Vertex(1, 0, 0, renderColor),
+            new Vertex(0.5, 1, 0.5, renderColor)
     };
     private Integer[] indexes_definiton = {
             0, 1, 2,

@@ -11,15 +11,15 @@ public class Cube extends Solid {
 
     private Vertex[] vertex_definition = {
             // dolní podstava
-            new Vertex(0, 0, 0, color),
-            new Vertex(1, 0, 0, color),
-            new Vertex(1, 0, 1, color),
-            new Vertex(0, 0, 1, color),
+            new Vertex(0, 0, 0, renderColor),
+            new Vertex(1, 0, 0, renderColor),
+            new Vertex(1, 0, 1, renderColor),
+            new Vertex(0, 0, 1, renderColor),
             // horní podstava
-            new Vertex(0, 1, 0, color),
-            new Vertex(1, 1, 0, color),
-            new Vertex(1, 1, 1, color),
-            new Vertex(0, 1, 1, color)
+            new Vertex(0, 1, 0, renderColor),
+            new Vertex(1, 1, 0, renderColor),
+            new Vertex(1, 1, 1, renderColor),
+            new Vertex(0, 1, 1, renderColor)
     };
     private Integer[] indexes_definiton = {
             // triangles

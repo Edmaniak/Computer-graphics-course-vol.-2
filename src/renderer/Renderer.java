@@ -44,7 +44,7 @@ public class Renderer {
 
                 case LINE: {
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 2) {
-                        line(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)), sld.getColor());
+                        line(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)), sld.getRenderColor());
                     }
                     break;
                 }
@@ -52,7 +52,7 @@ public class Renderer {
                 case TRIANGLE: {
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
                         triangle(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)),
-                                vb.get(sld.indexes().get(i + 2)), sld.getColor());
+                                vb.get(sld.indexes().get(i + 2)), sld.getRenderColor());
                     }
                     break;
                 }

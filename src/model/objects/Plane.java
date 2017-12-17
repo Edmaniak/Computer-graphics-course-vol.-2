@@ -11,10 +11,10 @@ public class Plane extends Solid {
 
     private Vertex[] vertex_definition = {
             // two triangles
-            new Vertex(-2, 0, -2, color),
-            new Vertex(2, 0, -2, color),
-            new Vertex(-2, 0, 2, color),
-            new Vertex(2, 0, 2, color),
+            new Vertex(-2, 0, -2, renderColor),
+            new Vertex(2, 0, -2, renderColor),
+            new Vertex(-2, 0, 2, renderColor),
+            new Vertex(2, 0, 2, renderColor),
     };
 
     private Integer[] index_definition = {

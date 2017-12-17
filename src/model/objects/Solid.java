@@ -14,15 +14,16 @@ public abstract class Solid {
     private final List<Vertex> vertexBuffer;
     private final List<Integer> indexBuffer;
     private final List<Part> parts;
-    protected Color color;
+    protected Color renderColor;
+    protected Color defaultColor;
     public final Transform transform;
     private Vec3D pivotPoint;
 
-    protected Solid(Color color, Vec3D pivotPoint,Vec3D initialPosition) {
+    protected Solid(Color color, Vec3D pivotPoint, Vec3D initialPosition) {
         this.vertexBuffer = new ArrayList<>();
         this.indexBuffer = new ArrayList<>();
         this.parts = new ArrayList<>();
-        this.color = color;
+        this.renderColor = defaultColor = color;
         this.pivotPoint = pivotPoint;
         this.transform = new Transform(pivotPoint);
         transform.translate(initialPosition);
@@ -40,12 +41,16 @@ public abstract class Solid {
         return parts;
     }
 
-    public Color getColor() {
-        return color;
+    public Color getRenderColor() {
+        return renderColor;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public void setRenderColor(Color renderColor) {
+        this.renderColor = renderColor;
+    }
+
+    public Color getDefaultColor() {
+        return defaultColor;
     }
 
     public Vec3D getDefaultPivotPoint() {

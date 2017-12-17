@@ -3,7 +3,7 @@ package transforms;
 import java.util.Locale;
 
 /**
- * Four-channel RGB with alpha double-precision color representation, immutable
+ * Four-channel RGB with alpha double-precision renderColor representation, immutable
  * 
  * @author PGRF FIM UHK
  * @version 2016
@@ -14,7 +14,7 @@ public class Col {
 	private final double r, g, b, a;
 
 	/**
-	 * Creates black color with alpha set to 1.0
+	 * Creates black renderColor with alpha set to 1.0
 	 */
 	public Col() {
 		r = g = b = 0.0;
@@ -22,10 +22,10 @@ public class Col {
 	}
 
 	/**
-	 * Creates new color as a clone of the given one
+	 * Creates new renderColor as a clone of the given one
 	 * 
 	 * @param c
-	 *            color to be copied
+	 *            renderColor to be copied
 	 */
 	public Col(final Col c) {
 		r = c.r;
@@ -35,7 +35,7 @@ public class Col {
 	}
 
 	/**
-	 * Creates new color by reinterpreting given homogeneous point coordinates
+	 * Creates new renderColor by reinterpreting given homogeneous point coordinates
 	 * as RGBA channels
 	 * 
 	 * @param p
@@ -49,7 +49,7 @@ public class Col {
 	}
 
 	/**
-	 * Creates new color by extracting RGB color channels packed as bytes of a
+	 * Creates new renderColor by extracting RGB renderColor channels packed as bytes of a
 	 * single int value, B in the least significant byte (LSB), and setting
 	 * alpha to 1.0
 	 * 
@@ -64,7 +64,7 @@ public class Col {
 	}
 
 	/**
-	 * Creates new color by extracting RGB color channels packed as bytes of a
+	 * Creates new renderColor by extracting RGB renderColor channels packed as bytes of a
 	 * single int value, B in the least significant byte (LSB), alpha in the MSB
 	 * or alpha set to 1.0 and MSB ignored, based on isAlpha
 	 * 
@@ -86,7 +86,7 @@ public class Col {
 	}
 
 	/**
-	 * Creates a new color with the given individual int RGB channels with
+	 * Creates a new renderColor with the given individual int RGB channels with
 	 * values in [0,255] and alpha set to 1.0
 	 * 
 	 * @param r
@@ -104,7 +104,7 @@ public class Col {
 	}
 
 	/**
-	 * Creates a new color with the given individual int RGBA channels with
+	 * Creates a new renderColor with the given individual int RGBA channels with
 	 * values in [0,255]
 	 * 
 	 * @param r
@@ -124,7 +124,7 @@ public class Col {
 	}
 
 	/**
-	 * Creates a new color with the given individual double RGB channels with
+	 * Creates a new renderColor with the given individual double RGB channels with
 	 * values in [0.0,1.0] and alpha set to 1.0
 	 * 
 	 * @param r
@@ -142,7 +142,7 @@ public class Col {
 	}
 
 	/**
-	 * Creates a new color with the given individual double RGBA channels with
+	 * Creates a new renderColor with the given individual double RGBA channels with
 	 * values typically in [0.0,1.0]
 	 * 
 	 * @param r
@@ -198,12 +198,12 @@ public class Col {
 	}
 
 	/**
-	 * Returns a new color by summing individual RGB channels with the channels
-	 * of the given color, no saturation (clamping channels to [0.0,1.0])
+	 * Returns a new renderColor by summing individual RGB channels with the channels
+	 * of the given renderColor, no saturation (clamping channels to [0.0,1.0])
 	 * performed, new alpha set to 1.0.
 	 * 
 	 * @param c
-	 *            color to sum with
+	 *            renderColor to sum with
 	 * @return new instance of Col
 	 */
 	public Col addna(final Col c) {
@@ -211,7 +211,7 @@ public class Col {
 	}
 
 	/**
-	 * Returns a new color by multiplying individual RGB channels by a scalar
+	 * Returns a new renderColor by multiplying individual RGB channels by a scalar
 	 * (one double-precision value), no saturation (clamping channels to
 	 * [0.0,1.0]) performed, new alpha set to 1.0.
 	 * 
@@ -225,12 +225,12 @@ public class Col {
 	}
 
 	/**
-	 * Returns a new color by summing individual RGBA channels with the channels
-	 * of the given color, no saturation (clamping channels to [0.0,1.0])
+	 * Returns a new renderColor by summing individual RGBA channels with the channels
+	 * of the given renderColor, no saturation (clamping channels to [0.0,1.0])
 	 * performed.
 	 * 
 	 * @param c
-	 *            color to sum with
+	 *            renderColor to sum with
 	 * @return new instance of Col
 	 */
 	public Col add(final Col c) {
@@ -238,7 +238,7 @@ public class Col {
 	}
 
 	/**
-	 * Returns a new color by multiplying individual RGBA channels by a scalar
+	 * Returns a new renderColor by multiplying individual RGBA channels by a scalar
 	 * (one double-precision value), no saturation (clamping channels to
 	 * [0.0,1.0]) performed.
 	 * 
@@ -252,12 +252,12 @@ public class Col {
 	}
 
 	/**
-	 * Returns a new color by multiplying individual RGBA channels by the
-	 * channels of the given color, no saturation (clamping channels to
+	 * Returns a new renderColor by multiplying individual RGBA channels by the
+	 * channels of the given renderColor, no saturation (clamping channels to
 	 * [0.0,1.0]) performed.
 	 * 
 	 * @param c
-	 *            color to per-channel multiply by
+	 *            renderColor to per-channel multiply by
 	 * @return new instance of Col
 	 */
 	public Col mul(final Col c) {
@@ -265,7 +265,7 @@ public class Col {
 	}
 
 	/**
-	 * Returns a new color with gamma-correction applied to RGB channels, alpha
+	 * Returns a new renderColor with gamma-correction applied to RGB channels, alpha
 	 * remains the same
 	 * 
 	 * @param gamma
@@ -334,7 +334,7 @@ public class Col {
 	 * Compares this Col against the specified Col with epsilon.
 	 * 
 	 * @param col
-	 *            the color to compare with.
+	 *            the renderColor to compare with.
 	 * @param epsilon
 	 *            the maximum epsilon between actual and specified value for
 	 *            which both numbers are still considered equal
@@ -353,7 +353,7 @@ public class Col {
 	 * Compares this Col against the specified Col with epsilon.
 	 * 
 	 * @param col
-	 *            the color to compare with.
+	 *            the renderColor to compare with.
 	 * @return {@code true} if the objects are considered equal; {@code false}
 	 *         otherwise.
 	 */

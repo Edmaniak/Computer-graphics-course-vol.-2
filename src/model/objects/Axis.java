@@ -9,26 +9,27 @@ import java.util.Arrays;
 
 public class Axis extends Solid {
     private Vertex[] vertex_definition = {
+
             // Axis
-            new Vertex(0, 0, 0, color),
-            new Vertex(1, 0, 0, color),
-            new Vertex(0, 0, 1, color),
-            new Vertex(0, 1, 0, color),
+            new Vertex(0, 0, 0, renderColor),
+            new Vertex(1, 0, 0, renderColor),
+            new Vertex(0, 0, 1, renderColor),
+            new Vertex(0, 1, 0, renderColor),
 
             // End triangle X
-            new Vertex(1, 0, -0.2, color),
-            new Vertex(1, 0, 0.2, color),
-            new Vertex(1.2, 0, 0, color),
+            new Vertex(1, 0, -0.2, renderColor),
+            new Vertex(1, 0, 0.2, renderColor),
+            new Vertex(1.2, 0, 0, renderColor),
 
             // End triangle Z
-            new Vertex(-0.2, 0, 1, color),
-            new Vertex(0.2, 0, 1, color),
-            new Vertex(0, 0, 1.2, color),
+            new Vertex(-0.2, 0, 1, renderColor),
+            new Vertex(0.2, 0, 1, renderColor),
+            new Vertex(0, 0, 1.2, renderColor),
 
             // End triangle Y
-            new Vertex(-0.2, 1, 0, color),
-            new Vertex(0.2, 1, 0, color),
-            new Vertex(0, 1.2, 0, color),
+            new Vertex(-0.2, 1, 0, renderColor),
+            new Vertex(0.2, 1, 0, renderColor),
+            new Vertex(0, 1.2, 0, renderColor),
 
     };
 
@@ -47,7 +48,6 @@ public class Axis extends Solid {
             new Part(Part.Type.LINE, 6, 0),
             new Part(Part.Type.TRIANGLE, 9, 6)
     };
-
 
     public Axis(Color color, Vec3D initialPosition) {
         super(color, new Vec3D(0, 0, 0), initialPosition);

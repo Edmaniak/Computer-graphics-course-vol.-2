@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
         canvas3D = new Canvas3D(new Dimension(width, height), new Color(70, 73, 76));
         toolBar = new JToolBar(JToolBar.VERTICAL);
         toolBar.setFloatable(false);
-        toolBar.setPreferredSize(new Dimension(40, 100));
+        toolBar.setPreferredSize(new Dimension(30, 100));
 
         controlInit();
         initButtons();
@@ -53,12 +53,12 @@ public class MainFrame extends JFrame {
         cube.addActionListener(e ->
                 App.app.switchTo(App.app.getScene().getSolid("cube")));
 
-        ToolButton projection = new ToolButton();
+        ToolButton projection = new ToolButton("res/per.png");
         projection.addActionListener(e -> {
             App.app.getScene().switchProjection();
             App.app.renderScene();
         });
-        projection.setText("P/O");
+
 
         ToolButton circle = new ToolButton("res/circle.png");
         circle.addActionListener(e -> App.app.switchTo(App.app.getScene().getSolid("circle")));

@@ -35,12 +35,11 @@ public class Canvas3D extends Canvas {
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                // mouse adn camera vector init
+                // mouse adnd camera vector init
                 Vec2D delta = new Vec2D(cp.getX() - e.getX(), cp.getY() - e.getY());
                 if (!delta.normalized().isPresent())
                     return;
                 delta = new Vec2D(delta).normalized().get();
-                Vec3D camVec = App.app.getScene().getCamera().getViewVector();
                 // Object moving
                 if (!cameraControl) {
 
