@@ -12,7 +12,5 @@ public class SceneObjectAxis extends Axis {
 
     public void alignFor(Solid solid) {
         transform.setWorldPosition(solid.transform.getWorldPosition());
-        transform.setRotation(solid.transform.getRotVec());
-
     }
 }

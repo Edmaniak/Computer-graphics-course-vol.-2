@@ -1,12 +1,19 @@
 package gui;
 
+import app.App;
+
 import javax.swing.*;
 
+
 public class ToolButton extends JButton {
-    public ToolButton(String text) {
+    public ToolButton(String path) {
         setFocusPainted(false);
         setContentAreaFilled(false);
-        setText(text);
+        setIcon(new ImageIcon(path));
+        addActionListener(e -> App.resetFocus());
+    }
+    public ToolButton() {
+        this("");
     }
 
 }

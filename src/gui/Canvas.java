@@ -1,16 +1,8 @@
 package gui;
 
-import app.App;
-import model.objects.Solid;
-import transforms.Mat4;
-import transforms.Point2D;
 
 import javax.swing.*;
 import java.awt.*;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferedImage;
 
 public class Canvas extends JPanel {
@@ -76,14 +68,8 @@ public class Canvas extends JPanel {
         super.remove(comp);
     }
 
-    public void debug(Solid activeSolid) {
-        drawString(activeSolid.transform.getModel().toString(), App.WIDTH - 125, 10);
-        drawString(activeSolid.transform.toString(), 20, 10);
-        //drawString(App.app.getScene().getCamera().toString(), 20, 50);
-        drawString(App.app.getScene().getRenderer().getView().toString(), App.WIDTH - 125, 100);
-    }
 
-    void drawString(String text, int x, int y) {
+    protected void drawString(String text, int x, int y) {
         for (String line : text.split("\n"))
             mainBuffer.getGraphics().drawString(line, x, y += mainBuffer.getGraphics().getFontMetrics().getHeight());
     }

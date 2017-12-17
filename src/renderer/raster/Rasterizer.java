@@ -1,4 +1,4 @@
-package renderer;
+package renderer.raster;
 
 
 import java.awt.image.BufferedImage;

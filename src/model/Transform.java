@@ -7,10 +7,10 @@ public class Transform {
 
     Vec3D position;
     Vec3D rotVec;
-    double rotX;
-    double rotY;
-    double rotZ;
-    double scale;
+    double rotX = 0;
+    double rotY = 0;
+    double rotZ = 0;
+    double scale = 1;
     Vec3D pivot;
     public static double SCALE_FACTOR = 0.01;
     Mat4 model = new Mat4Identity();

@@ -1,9 +1,9 @@
 package app;
 
 import gui.MainFrame;
-import model.BezierCurve;
+import model.objects.BezierCurve;
 import model.objects.*;
-import renderer.Scene;
+import model.Scene;
 import transforms.Point3D;
 import transforms.Vec3D;
 
@@ -40,19 +40,22 @@ public class App {
         // Models
         TetraHedron th = new TetraHedron(App.IDLE_COLOR, new Vec3D());
         Plane p = new Plane(Color.BLACK, new Vec3D());
-        Cube c = new Cube(App.IDLE_COLOR, new Vec3D(-1.9, 0, -1.9));
-        BezierCurve bc = new BezierCurve(Color.CYAN,new Vec3D(0,0,0),
-                new Point3D(-2,0,-2),
-                new Point3D(-1,0,-1),
-                new Point3D(1,0,1),
-                new Point3D(2,0,2));
+        Cube c = new Cube(App.IDLE_COLOR, new Vec3D(-1.9, -1.9, 0));
+        BezierCurve bc = new BezierCurve(Color.CYAN, new Vec3D(0, 0, 0),
+                new Point3D(-2, 0, -2),
+                new Point3D(-1, 2, -1),
+                new Point3D(1, 2, 1),
+                new Point3D(2, 0, 2), 20);
+        CircleCurve cc = new CircleCurve(Color.BLUE, new Vec3D(0, 0, 0), new Point3D(0, 0, 0), 2, 20);
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
 
+        scene.addSolid("circle", cc);
         scene.addSolid("axis", objectAxis);
         scene.addSolid("tetrahedron", th);
         scene.addSolid("plane", p);
         scene.addSolid("cube", c);
-        c.transform.translateToOrigin();
+        scene.addSolid("bezier", bc);
+
         setActiveSolid(th);
         resetToCamera();
         renderScene();
@@ -95,11 +98,16 @@ public class App {
     public Scene getScene() {
         return scene;
     }
-    
+
     public void resetToCamera() {
-    	for(Solid s : scene.getSolids().values()) {
-    		s.transform.rotate(0, 0, 45);
-    	}
+        for (Solid s : scene.getSolids().values()) {
+            s.transform.rotate(Math.PI / 2, 0, 0);
+        }
+    }
+
+    public static void resetFocus() {
+        gui.setFocusable(true);
+        gui.requestFocusInWindow();
     }
 
     public Solid getSolid(String name) {

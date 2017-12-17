@@ -1,7 +1,6 @@
 package gui;
 
 import app.App;
-import transforms.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,10 +9,7 @@ import java.awt.event.*;
 public class MainFrame extends JFrame {
 
     private final Canvas3D canvas3D;
-    private final Canvas canvasCurve;
     private final App app = App.app;
-    private Point2D cp;
-    private static double MOUSE_SPEED = 0.05;
     private JToolBar toolBar;
 
 
@@ -24,14 +20,13 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(App.title);
         setFocusable(true);
+        requestFocusInWindow();
 
-        JTabbedPane tabs = new JTabbedPane();
         canvas3D = new Canvas3D(new Dimension(width, height), new Color(70, 73, 76));
-        canvasCurve = new Canvas(new Dimension(width, height), new Color(70, 73, 76));
         toolBar = new JToolBar(JToolBar.VERTICAL);
         toolBar.setFloatable(false);
-        toolBar.setPreferredSize(new Dimension(30, 100));
-        
+        toolBar.setPreferredSize(new Dimension(40, 100));
+
         controlInit();
         initButtons();
 
@@ -44,29 +39,43 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    public Canvas getCanvas3D() {
+    public Canvas3D getCanvas3D() {
         return canvas3D;
     }
 
     private void initButtons() {
-        ToolButton tetraHedron = new ToolButton("Troj");
+        ToolButton tetraHedron = new ToolButton("res/tetra.png");
         tetraHedron.addActionListener(e ->
                 App.app.switchTo(App.app.getSolid("tetrahedron")));
-        toolBar.add(tetraHedron);
 
-        ToolButton cube = new ToolButton("Cube");
+
+        ToolButton cube = new ToolButton("res/cube.png");
         cube.addActionListener(e ->
                 App.app.switchTo(App.app.getScene().getSolid("cube")));
 
-        ToolButton rot = new ToolButton("Rot");
-        rot.addActionListener(e ->
-        {
-            System.out.println(App.app.getScene().getCamera().getAzimuth());
+        ToolButton projection = new ToolButton();
+        projection.addActionListener(e -> {
+            App.app.getScene().switchProjection();
             App.app.renderScene();
         });
-        toolBar.add(cube);
-        toolBar.add(rot);
+        projection.setText("P/O");
 
+        ToolButton circle = new ToolButton("res/circle.png");
+        circle.addActionListener(e -> App.app.switchTo(App.app.getScene().getSolid("circle")));
+
+        ToolButton arc = new ToolButton("res/arc.png");
+        arc.addActionListener(e -> App.app.switchTo(App.app.getScene().getSolid("bezier")));
+
+        ToolButton camera = new ToolButton("res/camera.png");
+        camera.addActionListener(e -> canvas3D.switchCameraControl());
+
+
+        toolBar.add(tetraHedron);
+        toolBar.add(cube);
+        toolBar.add(circle);
+        toolBar.add(arc);
+        toolBar.add(camera);
+        toolBar.add(projection);
 
     }
 
@@ -75,19 +84,45 @@ public class MainFrame extends JFrame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println("FFF");
                 if (e.getKeyCode() == KeyEvent.VK_D) {
-                    App.app.getScene().getCamera().addAzimuth(Math.toRadians(1));
-                    System.out.println("ddd");
+                    App.app.getScene().moveRight();
+                    App.app.renderScene();
                 }
                 if (e.getKeyCode() == KeyEvent.VK_A) {
-                    System.out.println("Camera left");
+                    App.app.getScene().moveLeft();
+                    App.app.renderScene();
                 }
                 if (e.getKeyCode() == KeyEvent.VK_W) {
-                    System.out.println("Camera up");
+                    App.app.getScene().moveForward();
+                    App.app.renderScene();
                 }
                 if (e.getKeyCode() == KeyEvent.VK_S) {
-                    System.out.println("Camera down");
+                    App.app.getScene().moveBackwards();
+                    App.app.renderScene();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_R) {
+                    App.app.getScene().moveUp();
+                    App.app.renderScene();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_F) {
+                    App.app.getScene().moveDown();
+                    App.app.renderScene();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_E) {
+                    App.app.getScene().tiltRight();
+                    App.app.renderScene();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_Q) {
+                    App.app.getScene().tiltLeft();
+                    App.app.renderScene();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_CAPS_LOCK) {
+                    App.app.getScene().tiltUp();
+                    App.app.renderScene();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+                    App.app.getScene().tiltDown();
+                    App.app.renderScene();
                 }
             }
         });
