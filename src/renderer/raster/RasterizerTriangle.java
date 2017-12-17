@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 
 public class RasterizerTriangle extends Rasterizer {
 
-
     public RasterizerTriangle(BufferedImage img) {
         super(img);
     }

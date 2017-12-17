@@ -1,7 +1,6 @@
 package app;
 
 import gui.MainFrame;
-import model.objects.BezierCurve;
 import model.objects.*;
 import model.Scene;
 import transforms.Point3D;
@@ -12,17 +11,17 @@ import java.awt.*;
 
 public class App {
 
-    public static final String title = "3D TABLE";
-    public static final Color ACTIVE_COLOR = Color.RED;
-    public static final Color IDLE_COLOR = Color.WHITE;
-    public static MainFrame gui;
-    public static App app;
+    public static final String title = "D 3D TABLE";
+    private static final Color ACTIVE_COLOR = Color.RED;
+    private static final Color IDLE_COLOR = Color.WHITE;
     public static final int WIDTH = 1055;
     public static final int HEIGHT = 800;
     public static final int RATIO = WIDTH / HEIGHT;
-    private SceneObjectAxis objectAxis;
-    private Solid activeSolid;
 
+    private static MainFrame gui;
+    public static App app;
+    private final SceneObjectAxis objectAxis;
+    private Solid activeSolid;
 
     private final Scene scene;
 
@@ -35,7 +34,7 @@ public class App {
             gui = new MainFrame(WIDTH, HEIGHT);
 
         // Scene init
-        scene = new Scene(gui.getCanvas3D(), Scene.Projection.PERSPECTIVE);
+        scene = new Scene(gui.getCanvas3D().getMainBuffer(), Scene.Projection.PERSPECTIVE);
 
         // Models
         TetraHedron th = new TetraHedron(App.IDLE_COLOR, new Vec3D());
@@ -46,7 +45,7 @@ public class App {
                 new Point3D(-1, 2, -1),
                 new Point3D(1, 2, 1),
                 new Point3D(2, 0, 2), 20);
-        CircleCurve cc = new CircleCurve(Color.BLUE, new Vec3D(0, 0, 0), new Point3D(0, 0, 0), 2, 20);
+        CircleCurve cc = new CircleCurve(Color.BLUE, new Vec3D(0, 0, 0), new Point3D(0, 0, 0), 2, 50);
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
 
         scene.addSolid("circle", cc);
@@ -57,6 +56,8 @@ public class App {
         scene.addSolid("bezier", bc);
 
         setActiveSolid(th);
+
+        // Protoze camera je v jinych souradnicich
         resetToCamera();
         renderScene();
 
@@ -69,7 +70,6 @@ public class App {
     public Solid getActiveSolid() {
         return activeSolid;
     }
-
 
     public void switchTo(Solid solid) {
         if (activeSolid != null) {
@@ -85,7 +85,7 @@ public class App {
         gui.getCanvas3D().debug(activeSolid);
     }
 
-    public void setActiveSolid(Solid activeSolid) {
+    private void setActiveSolid(Solid activeSolid) {
         this.activeSolid = activeSolid;
         objectAxis.alignFor(activeSolid);
         activeSolid.setRenderColor(App.ACTIVE_COLOR);
@@ -99,12 +99,15 @@ public class App {
         return scene;
     }
 
-    public void resetToCamera() {
+    private void resetToCamera() {
         for (Solid s : scene.getSolids().values()) {
             s.transform.rotate(Math.PI / 2, 0, 0);
         }
     }
 
+    /**
+     * Jinak klik pohřbí klávesnici, nutno volat po interakci s gui
+     */
     public static void resetFocus() {
         gui.setFocusable(true);
         gui.requestFocusInWindow();

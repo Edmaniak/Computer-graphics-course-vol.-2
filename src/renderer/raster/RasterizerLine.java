@@ -7,7 +7,6 @@ import transforms.Vec3D;
 
 public class RasterizerLine extends Rasterizer {
 
-
 	public RasterizerLine(BufferedImage img) {
 		super(img);
 	}
@@ -17,7 +16,5 @@ public class RasterizerLine extends Rasterizer {
 		g.setColor(color);
 		g.drawLine((int)v1.getX(), (int)v1.getY(), (int)v2.getX(), (int)v2.getY());
 	}
-	
-
 
 }

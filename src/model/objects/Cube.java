@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Cube extends Solid {
 
-    private Vertex[] vertex_definition = {
+    private final Vertex[] vertex_definition = {
             // dolní podstava
             new Vertex(0, 0, 0, renderColor),
             new Vertex(1, 0, 0, renderColor),
@@ -21,7 +21,7 @@ public class Cube extends Solid {
             new Vertex(1, 1, 1, renderColor),
             new Vertex(0, 1, 1, renderColor)
     };
-    private Integer[] indexes_definiton = {
+    private final Integer[] indexes_definiton = {
             // triangles
             // 1 spodni
             0, 1, 3,
@@ -42,13 +42,14 @@ public class Cube extends Solid {
             4, 5, 6,
             4, 7, 5
     };
-    private Part[] parts_definition = {new Part(Part.Type.TRIANGLE, 36, 0)};
+
+    private final Part[] parts_definition = {new Part(Part.Type.TRIANGLE, 36, 0)};
 
     public Cube(Color color,Vec3D initialPosition) {
         super(color, new Vec3D(0.5, 0.5, 0.5),initialPosition);
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(indexes_definiton));
-        getParts().addAll(Arrays.asList(parts_definition));
+        parts().addAll(Arrays.asList(parts_definition));
     }
 
 }

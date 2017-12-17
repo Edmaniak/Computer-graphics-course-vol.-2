@@ -5,26 +5,23 @@ import utilities.Util;
 
 public class Transform {
 
-    Vec3D position;
-    Vec3D rotVec;
-    double rotX = 0;
-    double rotY = 0;
-    double rotZ = 0;
-    double scale = 1;
-    Vec3D pivot;
-    public static double SCALE_FACTOR = 0.01;
-    Mat4 model = new Mat4Identity();
+    private Vec3D position = new Vec3D();
+    private Vec3D rotVec = new Vec3D();
+    private double rotX = 0;
+    private double rotY = 0;
+    private double rotZ = 0;
+    private double scale = 1;
+    private Vec3D pivot;
+    private static double SCALE_FACTOR = 0.01;
+    private Mat4 model = new Mat4Identity();
 
 
     public Transform(Vec3D pivotPoint) {
         pivot = pivotPoint;
-        position = new Vec3D();
-        rotVec = new Vec3D();
-        scale = 1;
     }
 
     public void rotate(double angX, double angY, double angZ) {
-        rotX += Math.toDegrees(angX);
+        rotX += (Math.toDegrees(angX));
         rotY += Math.toDegrees(angY);
         rotZ += Math.toDegrees(angZ);
         rotVec = new Vec3D(rotX, rotY, rotZ);
@@ -39,7 +36,7 @@ public class Transform {
         rotate(rotVector.getX(), rotVector.getY(), rotVector.getZ());
     }
 
-    public void translate(double x, double y, double z) {
+    private void translate(double x, double y, double z) {
         position = new Vec3D(position).add(new Vec3D(x, y, z));
         model = new Mat4(model).mul(new Mat4Transl(x, y, z));
     }
@@ -50,7 +47,8 @@ public class Transform {
 
     public void scale(double s) {
         if (s != 0) {
-            scale = SCALE_FACTOR * Math.signum(s);
+            s = SCALE_FACTOR * Math.signum(s);
+            scale += s;
             Vec3D p = getWorldPosition();
             Mat4 translMat = new Mat4Transl(-p.getX(), -p.getY(), -p.getZ());
             Mat4 sizeMat = new Mat4Scale(1+SCALE_FACTOR * Math.signum(s));
@@ -68,7 +66,7 @@ public class Transform {
         translate(position);
     }
 
-    public void setRotation(double x, double y, double z) {
+    private void setRotation(double x, double y, double z) {
         resetRotation();
         rotate(x, y, z);
     }
@@ -77,7 +75,7 @@ public class Transform {
         setRotation(rotVec.getX(), rotVec.getY(), rotVec.getZ());
     }
 
-    public void resetRotation() {
+    private void resetRotation() {
         Vec3D p = getWorldPosition();
         Mat4 translMat = new Mat4Transl(-p.getX(), -p.getY(), -p.getZ());
         Mat4 rotMat = new Mat4(new Mat4RotX(Math.toRadians(-rotX)).mul(new Mat4RotY(Math.toRadians(-rotY))));
@@ -88,7 +86,7 @@ public class Transform {
         rotZ = 0;
     }
 
-    public void translateToOrigin() {
+    private void translateToOrigin() {
         translate(position.opposite());
     }
 
@@ -127,7 +125,8 @@ public class Transform {
     @Override
     public String toString() {
         String out = "Position: x: " + Util.round(position.getX()) + " y: " + Util.round(position.getY()) + " z: " + Util.round(position.getZ()) + "\n";
-        out += "Rotation: x: " + Util.round(rotX) + " y: " + Util.round(rotY) + " z: " + Util.round(rotZ);
+        out += "Rotation: x: " + Util.round(rotX) + " y: " + Util.round(rotY) + " z: " + Util.round(rotZ) + "\n";
+        out += "Size: " + scale;
         return out;
     }
 }

@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Plane extends Solid {
 
-    private Vertex[] vertex_definition = {
+    private final Vertex[] vertex_definition = {
             // two triangles
             new Vertex(-2, 0, -2, renderColor),
             new Vertex(2, 0, -2, renderColor),
@@ -17,13 +17,13 @@ public class Plane extends Solid {
             new Vertex(2, 0, 2, renderColor),
     };
 
-    private Integer[] index_definition = {
+    private final Integer[] index_definition = {
             // Triangles
             0, 1, 2,
             2, 3, 1,
     };
 
-    private Part[] parts_definition = {
+    private final Part[] parts_definition = {
             new Part(Part.Type.TRIANGLE, 6, 0)
     };
 
@@ -31,7 +31,7 @@ public class Plane extends Solid {
         super(color, new Vec3D(0,0,0), initialPosition);
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(index_definition));
-        getParts().addAll(Arrays.asList(parts_definition));
+        parts().addAll(Arrays.asList(parts_definition));
     }
 
 }

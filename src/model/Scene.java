@@ -8,6 +8,7 @@ import renderer.raster.RasterizerLine;
 import renderer.raster.RasterizerTriangle;
 import transforms.*;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,34 +18,33 @@ public class Scene {
         ORTOGRAPHIC, PERSPECTIVE
     }
 
-    private Map<String, Solid> solids;
-    private Renderer renderer;
-    private Canvas canvas;
+    private final Map<String, Solid> solids;
+    private final Renderer renderer;
     private Projection projection;
     private Camera camera;
 
-    public static final double PERSP_VIEW_ANGLE = Math.PI / 3;
-    public static final double PERSP_NEAR_CLIPPING_PLANE = 0.1;
-    public static final double PERSP_FAR_CLIPPING_PLANE = 30;
+    private static final double PERSP_VIEW_ANGLE = Math.PI / 3;
+    private static final double PERSP_NEAR_CLIPPING_PLANE = 0.1;
+    private static final double PERSP_FAR_CLIPPING_PLANE = 30;
 
-    public static final double ORTH_VIEW_CUBOID_WIDTH = 10;
-    public static final double ORTH_VIEW_CUBOID_HEIGHT = 10;
-    public static final double ORTH_NEAR_CLIPPING_PLANE = 0.001;
-    public static final double ORTH_FAR_CLIPPING_PLANE = 50;
+    private static final double ORTH_VIEW_CUBOID_WIDTH = 10;
+    private static final double ORTH_VIEW_CUBOID_HEIGHT = 10;
+    private static final double ORTH_NEAR_CLIPPING_PLANE = 0.001;
+    private static final double ORTH_FAR_CLIPPING_PLANE = 50;
 
-    public static final double MOVEMENT_STEP = 0.1;
-    public static final double TILT_STEP = 0.01;
+    private static final double MOVEMENT_STEP = 0.1;
+    private static final double TILT_STEP = 0.01;
 
-    public static final Vec3D INITIAL_CAMERA_POSITION = new Vec3D(-0.43, -8.29, 2.59);
-    public static final double INITIAL_CAMERA_AZIMUTH = -4.74;
-    public static final double INITIAL_CAMERA_ZENITH = -0.2;
+    private static final Vec3D INITIAL_CAMERA_POSITION = new Vec3D(-0.43, -8.29, 2.59);
+    private static final double INITIAL_CAMERA_AZIMUTH = -4.74;
+    private static final double INITIAL_CAMERA_ZENITH = -0.2;
 
-    public Scene(Canvas canvas, Projection projection) {
+    public Scene(BufferedImage img, Projection projection) {
         this.projection = projection;
         solids = new HashMap<>();
 
-        RasterizerLine rl = new RasterizerLine(canvas.getMainBuffer());
-        RasterizerTriangle rt = new RasterizerTriangle(canvas.getMainBuffer());
+        RasterizerLine rl = new RasterizerLine(img);
+        RasterizerTriangle rt = new RasterizerTriangle(img);
 
         renderer = new Renderer(rl, rt);
         setProjection(projection);
@@ -63,7 +63,7 @@ public class Scene {
         solids.put(name, solid);
     }
 
-    public void setProjection(Projection projection) {
+    private void setProjection(Projection projection) {
         this.projection = projection;
         switch (projection) {
             case PERSPECTIVE:

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public class Canvas extends JPanel {
 
-    private BufferedImage mainBuffer;
+    private final BufferedImage mainBuffer;
     private final Color bgColor;
     private Dimension dimensions;
 
@@ -44,10 +44,6 @@ public class Canvas extends JPanel {
         repaint();
     }
 
-    public Dimension getDimensions() {
-        return dimensions;
-    }
-
     public void setDimensions(Dimension dimensions) {
         this.dimensions = dimensions;
     }
@@ -67,7 +63,6 @@ public class Canvas extends JPanel {
         repaint();
         super.remove(comp);
     }
-
 
     protected void drawString(String text, int x, int y) {
         for (String line : text.split("\n"))

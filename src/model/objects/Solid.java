@@ -14,12 +14,12 @@ public abstract class Solid {
     private final List<Vertex> vertexBuffer;
     private final List<Integer> indexBuffer;
     private final List<Part> parts;
-    protected Color renderColor;
-    protected Color defaultColor;
+    Color renderColor;
+    private Color defaultColor;
     public final Transform transform;
     private Vec3D pivotPoint;
 
-    protected Solid(Color color, Vec3D pivotPoint, Vec3D initialPosition) {
+    Solid(Color color, Vec3D pivotPoint, Vec3D initialPosition) {
         this.vertexBuffer = new ArrayList<>();
         this.indexBuffer = new ArrayList<>();
         this.parts = new ArrayList<>();
@@ -37,7 +37,8 @@ public abstract class Solid {
     public List<Integer> indexes() {
         return indexBuffer;
     }
-    public List<Part> getParts() {
+
+    public List<Part> parts() {
         return parts;
     }
 

@@ -9,8 +9,7 @@ import java.awt.event.*;
 public class MainFrame extends JFrame {
 
     private final Canvas3D canvas3D;
-    private final App app = App.app;
-    private JToolBar toolBar;
+    private final JToolBar toolBar;
 
 
     public MainFrame(int width, int height) {
@@ -45,20 +44,10 @@ public class MainFrame extends JFrame {
 
     private void initButtons() {
         ToolButton tetraHedron = new ToolButton("res/tetra.png");
-        tetraHedron.addActionListener(e ->
-                App.app.switchTo(App.app.getSolid("tetrahedron")));
-
+        tetraHedron.addActionListener(e -> App.app.switchTo(App.app.getSolid("tetrahedron")));
 
         ToolButton cube = new ToolButton("res/cube.png");
-        cube.addActionListener(e ->
-                App.app.switchTo(App.app.getScene().getSolid("cube")));
-
-        ToolButton projection = new ToolButton("res/per.png");
-        projection.addActionListener(e -> {
-            App.app.getScene().switchProjection();
-            App.app.renderScene();
-        });
-
+        cube.addActionListener(e -> App.app.switchTo(App.app.getScene().getSolid("cube")));
 
         ToolButton circle = new ToolButton("res/circle.png");
         circle.addActionListener(e -> App.app.switchTo(App.app.getScene().getSolid("circle")));
@@ -69,6 +58,11 @@ public class MainFrame extends JFrame {
         ToolButton camera = new ToolButton("res/camera.png");
         camera.addActionListener(e -> canvas3D.switchCameraControl());
 
+        ToolButton projection = new ToolButton("res/per.png");
+        projection.addActionListener(e -> {
+            App.app.getScene().switchProjection();
+            App.app.renderScene();
+        });
 
         toolBar.add(tetraHedron);
         toolBar.add(cube);
@@ -84,53 +78,40 @@ public class MainFrame extends JFrame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_D) {
+                if (e.getKeyCode() == KeyEvent.VK_D)
                     App.app.getScene().moveRight();
-                    App.app.renderScene();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_A) {
+
+                if (e.getKeyCode() == KeyEvent.VK_A)
                     App.app.getScene().moveLeft();
-                    App.app.renderScene();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_W) {
+
+                if (e.getKeyCode() == KeyEvent.VK_W)
                     App.app.getScene().moveForward();
-                    App.app.renderScene();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_S) {
+
+                if (e.getKeyCode() == KeyEvent.VK_S)
                     App.app.getScene().moveBackwards();
-                    App.app.renderScene();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_R) {
+
+                if (e.getKeyCode() == KeyEvent.VK_R)
                     App.app.getScene().moveUp();
-                    App.app.renderScene();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_F) {
+
+                if (e.getKeyCode() == KeyEvent.VK_F)
                     App.app.getScene().moveDown();
-                    App.app.renderScene();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_E) {
+
+                if (e.getKeyCode() == KeyEvent.VK_E)
                     App.app.getScene().tiltRight();
-                    App.app.renderScene();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_Q) {
+
+                if (e.getKeyCode() == KeyEvent.VK_Q)
                     App.app.getScene().tiltLeft();
-                    App.app.renderScene();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_CAPS_LOCK) {
+
+                if (e.getKeyCode() == KeyEvent.VK_CAPS_LOCK)
                     App.app.getScene().tiltUp();
-                    App.app.renderScene();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+
+                if (e.getKeyCode() == KeyEvent.VK_SHIFT)
                     App.app.getScene().tiltDown();
-                    App.app.renderScene();
-                }
+
+                App.app.renderScene();
             }
         });
-
-
     }
-
-
 }
 
 

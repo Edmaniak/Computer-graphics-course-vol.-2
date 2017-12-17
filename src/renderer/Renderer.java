@@ -14,14 +14,13 @@ import transforms.*;
 
 public class Renderer {
 
-    public List<Vertex> vb = new ArrayList<>();
+    private final List<Vertex> vb = new ArrayList<>();
 
     private Mat4 model = new Mat4Identity();
     private Mat4 view;
     private Mat4 projection;
-    private RasterizerLine rl;
-    private RasterizerTriangle rt;
-
+    private final RasterizerLine rl;
+    private final RasterizerTriangle rt;
 
     public Renderer(RasterizerLine rl, RasterizerTriangle rt) {
         this.rl = rl;
@@ -38,7 +37,7 @@ public class Renderer {
 
         for (Vertex v : sld.vertices())
             vb.add(v.mul(matMVP));
-        for (Part p : sld.getParts()) {
+        for (Part p : sld.parts()) {
 
             switch (p.getType()) {
 
@@ -70,11 +69,13 @@ public class Renderer {
         Vec3D vec1 = origin.dehomog();
         Vec3D vec2 = end.dehomog();
 
+        // orez
         if (!clipTest(vec1))
             return;
         if (!clipTest(vec2))
             return;
 
+        // projekce do rastru
         vec1 = project2D(vec1);
         vec2 = project2D(vec2);
 
@@ -92,6 +93,7 @@ public class Renderer {
         Vec3D vec2 = v2.dehomog();
         Vec3D vec3 = v3.dehomog();
 
+        // clip
         if (!clipTest(vec1))
             return;
         if (!clipTest(vec2))
@@ -99,6 +101,7 @@ public class Renderer {
         if (!clipTest(vec3))
             return;
 
+        // projekce do rastu
         vec1 = project2D(vec1);
         vec2 = project2D(vec2);
         vec3 = project2D(vec3);
@@ -108,10 +111,7 @@ public class Renderer {
     }
 
     private boolean clipTest(Vec3D v) {
-        if (v.getX() < -1 || v.getX() > 1 || v.getY() < -1 || v.getY() > 1 || v.getZ() < 0 || v.getZ() > 1) {
-            return false;
-        }
-        return true;
+        return !(v.getX() < -1) && !(v.getX() > 1) && !(v.getY() < -1) && !(v.getY() > 1) && !(v.getZ() < 0) && !(v.getZ() > 1);
     }
 
     private boolean isDehomogenizable(Vertex v) {
@@ -124,8 +124,7 @@ public class Renderer {
         return new Vec3D(x, y, 0);
     }
 
-
-    public void setModel(Mat4 model) {
+    private void setModel(Mat4 model) {
         this.model = model;
     }
 

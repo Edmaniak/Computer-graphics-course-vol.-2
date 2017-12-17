@@ -9,12 +9,11 @@ import transforms.Vec3D;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Optional;
 
 public class Canvas3D extends Canvas {
 
     private Point2D cp;
-    private static double MOUSE_SPEED = 0.05;
+    private static final double MOUSE_SPEED = 0.05;
 
     private boolean cameraControl;
 
@@ -35,14 +34,13 @@ public class Canvas3D extends Canvas {
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                // mouse adnd camera vector init
+                // mouse and camera vector init
                 Vec2D delta = new Vec2D(cp.getX() - e.getX(), cp.getY() - e.getY());
                 if (!delta.normalized().isPresent())
                     return;
                 delta = new Vec2D(delta).normalized().get();
                 // Object moving
                 if (!cameraControl) {
-
                     if (SwingUtilities.isRightMouseButton(e)) {
                         App.app.getActiveSolid().transform.rotate(delta.getY() * MOUSE_SPEED, delta.getX() * MOUSE_SPEED, 0);
                         App.app.renderScene();
@@ -76,10 +74,7 @@ public class Canvas3D extends Canvas {
     }
 
     public void switchCameraControl() {
-        if (cameraControl)
-            cameraControl = false;
-        else
-            cameraControl = true;
+        cameraControl = !cameraControl;
     }
 
     public void debug(Solid activeSolid) {
@@ -88,8 +83,12 @@ public class Canvas3D extends Canvas {
         drawString(activeSolid.transform.getModel().toString(), App.WIDTH - 125, 30);
         drawString("Model transform object >", 20, 10);
         drawString(activeSolid.transform.toString(), 40, 30);
+
+        // kamera
         drawString("Camera object >", 20, 90);
         drawString(App.app.getScene().getCamera().toString(), 40, 110);
+
+        // Pipeline matrices
         drawString("View matrix >", App.WIDTH - 170, 110);
         drawString(App.app.getScene().getRenderer().getView().toString(), App.WIDTH - 125, 130);
     }

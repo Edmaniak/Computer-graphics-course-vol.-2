@@ -8,7 +8,8 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class Axis extends Solid {
-    private Vertex[] vertex_definition = {
+
+    private final Vertex[] vertex_definition = {
 
             // Axis
             new Vertex(0, 0, 0, renderColor),
@@ -33,7 +34,7 @@ public class Axis extends Solid {
 
     };
 
-    private Integer[] index_definition = {
+    private final Integer[] index_definition = {
             // Lines
             0, 1,
             0, 2,
@@ -44,7 +45,7 @@ public class Axis extends Solid {
             10, 11, 12
     };
 
-    private Part[] parts_definition = {
+    private final Part[] parts_definition = {
             new Part(Part.Type.LINE, 6, 0),
             new Part(Part.Type.TRIANGLE, 9, 6)
     };
@@ -53,7 +54,7 @@ public class Axis extends Solid {
         super(color, new Vec3D(0, 0, 0), initialPosition);
         vertices().addAll(Arrays.asList(vertex_definition));
         indexes().addAll(Arrays.asList(index_definition));
-        getParts().addAll(Arrays.asList(parts_definition));
+        parts().addAll(Arrays.asList(parts_definition));
     }
 
 }

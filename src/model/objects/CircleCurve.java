@@ -10,15 +10,19 @@ import java.awt.*;
 public class CircleCurve extends Curve {
 
     public CircleCurve(Color color, Vec3D initialPosition, Point3D center, double radius, int step) {
+
         super(color, new Vec3D(center), initialPosition, step);
+
         for (int i = 0; i <= step; i++) {
+
             double angle = (Math.PI * 2 / step) * i;
             Point3D point = new Point3D(radius * Math.cos(angle)+center.getX(), radius * Math.sin(angle)+center.getY(), center.getZ());
+
             vertices().add(new Vertex(point));
             indexes().add(i);
             indexes().add(i + 1);
         }
-        getParts().add(new Part(Part.Type.LINE, (step * 2) - 1, 0));
-    }
 
+        parts().add(new Part(Part.Type.LINE, (step * 2) - 1, 0));
+    }
 }
