@@ -106,7 +106,7 @@ public class Renderer {
         vec2 = project2D(vec2);
         vec3 = project2D(vec3);
 
-        rt.draw(vec1, vec2, vec3, color);
+        rt.rasterize(vec1, vec2, vec3);
 
     }
 
