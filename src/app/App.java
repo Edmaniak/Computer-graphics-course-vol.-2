@@ -37,25 +37,28 @@ public class App {
         scene = new Scene(gui.getCanvas3D().getMainBuffer(), Scene.Projection.PERSPECTIVE);
 
         // Models
-        TetraHedron th = new TetraHedron(App.IDLE_COLOR, new Vec3D());
-        Plane p = new Plane(Color.BLACK, new Vec3D());
-        Cube c = new Cube(App.IDLE_COLOR, new Vec3D(-1.9, -1.9, 0));
-        BezierCurve bc = new BezierCurve(Color.CYAN, new Vec3D(0, 0, 0),
+        TetraHedron tetraHedron = new TetraHedron(App.IDLE_COLOR, new Vec3D());
+        Plane plane = new Plane(Color.BLACK, new Vec3D());
+        Cube cube = new Cube(App.IDLE_COLOR, new Vec3D(-1.9, -1.9, 0));
+        BezierCurve bezierCurve = new BezierCurve(Color.CYAN, new Vec3D(0, 0, 0),
                 new Point3D(-2, 0, -2),
                 new Point3D(-1, 2, -1),
                 new Point3D(1, 2, 1),
                 new Point3D(2, 0, 2), 20);
-        CircleCurve cc = new CircleCurve(Color.BLUE, new Vec3D(0, 0, 0), new Point3D(0, 0, 0), 2, 50);
+        CircleCurve circleCurve = new CircleCurve(Color.BLUE, new Vec3D(0, 0, 0), new Point3D(0, 0, 0), 2, 50);
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
 
-        scene.addSolid("circle", cc);
-        scene.addSolid("axis", objectAxis);
-        scene.addSolid("tetrahedron", th);
-        scene.addSolid("plane", p);
-        scene.addSolid("cube", c);
-        scene.addSolid("bezier", bc);
+        cube.randomizeColors();
+        tetraHedron.randomizeColors();
 
-        setActiveSolid(th);
+        scene.addSolid("circle", circleCurve);
+        scene.addSolid("axis", objectAxis);
+        scene.addSolid("tetrahedron", tetraHedron);
+        scene.addSolid("plane", plane);
+        scene.addSolid("cube", cube);
+        scene.addSolid("bezier", bezierCurve);
+
+        setActiveSolid(tetraHedron);
 
         // Protoze camera je v jinych souradnicich
         resetToCamera();

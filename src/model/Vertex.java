@@ -15,6 +15,11 @@ public class Vertex {
         this.color = color;
     }
 
+    public Vertex(Vec3D position, Color color) {
+        this.position = new Point3D(position.getX(), position.getY(), position.getZ());
+        this.color = color;
+    }
+
     public Vertex(Point3D position) {
         this.position = position;
     }
@@ -47,5 +52,17 @@ public class Vertex {
     @Override
     public String toString() {
         return position.toString();
+    }
+
+    public double getX() {
+        return position.getX();
+    }
+
+    public double getY() {
+        return position.getY();
+    }
+
+    public double getZ() {
+        return position.getZ();
     }
 }

@@ -51,7 +51,7 @@ public class Renderer {
                 case TRIANGLE: {
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
                         triangle(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)),
-                                vb.get(sld.indexes().get(i + 2)), sld.getRenderColor());
+                                vb.get(sld.indexes().get(i + 2)));
                     }
                     break;
                 }
@@ -83,7 +83,7 @@ public class Renderer {
 
     }
 
-    private void triangle(Vertex v1, Vertex v2, Vertex v3, Color color) {
+    private void triangle(Vertex v1, Vertex v2, Vertex v3) {
 
         //dehomogenizace
         if (!isDehomogenizable(v1) || !isDehomogenizable(v2) || !isDehomogenizable(v3))
@@ -101,7 +101,7 @@ public class Renderer {
         if (!clipTest(vec3))
             return;
 
-        // projekce do rastu
+        // projekce do rastru
         vec1 = project2D(vec1);
         vec2 = project2D(vec2);
         vec3 = project2D(vec3);
@@ -121,7 +121,7 @@ public class Renderer {
     private Vec3D project2D(Vec3D v) {
         double y = (-v.getY() + 1) * App.HEIGHT / 2;
         double x = (v.getX() + 1) * App.WIDTH / 2;
-        return new Vec3D(x, y, 0);
+        return new Vec3D(x, y, v.getZ());
     }
 
     private void setModel(Mat4 model) {

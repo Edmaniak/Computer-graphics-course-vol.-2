@@ -8,6 +8,7 @@ import transforms.Vec3D;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Solid {
 
@@ -19,7 +20,7 @@ public abstract class Solid {
     public final Transform transform;
     private Vec3D pivotPoint;
 
-    Solid(Color color, Vec3D pivotPoint, Vec3D initialPosition) {
+    public Solid(Color color, Vec3D pivotPoint, Vec3D initialPosition) {
         this.vertexBuffer = new ArrayList<>();
         this.indexBuffer = new ArrayList<>();
         this.parts = new ArrayList<>();
@@ -60,5 +61,12 @@ public abstract class Solid {
 
     public void setPivotPoint(Vec3D pivotPoint) {
         this.pivotPoint = pivotPoint;
+    }
+
+    public void randomizeColors() {
+        Random r = new Random();
+        for (Vertex v : vertexBuffer) {
+            v.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+        }
     }
 }
