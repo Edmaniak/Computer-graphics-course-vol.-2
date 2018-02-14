@@ -51,7 +51,7 @@ public class Transform {
             scale += s;
             Vec3D p = getWorldPosition();
             Mat4 translMat = new Mat4Transl(-p.getX(), -p.getY(), -p.getZ());
-            Mat4 sizeMat = new Mat4Scale(1+SCALE_FACTOR * Math.signum(s));
+            Mat4 sizeMat = new Mat4Scale(1 + SCALE_FACTOR * Math.signum(s));
             Mat4 transBack = new Mat4Transl(p.getX(), p.getY(), p.getZ());
             model = new Mat4(model).mul(translMat).mul(sizeMat).mul(transBack);
         }

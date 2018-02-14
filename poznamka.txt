@@ -1,8 +1,8 @@
-[ÚLOHA 2]
+﻿[ÚLOHA 2]
 
 Poněkud ve spěchu. Předpokládám, že pro dosažení svého cíle bych musel zvládnout oblast kvaternionů.
 Nevím, možná by vektory stačily. Nikoliv už čas. Cílem bylo zpracovat pohledový vektor kamery a orientaci tělesa tak,
-aby bylo možné editovat objekty vždy ve vztahu ke kameře. To je sice pro editaci tělec těžkopádné, nicméně bez toho vzniká
+aby bylo možné editovat objekty vždy ve vztahu ke kameře. To je sice pro editaci těles těžkopádné, nicméně bez toho vzniká
 ještě těžkopádnější polotovar, kde veškeré modelovací transformace jsou omezeny na dvě libovolné osy.
 V tomto případě jsem zvolil transformace v rovině XZ. Y(up) byla opomenuta,neboť myší zkrátka nelze
 jít do třech směrů a k onomu zpracování nedošlo. Dalším důsledkem jsou statické osy objektu při rotaci.
