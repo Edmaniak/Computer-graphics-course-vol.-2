@@ -40,7 +40,7 @@ public class Cube extends Solid {
             3, 4, 7,
             // 6 horni
             4, 5, 6,
-            4, 7, 5
+            4, 7, 6
     };
 
     private final Part[] parts_definition = {new Part(Part.Type.TRIANGLE, 36, 0)};

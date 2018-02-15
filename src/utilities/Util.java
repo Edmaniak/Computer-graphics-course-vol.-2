@@ -7,7 +7,7 @@ public class Util {
     }
 
     public static double lerpDouble(double val1, double val2, double par) {
-        return val1 * (1 - par) + val2 * par;
+        return val1 * (1.0 - par) + val2 * par;
     }
 
     public static int lerpInt(double val1, double val2, double par) {
