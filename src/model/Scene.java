@@ -46,7 +46,7 @@ public class Scene {
         solids = new HashMap<>();
 
         zb = new ZBuffer(App.WIDTH, App.HEIGHT);
-        RasterizerLine rl = new RasterizerLine(img);
+        RasterizerLine rl = new RasterizerLine(img, zb);
         RasterizerTriangle rt = new RasterizerTriangle(img, zb);
 
         renderer = new Renderer(rl, rt, zb);

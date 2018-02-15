@@ -46,17 +46,21 @@ public class App {
                 new Point3D(1, 2, 1),
                 new Point3D(2, 0, 2), 20);
         CircleCurve circleCurve = new CircleCurve(Color.BLUE, new Vec3D(0, 0, 0), new Point3D(0, 0, 0), 2, 50);
+
+        IcoSphere icoSphere = new IcoSphere(Color.CYAN, new Vec3D(0, 0, 0), 1);
+
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
 
         cube.randomizeColors();
         tetraHedron.randomizeColors();
 
-        scene.addSolid("circle", circleCurve);
+        //scene.addSolid("circle", circleCurve);
         scene.addSolid("axis", objectAxis);
         scene.addSolid("tetrahedron", tetraHedron);
         scene.addSolid("plane", plane);
         scene.addSolid("cube", cube);
-        scene.addSolid("bezier", bezierCurve);
+        scene.addSolid("icosphere", icoSphere);
+        //scene.addSolid("bezier", bezierCurve);
 
         setActiveSolid(tetraHedron);
 

@@ -12,12 +12,10 @@ import java.util.Random;
 
 public class RasterizerTriangle extends Rasterizer {
 
-    private ZBuffer zb;
 
 
     public RasterizerTriangle(BufferedImage img, ZBuffer zb) {
-        super(img);
-        this.zb = zb;
+        super(img,zb);
     }
 
     public void rasterize(Vec3D vec1, Vec3D vec2, Vec3D vec3) {
@@ -55,8 +53,8 @@ public class RasterizerTriangle extends Rasterizer {
                     double s3 = ((double) x - keo) / (x2 - keo);
                     double z = Util.lerpDouble(z1, z2, s3);
 
-                    int r = (int) (0 * (1 - s3) + 255 * s3);
-                    int g = (int) (255 * (1 - s3) + 0 * s3);
+                    int r = (int) (0 * (1 - s3) + 100 * s3);
+                    int g = (int) (100 * (1 - s3) + 0 * s3);
                     int b = (int) (0 * (1 - s3) + 0 * s3);
 
                     if (zb.getDepth(x, y) >= z && z >= 0) {
@@ -71,29 +69,6 @@ public class RasterizerTriangle extends Rasterizer {
         }
     }
 
-    private Vec3D[] sort(Vec3D[] array) {
-
-        if (array[0].getY() > array[1].getY()) {
-            Vec3D pom = array[1];
-            array[1] = array[0];
-            array[0] = pom;
-        }
-
-        if (array[0].getY() > array[2].getY()) {
-            Vec3D pom = array[2];
-            array[2] = array[0];
-            array[0] = pom;
-        }
-
-        if (array[1].getY() > array[2].getY()) {
-            Vec3D pom = array[2];
-            array[2] = array[1];
-            array[1] = pom;
-        }
-
-        return array;
-
-    }
 
 
 }
