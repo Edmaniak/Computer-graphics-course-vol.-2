@@ -1,6 +1,9 @@
 package renderer.raster;
 
+import app.App;
+import renderer.ZBuffer;
 import transforms.Vec3D;
+import utilities.Util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,8 +11,11 @@ import java.util.Arrays;
 
 public class RasterizerTriangle extends Rasterizer {
 
-    public RasterizerTriangle(BufferedImage img) {
+    private ZBuffer zb;
+
+    public RasterizerTriangle(BufferedImage img, ZBuffer zb) {
         super(img);
+        this.zb = zb;
     }
 
     public void rasterize(Vec3D vec1, Vec3D vec2, Vec3D vec3) {
@@ -18,15 +24,17 @@ public class RasterizerTriangle extends Rasterizer {
         // Top and bottom triangle
         for (int i = 0; i <= 1; i++) {
             // one of the triangles
-            for (int y = (int) vertx[0 + i].getY() + 1; y < vertx[1 + i].getY(); y++) {
+            for (int y = (int) vertx[0 + i].getY() + 1; y <= Math.min(vertx[1 + i].getY(), App.HEIGHT - 1); y++) {
 
                 // kalkulace interpolacniho k + interpolace
-                double s1 = (y - (int) vertx[0 + i].getY()) / (vertx[1 + i].getY() - (int) vertx[0 + i].getY());
-                double s2 = (y - (int) vertx[0].getY()) / (vertx[2].getY() - (int) vertx[0].getY());
+                double s1 = (y - vertx[0 + i].getY()) / (vertx[1 + i].getY() - vertx[0 + i].getY());
+                double s2 = (y - vertx[0].getY()) / (vertx[2].getY() - vertx[0].getY());
 
-                int x1 = (int) (vertx[0 + i].getX() * (1 - s1) + vertx[1 + i].getX() * s1);
-                int x2 = (int) (vertx[0].getX() * (1 - s2) + vertx[2].getX() * s2);
+                int x1 = Util.lerpInt(vertx[0 + i].getX(), vertx[1 + i].getX(), s1);
+                int x2 = Util.lerpInt(vertx[0].getX(), vertx[2].getX(), s2);
 
+                double z1 = Util.lerpDouble(vertx[0 + i].getZ(), vertx[1 + i].getZ(), s1);
+                double z2 = Util.lerpDouble(vertx[0].getZ(), vertx[2].getZ(), s2);
 
                 // Swaping x coordinates when we need to draw the line from the other end
                 if (x2 < x1) {
@@ -38,11 +46,18 @@ public class RasterizerTriangle extends Rasterizer {
                 double keo = x1;
                 // Main rasterizing cycle
                 for (int x = x1; x < x2; x++) {
-                    double colorPar = (x - keo) / (x2 - keo);
-                    int r = (int) (20 * (1 - colorPar) + 196 * colorPar);
-                    int g = (int) (50 * (1 - colorPar) + 120 * colorPar);
-                    int b = (int) (60 * (1 - colorPar) + 2 * colorPar);
-                    img.setRGB(x, y, new Color(r, g, b).hashCode());
+                    double s3 = (x - keo) / (x2 - keo);
+                    double z = (z1 * (1 - s3) + z2 * s3);
+
+                    int r = (int) (20 * (1 - s3) + 196 * s3);
+                    int g = (int) (50 * (1 - s3) + 120 * s3);
+                    int b = (int) (60 * (1 - s3) + 2 * s3);
+
+                    if (zb.getDepth(x, y) > z && z >= 0) {
+                        img.setRGB(x, y, new Color(r, g, b).hashCode());
+                        zb.setDepth(x, y, z);
+                    }
+
                 }
             }
         }

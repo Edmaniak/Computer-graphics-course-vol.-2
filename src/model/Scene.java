@@ -4,6 +4,7 @@ import app.App;
 import gui.Canvas;
 import model.objects.Solid;
 import renderer.Renderer;
+import renderer.ZBuffer;
 import renderer.raster.RasterizerLine;
 import renderer.raster.RasterizerTriangle;
 import transforms.*;
@@ -22,6 +23,7 @@ public class Scene {
     private final Renderer renderer;
     private Projection projection;
     private Camera camera;
+    private ZBuffer zb;
 
     private static final double PERSP_VIEW_ANGLE = Math.PI / 3;
     private static final double PERSP_NEAR_CLIPPING_PLANE = 0.1;
@@ -43,10 +45,11 @@ public class Scene {
         this.projection = projection;
         solids = new HashMap<>();
 
+        zb = new ZBuffer(App.WIDTH, App.HEIGHT);
         RasterizerLine rl = new RasterizerLine(img);
-        RasterizerTriangle rt = new RasterizerTriangle(img);
+        RasterizerTriangle rt = new RasterizerTriangle(img, zb);
 
-        renderer = new Renderer(rl, rt);
+        renderer = new Renderer(rl, rt, zb);
         setProjection(projection);
         camera = new Camera(INITIAL_CAMERA_POSITION, INITIAL_CAMERA_AZIMUTH, INITIAL_CAMERA_ZENITH, 1, true);
 
@@ -57,6 +60,7 @@ public class Scene {
         for (Solid solid : solids.values()) {
             renderer.render(solid);
         }
+        zb.clear();
     }
 
     public void addSolid(String name, Solid solid) {
@@ -132,7 +136,7 @@ public class Scene {
         if (!v.normalized().isPresent())
             return;
         Vec2D vn = v.normalized().get();
-        camera = camera.move(new Vec3D(vn.getX(),vn.getY(),0).mul(MOVEMENT_STEP));
+        camera = camera.move(new Vec3D(vn.getX(), vn.getY(), 0).mul(MOVEMENT_STEP));
     }
 
 

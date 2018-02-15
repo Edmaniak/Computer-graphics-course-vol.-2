@@ -21,10 +21,12 @@ public class Renderer {
     private Mat4 projection;
     private final RasterizerLine rl;
     private final RasterizerTriangle rt;
+    private final ZBuffer zb;
 
-    public Renderer(RasterizerLine rl, RasterizerTriangle rt) {
+    public Renderer(RasterizerLine rl, RasterizerTriangle rt, ZBuffer zb) {
         this.rl = rl;
         this.rt = rt;
+        this.zb = zb;
     }
 
     public void render(Solid sld) {
@@ -105,6 +107,13 @@ public class Renderer {
         vec1 = project2D(vec1);
         vec2 = project2D(vec2);
         vec3 = project2D(vec3);
+
+        //assigning the original z value
+        /*
+        vec1 = new Vec3D(vec1.getX(), vec1.getY(), v1.getZ());
+        vec2 = new Vec3D(vec2.getX(), vec2.getY(), v2.getZ());
+        vec3 = new Vec3D(vec3.getX(), vec3.getY(), v3.getZ());
+        */
 
         rt.rasterize(vec1, vec2, vec3);
 
