@@ -1,12 +1,11 @@
 package renderer.raster;
 
 
-import app.App;
-import renderer.ZBuffer;
-import transforms.Vec3D;
 
+import model.Vertex;
+import renderer.ZBuffer;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
+
 
 
 public abstract class Rasterizer {
@@ -20,22 +19,22 @@ public abstract class Rasterizer {
         this.zb = zb;
     }
 
-    protected Vec3D[] sort(Vec3D[] array) {
+    protected Vertex[] sort(Vertex[] array) {
 
         if (array[0].getY() > array[1].getY()) {
-            Vec3D pom = array[1];
+            Vertex pom = array[1];
             array[1] = array[0];
             array[0] = pom;
         }
 
         if (array[0].getY() > array[2].getY()) {
-            Vec3D pom = array[2];
+            Vertex pom = array[2];
             array[2] = array[0];
             array[0] = pom;
         }
 
         if (array[1].getY() > array[2].getY()) {
-            Vec3D pom = array[2];
+            Vertex pom = array[2];
             array[2] = array[1];
             array[1] = pom;
         }

@@ -20,6 +20,7 @@ public class Vertex {
         this.color = color;
     }
 
+
     public Vertex(Point3D position) {
         this.position = position;
     }
@@ -37,8 +38,9 @@ public class Vertex {
         return new Vertex(new Point3D(position).mul(m));
     }
 
-    public Vec3D dehomog() {
-        return new Vec3D(position.dehomog().get());
+    public Vertex dehomog() {
+        Vec3D pos = position.dehomog().get();
+        return new Vertex(pos, this.color);
     }
 
     public Color getColor() {

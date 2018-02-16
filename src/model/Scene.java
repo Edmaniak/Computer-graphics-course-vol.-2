@@ -2,6 +2,7 @@ package model;
 
 import app.App;
 import gui.Canvas;
+import model.light.PointLight;
 import model.objects.Solid;
 import renderer.Renderer;
 import renderer.ZBuffer;
@@ -10,20 +11,23 @@ import renderer.raster.RasterizerTriangle;
 import transforms.*;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Scene {
+
 
     public enum Projection {
         ORTOGRAPHIC, PERSPECTIVE
     }
 
     private final Map<String, Solid> solids;
+    private final List<PointLight> lights;
     private final Renderer renderer;
     private Projection projection;
     private Camera camera;
-    private ZBuffer zb;
 
     private static final double PERSP_VIEW_ANGLE = Math.PI / 3;
     private static final double PERSP_NEAR_CLIPPING_PLANE = 0.1;
@@ -41,30 +45,27 @@ public class Scene {
     private static final double INITIAL_CAMERA_AZIMUTH = -4.74;
     private static final double INITIAL_CAMERA_ZENITH = -0.2;
 
-    public Scene(BufferedImage img, Projection projection) {
+    private double ambientLight = 0.2;
+
+    public Scene(Projection projection) {
         this.projection = projection;
         solids = new HashMap<>();
-
-        zb = new ZBuffer(App.WIDTH, App.HEIGHT);
-        RasterizerLine rl = new RasterizerLine(img, zb);
-        RasterizerTriangle rt = new RasterizerTriangle(img, zb);
-
-        renderer = new Renderer(rl, rt, zb);
+        lights = new ArrayList<>();
+        renderer = new Renderer();
         setProjection(projection);
         camera = new Camera(INITIAL_CAMERA_POSITION, INITIAL_CAMERA_AZIMUTH, INITIAL_CAMERA_ZENITH, 1, true);
-
     }
 
     public void render() {
-        renderer.setView(new Mat4(camera.getViewMatrix()));
-        for (Solid solid : solids.values()) {
-            renderer.render(solid);
-        }
-        zb.clear();
+        renderer.renderScene(this);
     }
 
     public void addSolid(String name, Solid solid) {
         solids.put(name, solid);
+    }
+
+    public void addLight(PointLight light) {
+        lights.add(light);
     }
 
     private void setProjection(Projection projection) {
@@ -158,5 +159,17 @@ public class Scene {
 
     public Renderer getRenderer() {
         return renderer;
+    }
+
+    public List<PointLight> getLights() {
+        return lights;
+    }
+
+    public double getAmbientLight() {
+        return ambientLight;
+    }
+
+    public void setAmbientLight(double ambientLight) {
+        this.ambientLight = ambientLight;
     }
 }

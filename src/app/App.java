@@ -1,6 +1,7 @@
 package app;
 
 import gui.MainFrame;
+import model.light.PointLight;
 import model.objects.*;
 import model.Scene;
 import transforms.Point3D;
@@ -18,7 +19,7 @@ public class App {
     public static final int HEIGHT = 800;
     public static final int RATIO = WIDTH / HEIGHT;
 
-    private static MainFrame gui;
+    public static MainFrame gui;
     public static App app;
     private final SceneObjectAxis objectAxis;
     private Solid activeSolid;
@@ -34,12 +35,15 @@ public class App {
             gui = new MainFrame(WIDTH, HEIGHT);
 
         // Scene init
-        scene = new Scene(gui.getCanvas3D().getMainBuffer(), Scene.Projection.PERSPECTIVE);
+        scene = new Scene(Scene.Projection.PERSPECTIVE);
 
         // Models
         TetraHedron tetraHedron = new TetraHedron(App.IDLE_COLOR, new Vec3D());
+        tetraHedron.randomizeColors();
         Plane plane = new Plane(Color.BLACK, new Vec3D());
+        plane.randomizeColors();
         Cube cube = new Cube(App.IDLE_COLOR, new Vec3D(-1.9, -1.9, 0));
+        cube.randomizeColors();
         BezierCurve bezierCurve = new BezierCurve(Color.CYAN, new Vec3D(0, 0, 0),
                 new Point3D(-2, 0, -2),
                 new Point3D(-1, 2, -1),
@@ -48,6 +52,8 @@ public class App {
         CircleCurve circleCurve = new CircleCurve(Color.BLUE, new Vec3D(0, 0, 0), new Point3D(0, 0, 0), 2, 50);
 
         IcoSphere icoSphere = new IcoSphere(Color.CYAN, new Vec3D(0, 0, 0), 1);
+
+        PointLight light1 = new PointLight(new Point3D(0, 0, 3), 0.8);
 
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
 
@@ -60,6 +66,7 @@ public class App {
         scene.addSolid("plane", plane);
         scene.addSolid("cube", cube);
         scene.addSolid("icosphere", icoSphere);
+        scene.addLight(light1);
         //scene.addSolid("bezier", bezierCurve);
 
         setActiveSolid(tetraHedron);
