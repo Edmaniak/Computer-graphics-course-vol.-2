@@ -1,5 +1,6 @@
 package model.objects;
 
+import material.Material;
 import model.Part;
 import model.Vertex;
 import transforms.Vec3D;
@@ -12,25 +13,25 @@ public class Axis extends Solid {
     private final Vertex[] vertex_definition = {
 
             // Axis
-            new Vertex(0, 0, 0, renderColor),
-            new Vertex(1, 0, 0, renderColor),
-            new Vertex(0, 0, 1, renderColor),
-            new Vertex(0, 1, 0, renderColor),
+            new Vertex(0, 0, 0),
+            new Vertex(1, 0, 0),
+            new Vertex(0, 0, 1),
+            new Vertex(0, 1, 0),
 
             // End triangle X
-            new Vertex(1, 0, -0.2, renderColor),
-            new Vertex(1, 0, 0.2, renderColor),
-            new Vertex(1.2, 0, 0, renderColor),
+            new Vertex(1, 0, -0.2),
+            new Vertex(1, 0, 0.2),
+            new Vertex(1.2, 0, 0),
 
             // End triangle Z
-            new Vertex(-0.2, 0, 1, renderColor),
-            new Vertex(0.2, 0, 1, renderColor),
-            new Vertex(0, 0, 1.2, renderColor),
+            new Vertex(-0.2, 0, 1),
+            new Vertex(0.2, 0, 1),
+            new Vertex(0, 0, 1.2),
 
             // End triangle Y
-            new Vertex(-0.2, 1, 0, renderColor),
-            new Vertex(0.2, 1, 0, renderColor),
-            new Vertex(0, 1.2, 0, renderColor),
+            new Vertex(-0.2, 1, 0),
+            new Vertex(0.2, 1, 0),
+            new Vertex(0, 1.2, 0),
 
     };
 
@@ -50,11 +51,19 @@ public class Axis extends Solid {
             new Part(Part.Type.TRIANGLE, 9, 6)
     };
 
+    public Axis(Material material, Vec3D initialPosition) {
+        super(material, new Vec3D(0, 0, 0), initialPosition);
+        define(vertex_definition, index_definition, parts_definition);
+    }
+
     public Axis(Color color, Vec3D initialPosition) {
         super(color, new Vec3D(0, 0, 0), initialPosition);
-        vertices().addAll(Arrays.asList(vertex_definition));
-        indexes().addAll(Arrays.asList(index_definition));
-        parts().addAll(Arrays.asList(parts_definition));
+        define(vertex_definition, index_definition, parts_definition);
+    }
+
+    public Axis(Vec3D initialPosition) {
+        super(new Vec3D(0, 0, 0), initialPosition);
+        define(vertex_definition, index_definition, parts_definition);
     }
 
 }

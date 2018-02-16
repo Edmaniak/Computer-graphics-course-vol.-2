@@ -30,6 +30,13 @@ public class Vertex {
         this.color = color;
     }
 
+    public Vertex(double x, double y, double z) {
+        this.position = new Point3D(x, y, z);
+        this.color = color;
+    }
+
+
+
     public Point3D getPosition() {
         return position;
     }

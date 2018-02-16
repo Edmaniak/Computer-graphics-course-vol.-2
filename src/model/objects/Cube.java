@@ -1,7 +1,9 @@
 package model.objects;
 
+import material.Material;
 import model.Part;
 import model.Vertex;
+import transforms.Mat4;
 import transforms.Vec3D;
 
 import java.awt.*;
@@ -21,7 +23,7 @@ public class Cube extends Solid {
             new Vertex(1, 1, 1, Color.BLUE),
             new Vertex(0, 1, 1, Color.BLUE)
     };
-    private final Integer[] indexes_definiton = {
+    private final Integer[] index_definition = {
             // triangles
             // 1 spodni
             0, 1, 3,
@@ -45,11 +47,31 @@ public class Cube extends Solid {
 
     private final Part[] parts_definition = {new Part(Part.Type.TRIANGLE, 36, 0)};
 
-    public Cube(Color color,Vec3D initialPosition) {
-        super(color, new Vec3D(0.5, 0.5, 0.5),initialPosition);
-        vertices().addAll(Arrays.asList(vertex_definition));
-        indexes().addAll(Arrays.asList(indexes_definiton));
-        parts().addAll(Arrays.asList(parts_definition));
+    public Cube(Material material, Vec3D initialPosition) {
+        super(material, new Vec3D(0.5, 0.5, 0.5), initialPosition);
+        define(vertex_definition, index_definition, parts_definition);
     }
+
+    public Cube(double size, Material material, Vec3D initialPosition) {
+        super(material, new Vec3D(0.5, 0.5, 0.5), initialPosition);
+        for (int i = 0; i < vertex_definition.length; i++) {
+            double x = vertex_definition[i].getX() * size;
+            double y = vertex_definition[i].getX() * size;
+            double z = vertex_definition[i].getX() * size;
+            vertex_definition[i] = new Vertex(x, y, z);
+        }
+        define(vertex_definition, index_definition, parts_definition);
+    }
+
+    public Cube(Color color, Vec3D initialPosition) {
+        super(color, new Vec3D(0.5, 0.5, 0.5), initialPosition);
+        define(vertex_definition, index_definition, parts_definition);
+    }
+
+    public Cube(Vec3D initialPosition) {
+        super(new Vec3D(0.5, 0.5, 0.5), initialPosition);
+        define(vertex_definition, index_definition, parts_definition);
+    }
+
 
 }

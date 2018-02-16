@@ -1,5 +1,6 @@
 package model.objects;
 
+import material.Material;
 import model.Part;
 import model.Vertex;
 import transforms.Vec3D;
@@ -11,10 +12,10 @@ public class Plane extends Solid {
 
     private final Vertex[] vertex_definition = {
             // two triangles
-            new Vertex(-2, 0, -2, renderColor),
-            new Vertex(2, 0, -2, renderColor),
-            new Vertex(-2, 0, 2, renderColor),
-            new Vertex(2, 0, 2, renderColor),
+            new Vertex(-2, 0, -2),
+            new Vertex(2, 0, -2),
+            new Vertex(-2, 0, 2),
+            new Vertex(2, 0, 2),
     };
 
     private final Integer[] index_definition = {
@@ -29,9 +30,12 @@ public class Plane extends Solid {
 
     public Plane(Color color, Vec3D initialPosition) {
         super(color, new Vec3D(0,0,0), initialPosition);
-        vertices().addAll(Arrays.asList(vertex_definition));
-        indexes().addAll(Arrays.asList(index_definition));
-        parts().addAll(Arrays.asList(parts_definition));
+        define(vertex_definition,index_definition,parts_definition);
+    }
+
+    public Plane(Material material, Vec3D initialPosition) {
+        super(material, new Vec3D(0,0,0), initialPosition);
+        define(vertex_definition,index_definition,parts_definition);
     }
 
 }

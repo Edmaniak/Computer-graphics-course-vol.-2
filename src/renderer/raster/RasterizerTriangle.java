@@ -1,7 +1,9 @@
 package renderer.raster;
 
 import app.App;
+import material.Material;
 import model.Vertex;
+import model.light.AmbientLight;
 import model.light.PointLight;
 import renderer.ZBuffer;
 import transforms.Vec3D;
@@ -16,18 +18,18 @@ import java.util.Random;
 public class RasterizerTriangle extends Rasterizer {
 
     private List<PointLight> lights;
-    private double ambientLight;
+    private AmbientLight ambientLight;
 
 
-    public RasterizerTriangle(BufferedImage img, ZBuffer zb, List<PointLight> lights, double ambientLight) {
+    public RasterizerTriangle(BufferedImage img, ZBuffer zb, List<PointLight> lights, AmbientLight ambientLight) {
         super(img, zb);
         this.lights = lights;
         this.ambientLight = ambientLight;
     }
 
-    public void rasterize(Vertex vec1, Vertex vec2, Vertex vec3) {
+    public void rasterize(Vertex vec1, Vertex vec2, Vertex vec3, Material material) {
         Vertex[] vertx = sort(new Vertex[]{vec1, vec2, vec3});
-        Vec3D normal = Util.crossProduct(vec1, vec2);
+        Vec3D normal = Util.crossProduct(Util.unProject(vec1), Util.unProject(vec2));
         // Top and bottom triangle
         for (int i = 0; i <= 1; i++) {
             // one of the triangles
@@ -75,10 +77,20 @@ public class RasterizerTriangle extends Rasterizer {
                     int r = (c1.getRed() + c2.getRed() + c3.getRed());
                     int g = (c1.getGreen() + c2.getGreen() + c3.getGreen());
                     int b = (c1.getBlue() + c2.getBlue() + c3.getBlue());
+
+
 */
+                    int r = Math.min(ambientLight.calculateRed(material) + lights.get(0).calculateRed(material, normal, App.app.getScene().getCamera().getViewVector()), 255);
+                    int g = Math.min(ambientLight.calculateGreen(material) + lights.get(0).calculateGreen(material, normal, App.app.getScene().getCamera().getViewVector()), 255);
+                    int b = Math.min(ambientLight.calculateBlue(material) + lights.get(0).calculateBlue(material, normal, App.app.getScene().getCamera().getViewVector()), 255);
+
+                    int red = r > 0 ? r : 0;
+                    int blue = b > 0 ? b : 0;
+                    int green = g > 0 ? g : 0;
 
                     if (zb.getDepth(x, y) >= z && z >= 0) {
-                        img.setRGB(x, y, new Color((int) (100 * s3), (int) (50 * s3), (int) (200 * s3)).hashCode());
+
+                        img.setRGB(x, y, new Color(red, green, blue).hashCode());
                         zb.setDepth(x, y, z);
                     }
                 }

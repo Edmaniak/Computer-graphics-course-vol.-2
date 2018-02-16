@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.App;
+import material.Material;
 import model.Part;
 import model.Scene;
 import model.Vertex;
+import model.light.AmbientLight;
 import model.light.PointLight;
 import model.objects.Solid;
 import renderer.raster.RasterizerLine;
@@ -25,9 +27,9 @@ public class Renderer {
     private final RasterizerTriangle rt;
     private final ZBuffer zb;
     private final List<PointLight> lights;
-    private double ambientLight;
+    private AmbientLight ambientLight;
 
-    public Renderer(List<PointLight> lights, double ambientLight) {
+    public Renderer(List<PointLight> lights, AmbientLight ambientLight) {
         this.zb = new ZBuffer(App.WIDTH, App.HEIGHT);
         this.rl = new RasterizerLine(App.gui.getCanvas3D().getMainBuffer(), zb);
         this.rt = new RasterizerTriangle(App.gui.getCanvas3D().getMainBuffer(), zb, lights, ambientLight);
@@ -51,7 +53,7 @@ public class Renderer {
 
                 case LINE: {
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 2) {
-                        line(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)), sld.getRenderColor());
+                        line(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)), sld.getMaterial());
                     }
                     break;
                 }
@@ -59,7 +61,7 @@ public class Renderer {
                 case TRIANGLE: {
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
                         triangle(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)),
-                                vb.get(sld.indexes().get(i + 2)));
+                                vb.get(sld.indexes().get(i + 2)), sld.getMaterial());
                     }
                     break;
                 }
@@ -76,7 +78,7 @@ public class Renderer {
 
     }
 
-    private void line(Vertex origin, Vertex end, Color color) {
+    private void line(Vertex origin, Vertex end, Material material) {
 
         // dehomogenizace
         if (!isDehomogenizable(origin) || !isDehomogenizable(end))
@@ -99,7 +101,7 @@ public class Renderer {
 
     }
 
-    private void triangle(Vertex v1, Vertex v2, Vertex v3) {
+    private void triangle(Vertex v1, Vertex v2, Vertex v3, Material material) {
 
         //dehomogenizace
         if (!isDehomogenizable(v1) || !isDehomogenizable(v2) || !isDehomogenizable(v3))
@@ -123,7 +125,7 @@ public class Renderer {
         vec3 = project2D(vec3);
 
 
-        rt.rasterize(vec1, vec2, vec3);
+        rt.rasterize(vec1, vec2, vec3, material);
 
     }
 

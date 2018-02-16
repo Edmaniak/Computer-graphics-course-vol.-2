@@ -38,20 +38,20 @@ public class IcoSphere extends Solid {
         super(color, new Vec3D(0, 0, 0),initialPosition);
         double t = (1 + Math.sqrt(size)) / 2;
 
-        vertices().add(new Vertex(-1, t, 0, renderColor));
-        vertices().add(new Vertex(1, t, 0, renderColor));
-        vertices().add(new Vertex(-1, -t, 0, renderColor));
-        vertices().add(new Vertex(1, t, 0, renderColor));
+        vertices().add(new Vertex(-1, t, 0));
+        vertices().add(new Vertex(1, t, 0));
+        vertices().add(new Vertex(-1, -t, 0));
+        vertices().add(new Vertex(1, t, 0));
 
-        vertices().add(new Vertex(0, -1, t, renderColor));
-        vertices().add(new Vertex(0, 1, t, renderColor));
-        vertices().add(new Vertex(0, -1, -t, renderColor));
-        vertices().add(new Vertex(0, 1, t, renderColor));
+        vertices().add(new Vertex(0, -1, t));
+        vertices().add(new Vertex(0, 1, t));
+        vertices().add(new Vertex(0, -1, -t));
+        vertices().add(new Vertex(0, 1, t));
 
-        vertices().add(new Vertex(t, 0, -1, renderColor));
-        vertices().add(new Vertex(t, 0, 1, renderColor));
-        vertices().add(new Vertex(-t, 0, -1, renderColor));
-        vertices().add(new Vertex(-t, 0, 1, renderColor));
+        vertices().add(new Vertex(t, 0, -1));
+        vertices().add(new Vertex(t, 0, 1));
+        vertices().add(new Vertex(-t, 0, -1));
+        vertices().add(new Vertex(-t, 0, 1));
 
         indexes().addAll(Arrays.asList(indexes_definiton));
         parts().addAll(Arrays.asList(parts_definition));

@@ -2,6 +2,7 @@ package model;
 
 import app.App;
 import gui.Canvas;
+import model.light.AmbientLight;
 import model.light.PointLight;
 import model.objects.Solid;
 import renderer.Renderer;
@@ -10,6 +11,7 @@ import renderer.raster.RasterizerLine;
 import renderer.raster.RasterizerTriangle;
 import transforms.*;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,15 +47,20 @@ public class Scene {
     private static final double INITIAL_CAMERA_AZIMUTH = -4.74;
     private static final double INITIAL_CAMERA_ZENITH = -0.2;
 
-    private double ambientLight = 0.2;
+    private AmbientLight ambientLight = new AmbientLight(Color.WHITE, 0.3);
 
     public Scene(Projection projection) {
         this.projection = projection;
         solids = new HashMap<>();
         lights = new ArrayList<>();
-        renderer = new Renderer();
+        renderer = new Renderer(lights, ambientLight);
         setProjection(projection);
         camera = new Camera(INITIAL_CAMERA_POSITION, INITIAL_CAMERA_AZIMUTH, INITIAL_CAMERA_ZENITH, 1, true);
+    }
+
+    public Scene(Projection projection, AmbientLight ambientLight) {
+        this(projection);
+        this.ambientLight = ambientLight;
     }
 
     public void render() {
@@ -165,11 +172,11 @@ public class Scene {
         return lights;
     }
 
-    public double getAmbientLight() {
+    public AmbientLight getAmbientLight() {
         return ambientLight;
     }
 
-    public void setAmbientLight(double ambientLight) {
+    public void setAmbientLight(AmbientLight ambientLight) {
         this.ambientLight = ambientLight;
     }
 }

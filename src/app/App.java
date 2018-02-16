@@ -1,6 +1,7 @@
 package app;
 
 import gui.MainFrame;
+import material.Material;
 import model.light.PointLight;
 import model.objects.*;
 import model.Scene;
@@ -37,25 +38,23 @@ public class App {
         // Scene init
         scene = new Scene(Scene.Projection.PERSPECTIVE);
 
+        //Materials
+        Material brass = new Material(Color.YELLOW, 0.3, 0.9, 2, 27);
+        Material difuse = new Material(Color.RED, 0.3, 0, 2, 20);
+
         // Models
-        TetraHedron tetraHedron = new TetraHedron(App.IDLE_COLOR, new Vec3D());
+        TetraHedron tetraHedron = new TetraHedron(difuse, new Vec3D());
         tetraHedron.randomizeColors();
-        Plane plane = new Plane(Color.BLACK, new Vec3D());
-        plane.randomizeColors();
-        Cube cube = new Cube(App.IDLE_COLOR, new Vec3D(-1.9, -1.9, 0));
-        cube.randomizeColors();
-        BezierCurve bezierCurve = new BezierCurve(Color.CYAN, new Vec3D(0, 0, 0),
-                new Point3D(-2, 0, -2),
-                new Point3D(-1, 2, -1),
-                new Point3D(1, 2, 1),
-                new Point3D(2, 0, 2), 20);
-        CircleCurve circleCurve = new CircleCurve(Color.BLUE, new Vec3D(0, 0, 0), new Point3D(0, 0, 0), 2, 50);
-
-        IcoSphere icoSphere = new IcoSphere(Color.CYAN, new Vec3D(0, 0, 0), 1);
-
-        PointLight light1 = new PointLight(new Point3D(0, 0, 3), 0.8);
-
+        Plane plane = new Plane(difuse, new Vec3D());
+        Cube cube = new Cube(brass, new Vec3D(-1.9, -1.9, 0));
+        // IcoSphere icoSphere = new IcoSphere(Color.CYAN, new Vec3D(0, 0, 0), 1);
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
+
+
+        // Lights
+        PointLight light1 = new PointLight(Color.WHITE, new Vec3D(0, 1, 2), 1);
+        Cube lightCube = new Cube(difuse, light1.getPosition());
+
 
         cube.randomizeColors();
         tetraHedron.randomizeColors();
@@ -65,7 +64,8 @@ public class App {
         scene.addSolid("tetrahedron", tetraHedron);
         scene.addSolid("plane", plane);
         scene.addSolid("cube", cube);
-        scene.addSolid("icosphere", icoSphere);
+        scene.addSolid("lightCube", lightCube);
+        //scene.addSolid("icosphere", icoSphere);
         scene.addLight(light1);
         //scene.addSolid("bezier", bezierCurve);
 
@@ -87,7 +87,6 @@ public class App {
 
     public void switchTo(Solid solid) {
         if (activeSolid != null) {
-            activeSolid.setRenderColor(activeSolid.getDefaultColor());
             setActiveSolid(solid);
         }
         renderScene();
@@ -102,7 +101,6 @@ public class App {
     private void setActiveSolid(Solid activeSolid) {
         this.activeSolid = activeSolid;
         objectAxis.alignFor(activeSolid);
-        activeSolid.setRenderColor(App.ACTIVE_COLOR);
     }
 
     public SceneObjectAxis getObjectAxis() {

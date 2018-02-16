@@ -1,41 +1,42 @@
 package model.light;
 
+import material.Material;
 import transforms.Point3D;
+import transforms.Vec3D;
+import utilities.Util;
 
 import java.awt.*;
 
-public class PointLight {
+public class PointLight extends Light {
 
-    private Point3D position;
-    private double intensity;
-    private Color color;
+    private Vec3D position;
 
-    public PointLight(Point3D position, double intensity) {
+
+    public PointLight(Color color, Vec3D position, double intensity) {
+        super(color, intensity);
         this.intensity = Math.min(intensity, 1 / intensity);
         this.position = position;
     }
 
-    public Point3D getPosition() {
+    public Vec3D getPosition() {
         return position;
     }
 
-    public void setPosition(Point3D position) {
+    public void setPosition(Vec3D position) {
         this.position = position;
     }
 
-    public double getIntensity() {
-        return intensity;
+    public int calculateRed(Material material, Vec3D normal, Vec3D viewVector) {
+        return (int) (color.getRed() * intensity * material.getKd() * Util.dotProduct(position, normal));
     }
 
-    public void setIntensity(double intensity) {
-        this.intensity = intensity;
+    public int calculateBlue(Material material, Vec3D normal, Vec3D viewVector) {
+        return (int) (color.getBlue() * intensity * material.getKd() * Util.dotProduct(position, normal));
     }
 
-    public Color getColor() {
-        return color;
+    public int calculateGreen(Material material, Vec3D normal, Vec3D viewVector) {
+        return (int) (color.getGreen() * intensity * material.getKd() * Util.dotProduct(position, normal));
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+
 }
