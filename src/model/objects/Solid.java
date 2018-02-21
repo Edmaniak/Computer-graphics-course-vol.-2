@@ -2,7 +2,6 @@ package model.objects;
 
 import material.Material;
 import model.Part;
-import model.Transform;
 import model.Vertex;
 import transforms.Vec3D;
 
@@ -12,22 +11,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Solid {
+public abstract class Solid extends SceneObject {
 
-    private final List<Vertex> vertexBuffer;
-    private final List<Integer> indexBuffer;
-    private final List<Part> parts;
-    public final Transform transform;
-    private Vec3D pivotPoint;
+    private final List<Vertex> vertexBuffer = new ArrayList<>();
+    private final List<Integer> indexBuffer = new ArrayList<>();
+    private final List<Part> parts = new ArrayList<>();
+
     private Material material;
 
-    public Solid(Vec3D pivotPoint, Vec3D initialPosition) {
-        this.vertexBuffer = new ArrayList<>();
-        this.indexBuffer = new ArrayList<>();
-        this.parts = new ArrayList<>();
-        this.pivotPoint = pivotPoint;
-        this.transform = new Transform(pivotPoint);
-        transform.translate(initialPosition);
+    private Solid(Vec3D pivotPoint, Vec3D initialPosition) {
+        super(pivotPoint,initialPosition);
     }
 
     public Solid(Material material, Vec3D pivotPoint, Vec3D initialPosition) {
@@ -39,6 +32,12 @@ public abstract class Solid {
         this(pivotPoint, initialPosition);
         this.material = new Material(color);
     }
+
+    public Solid(Color color, Vec3D initialPosition) {
+        super(initialPosition);
+        this.material = new Material(color);
+    }
+
 
     public List<Vertex> vertices() {
         return vertexBuffer;
@@ -52,13 +51,6 @@ public abstract class Solid {
         return parts;
     }
 
-    public Vec3D getDefaultPivotPoint() {
-        return pivotPoint;
-    }
-
-    public void setPivotPoint(Vec3D pivotPoint) {
-        this.pivotPoint = pivotPoint;
-    }
 
     public Material getMaterial() {
         return material;

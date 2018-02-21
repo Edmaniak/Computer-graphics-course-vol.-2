@@ -20,7 +20,6 @@ public class RasterizerTriangle extends Rasterizer {
     private List<PointLight> lights;
     private AmbientLight ambientLight;
 
-
     public RasterizerTriangle(BufferedImage img, ZBuffer zb, List<PointLight> lights, AmbientLight ambientLight) {
         super(img, zb);
         this.lights = lights;
@@ -29,7 +28,11 @@ public class RasterizerTriangle extends Rasterizer {
 
     public void rasterize(Vertex vec1, Vertex vec2, Vertex vec3, Material material) {
         Vertex[] vertx = sort(new Vertex[]{vec1, vec2, vec3});
-        Vec3D normal = Util.crossProduct(Util.unProject(vec1), Util.unProject(vec2));
+        Vec3D v1 = Util.vectorize(Util.unProject(vertx[0]), Util.unProject(vertx[1]));
+        Vec3D v2 = Util.vectorize(Util.unProject(vertx[0]), Util.unProject(vertx[2]));
+        Vec3D normal = Util.crossProduct(v1,v2);
+        normal = Util.dotProduct(App.app.getScene().getCamera().getViewVector(), normal) > 0 ? Util.mul(normal, -1) : normal;
+        System.out.println(normal);
         // Top and bottom triangle
         for (int i = 0; i <= 1; i++) {
             // one of the triangles

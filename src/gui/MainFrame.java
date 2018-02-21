@@ -1,6 +1,7 @@
 package gui;
 
 import app.App;
+import transforms.Vec3D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -107,6 +108,9 @@ public class MainFrame extends JFrame {
 
                 if (e.getKeyCode() == KeyEvent.VK_SHIFT)
                     App.app.getScene().tiltDown();
+
+                if(e.getKeyCode() == KeyEvent.VK_J)
+                    App.app.getScene().getLights().get(0).transform.translate(new Vec3D(-0.1,0,0));
 
                 App.app.renderScene();
             }

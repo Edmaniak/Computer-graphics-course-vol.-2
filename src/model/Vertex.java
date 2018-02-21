@@ -20,7 +20,6 @@ public class Vertex {
         this.color = color;
     }
 
-
     public Vertex(Point3D position) {
         this.position = position;
     }
@@ -33,6 +32,10 @@ public class Vertex {
     public Vertex(double x, double y, double z) {
         this.position = new Point3D(x, y, z);
         this.color = color;
+    }
+
+    public Vertex normalize() {
+        return new Vertex(new Point3D(new Vec3D(position).normalized().get()));
     }
 
 

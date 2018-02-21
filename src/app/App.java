@@ -39,8 +39,8 @@ public class App {
         scene = new Scene(Scene.Projection.PERSPECTIVE);
 
         //Materials
-        Material brass = new Material(Color.YELLOW, 0.3, 0.9, 2, 27);
-        Material difuse = new Material(Color.RED, 0.3, 0, 2, 20);
+        Material brass = new Material(Color.YELLOW, 0.3, 0.9, 0.6, 27);
+        Material difuse = new Material(Color.RED, 0.3, 0, 0.7, 20);
 
         // Models
         TetraHedron tetraHedron = new TetraHedron(difuse, new Vec3D());
@@ -52,7 +52,7 @@ public class App {
 
 
         // Lights
-        PointLight light1 = new PointLight(Color.WHITE, new Vec3D(0, 1, 2), 1);
+        PointLight light1 = new PointLight(Color.WHITE, new Vec3D(0, 0, 2), 1);
         Cube lightCube = new Cube(difuse, light1.getPosition());
 
 

@@ -1,6 +1,8 @@
 package model.light;
 
 import material.Material;
+import transforms.Point3D;
+import transforms.Vec3D;
 
 import java.awt.*;
 
@@ -21,4 +23,5 @@ public class AmbientLight extends Light {
     public int calculateGreen(Material material) {
         return (int) (material.getIluminatedGreen() * intensity);
     }
+
 }

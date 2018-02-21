@@ -18,11 +18,11 @@ public class Util {
         return (int) lerpDouble(val1, val2, par);
     }
 
-    public static Vec3D crossProduct(Vertex v1, Vertex v2) {
+    public static Vec3D crossProduct(Vec3D v1, Vec3D v2) {
         double x = (v1.getY() * v2.getZ()) - (v1.getZ() * v2.getY());
         double y = (v1.getZ() * v2.getX()) - (v1.getX() * v2.getZ());
         double z = (v1.getX() * v2.getY()) - (v1.getY() * v2.getX());
-        return new Vec3D(x, z, y);
+        return new Vec3D(x, y, z);
     }
 
     public static double dotProduct(Vec3D v1, Vec3D v2) {
@@ -30,8 +30,9 @@ public class Util {
     }
 
     public static Vertex unProject(Vertex v) {
-        double y = (-v.getY() - 1) / (App.HEIGHT * 2);
-        double x = (v.getX() - 1) / (App.WIDTH * 2);
+        double x = ((2 * v.getX()) / App.WIDTH) - 1;
+        double y =((2 * v.getY()) / -App.HEIGHT) + 1;
+
         return new Vertex(x, y, v.getZ(), v.getColor());
     }
 
@@ -42,5 +43,22 @@ public class Util {
     public static Vec3D sub(Vec3D v1, Vec3D v2) {
         return new Vec3D(v1.getX() - v2.getX(), v1.getY() - v2.getY(), v1.getZ() - v2.getZ());
     }
+
+    public static Vertex project2D(Vertex v) {
+        double x = (v.getX() + 1) * App.WIDTH / 2;
+        double y = (-v.getY() + 1) * App.HEIGHT / 2;
+        return new Vertex(x, y, v.getZ(), v.getColor());
+    }
+
+    public static Vec3D project2D(Vec3D v) {
+        double x = (v.getX() + 1) * App.WIDTH / 2;
+        double y = (-v.getY() + 1) * App.HEIGHT / 2;
+        return new Vec3D(x, y, v.getZ());
+    }
+
+    public static Vec3D vectorize(Vertex v1, Vertex v2) {
+        return new Vec3D(v2.getX() - v1.getX(), v2.getY() - v1.getY(), v2.getZ() - v1.getZ());
+    }
+
 
 }

@@ -25,10 +25,6 @@ public class TetraHedron extends Solid {
     };
     private final Part[] parts_definition = {new Part(Part.Type.TRIANGLE, 12, 0)};
 
-    public TetraHedron(Vec3D initialPosition) {
-        super(new Vec3D(0, 0, 0), initialPosition);
-        define(vertex_definition, indexes_definiton, parts_definition);
-    }
 
     public TetraHedron(Color color, Vec3D initialPosition) {
         super(color, new Vec3D(0, 0, 0), initialPosition);

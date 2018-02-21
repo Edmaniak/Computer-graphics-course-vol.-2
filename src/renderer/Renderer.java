@@ -10,11 +10,13 @@ import model.Part;
 import model.Scene;
 import model.Vertex;
 import model.light.AmbientLight;
+import model.light.Light;
 import model.light.PointLight;
 import model.objects.Solid;
 import renderer.raster.RasterizerLine;
 import renderer.raster.RasterizerTriangle;
 import transforms.*;
+import utilities.Util;
 
 public class Renderer {
 
@@ -59,6 +61,7 @@ public class Renderer {
                 }
 
                 case TRIANGLE: {
+                    System.out.println(sld);
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
                         triangle(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)),
                                 vb.get(sld.indexes().get(i + 2)), sld.getMaterial());
@@ -70,12 +73,27 @@ public class Renderer {
         vb.clear();
     }
 
+
+    public void renderVertex() {
+
+    }
+
     public void renderScene(Scene scene) {
+
         setView(new Mat4(scene.getCamera().getViewMatrix()));
+
+        for (int i = 0; i < lights.size(); i++) {
+            Mat4 matMVP = model.mul(view).mul(projection);
+            Point3D position = new Point3D(lights.get(i).getPointPosition());
+            lights.set(i, new PointLight(lights.get(i), new Vertex(new Point3D(position.mul(matMVP).dehomog().get()))));
+
+        }
+
+
         for (Solid solid : scene.getSolids().values())
             renderSolid(solid);
-        zb.clear();
 
+        zb.clear();
     }
 
     private void line(Vertex origin, Vertex end, Material material) {
@@ -94,8 +112,8 @@ public class Renderer {
             return;
 
         // projekce do rastru
-        vec1 = project2D(vec1);
-        vec2 = project2D(vec2);
+        vec1 = Util.project2D(vec1);
+        vec2 = Util.project2D(vec2);
 
         rl.rasterize(vec1, vec2);
 
@@ -120,10 +138,9 @@ public class Renderer {
             return;
 
         // projekce do rastru
-        vec1 = project2D(vec1);
-        vec2 = project2D(vec2);
-        vec3 = project2D(vec3);
-
+        vec1 = Util.project2D(vec1);
+        vec2 = Util.project2D(vec2);
+        vec3 = Util.project2D(vec3);
 
         rt.rasterize(vec1, vec2, vec3, material);
 
@@ -137,11 +154,6 @@ public class Renderer {
         return v.getPosition().dehomog().isPresent();
     }
 
-    private Vertex project2D(Vertex v) {
-        double y = (-v.getY() + 1) * App.HEIGHT / 2;
-        double x = (v.getX() + 1) * App.WIDTH / 2;
-        return new Vertex(x, y, v.getZ(), v.getColor());
-    }
 
     private void setModel(Mat4 model) {
         this.model = model;

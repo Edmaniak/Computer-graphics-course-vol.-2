@@ -1,16 +1,31 @@
 package model.light;
 
-import material.Material;
+import model.objects.SceneObject;
 import transforms.Point3D;
+import transforms.Vec3D;
 
 import java.awt.*;
 
-public abstract class Light {
+public abstract class Light extends SceneObject {
 
     protected double intensity;
     protected Color color;
 
-    public Light(Color color, double intensity) {
+
+    protected Light(Color color, double intensity, Vec3D initialPosition, Vec3D pivotPoint) {
+        super(pivotPoint, initialPosition);
+        this.color = color;
+        this.intensity = intensity;
+    }
+
+    protected Light(Color color, double intensity, Vec3D initialPosition) {
+        super(initialPosition);
+        this.color = color;
+        this.intensity = intensity;
+    }
+
+    protected Light(Color color, double intensity) {
+        super();
         this.color = color;
         this.intensity = intensity;
     }

@@ -52,24 +52,8 @@ public class Cube extends Solid {
         define(vertex_definition, index_definition, parts_definition);
     }
 
-    public Cube(double size, Material material, Vec3D initialPosition) {
-        super(material, new Vec3D(0.5, 0.5, 0.5), initialPosition);
-        for (int i = 0; i < vertex_definition.length; i++) {
-            double x = vertex_definition[i].getX() * size;
-            double y = vertex_definition[i].getX() * size;
-            double z = vertex_definition[i].getX() * size;
-            vertex_definition[i] = new Vertex(x, y, z);
-        }
-        define(vertex_definition, index_definition, parts_definition);
-    }
-
     public Cube(Color color, Vec3D initialPosition) {
         super(color, new Vec3D(0.5, 0.5, 0.5), initialPosition);
-        define(vertex_definition, index_definition, parts_definition);
-    }
-
-    public Cube(Vec3D initialPosition) {
-        super(new Vec3D(0.5, 0.5, 0.5), initialPosition);
         define(vertex_definition, index_definition, parts_definition);
     }
 

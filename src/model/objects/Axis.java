@@ -61,9 +61,5 @@ public class Axis extends Solid {
         define(vertex_definition, index_definition, parts_definition);
     }
 
-    public Axis(Vec3D initialPosition) {
-        super(new Vec3D(0, 0, 0), initialPosition);
-        define(vertex_definition, index_definition, parts_definition);
-    }
 
 }
