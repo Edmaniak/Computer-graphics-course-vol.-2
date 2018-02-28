@@ -11,15 +11,16 @@ public class ZTest {
 	
 	public ZTest(BufferedImage img) {
 		zBuffer = new Zbuffer(img);
-		imgBuffer = new ImageBuffer();
+		imgBuffer = new ImageBuffer(img);
 	}
 	
 	public void test(int x, int y, double z, Col color) {
 		
 		Optional<Double> zVal = zBuffer.getPixel(x, y);
-		if(!zVal.isPresent()) {
+
+		if(!zVal.isPresent())
 			return;
-		}
+
 		if(z < zVal.get() && z >= 0) {
 			zBuffer.setPixel(z, x, y);
 			imgBuffer.setPixel(color,x,y);

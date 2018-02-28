@@ -1,31 +1,46 @@
 package schoolClasses;
 
+import transforms.Col;
+import java.awt.image.BufferedImage;
 import java.util.Optional;
 
-public class ImageBuffer implements Raster<Color> {
+public class ImageBuffer implements Raster<Col> {
+    private final int width;
+    private final int height;
+    private final BufferedImage img;
 
-	@Override
-	public int getWidth() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public ImageBuffer(BufferedImage img) {
+        this.width = img.getWidth();
+        this.height = img.getHeight();
+        this.img = img;
+    }
 
-	@Override
-	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public int getWidth() {
+        return width;
+    }
 
-	@Override
-	public Optional<Color> getPixel(int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public int getHeight() {
+        return height;
+    }
 
-	@Override
-	public void setPixel(Color pixel, int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public Optional<Col> getPixel(int x, int y) {
+        if (isPointValid(x, y))
+            return Optional.of(new Col(img.getRGB(x, y)));
+        return Optional.empty();
+    }
+
+    @Override
+    public void setPixel(Col pixel, int x, int y) {
+        if (isPointValid(x, y))
+            img.setRGB(x, y, pixel.getRGB());
+
+    }
+
+    private boolean isPointValid(int x, int y) {
+        return (x < width && x >= 0 && y < height && y >= 0);
+    }
 
 }
