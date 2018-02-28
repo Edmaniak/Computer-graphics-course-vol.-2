@@ -1,14 +1,27 @@
 package model;
 
 import transforms.Mat4;
+import transforms.Point2D;
 import transforms.Point3D;
 import transforms.Vec3D;
 
 import java.awt.*;
 
 public class Vertex {
+
     private final Point3D position;
-    private Color color = Color.WHITE;
+    private Color color = Color.WHITE; //add final def.
+    private Vec3D normal;
+    private Point2D texUV;
+    private double one;
+
+    public Vertex(Point3D position, Color color, Vec3D normal, Point2D texUV, double one) {
+        this.position = position;
+        this.color = color;
+        this.normal = normal;
+        this.texUV = texUV;
+        this.one = 1.0;
+    }
 
     public Vertex(Point3D position, Color color) {
         this.position = position;
@@ -38,14 +51,16 @@ public class Vertex {
         return new Vertex(new Point3D(new Vec3D(position).normalized().get()));
     }
 
-
-
     public Point3D getPosition() {
         return position;
     }
 
     public Vertex mul(Mat4 m) {
         return new Vertex(new Point3D(position).mul(m));
+    }
+
+    public Vertex mul(double t) {
+        return new Vertex(position.mul(t), color.mul(t), normal.mul(t), texUV.mul(t), one * t);
     }
 
     public Vertex dehomog() {
@@ -76,5 +91,13 @@ public class Vertex {
 
     public double getZ() {
         return position.getZ();
+    }
+
+    public Vec3D getNormal() {
+        return normal;
+    }
+
+    public Point2D getTexUV() {
+        return texUV;
     }
 }
