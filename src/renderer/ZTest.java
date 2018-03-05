@@ -1,4 +1,4 @@
-package schoolClasses;
+package renderer;
 
 import java.awt.image.BufferedImage;
 import java.util.Optional;
@@ -6,11 +6,11 @@ import java.util.Optional;
 import transforms.Col;
 
 public class ZTest {
-    private final Zbuffer zBuffer;
+    private final ZBuffer2 zBuffer;
     private final ImageBuffer imgBuffer;
 
     public ZTest(BufferedImage img) {
-        zBuffer = new Zbuffer(img);
+        zBuffer = new ZBuffer2(img);
         imgBuffer = new ImageBuffer(img);
     }
 
@@ -33,5 +33,13 @@ public class ZTest {
 
     public int getHeight() {
         return zBuffer.getHeight();
+    }
+
+    public ImageBuffer getImgBuffer() {
+        return imgBuffer;
+    }
+
+    public ZBuffer2 getzBuffer() {
+        return zBuffer;
     }
 }

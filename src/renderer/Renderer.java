@@ -1,6 +1,7 @@
 package renderer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,9 @@ import model.light.AmbientLight;
 import model.light.Light;
 import model.light.PointLight;
 import model.objects.Solid;
+import renderer.raster.Rasterizer;
 import renderer.raster.RasterizerLine;
+import renderer.raster.RasterizerSchool;
 import renderer.raster.RasterizerTriangle;
 import transforms.*;
 import utilities.Util;
@@ -25,16 +28,16 @@ public class Renderer {
     private Mat4 model = new Mat4Identity();
     private Mat4 view;
     private Mat4 projection;
-    private final RasterizerLine rl;
-    private final RasterizerTriangle rt;
-    private final ZBuffer zb;
+   // private final RasterizerLine rl;
+    private final RasterizerSchool rasterizer;
+    private final ZTest zTest;
     private final List<PointLight> lights;
     private AmbientLight ambientLight;
 
-    public Renderer(List<PointLight> lights, AmbientLight ambientLight) {
-        this.zb = new ZBuffer(App.WIDTH, App.HEIGHT);
-        this.rl = new RasterizerLine(App.gui.getCanvas3D().getMainBuffer(), zb);
-        this.rt = new RasterizerTriangle(App.gui.getCanvas3D().getMainBuffer(), zb, lights, ambientLight);
+    public Renderer(BufferedImage img,List<PointLight> lights, AmbientLight ambientLight) {
+        this.zTest = new ZTest(img);
+        //this.rl = new RasterizerLine(App.gui.getCanvas3D().getMainBuffer(), zb);
+        this.rasterizer = new RasterizerSchool(zTest);
         this.lights = lights;
         this.ambientLight = ambientLight;
     }
@@ -89,11 +92,10 @@ public class Renderer {
 
         }
 
-
         for (Solid solid : scene.getSolids().values())
             renderSolid(solid);
 
-        zb.clear();
+        zTest.getzBuffer().clear();
     }
 
     private void line(Vertex origin, Vertex end, Material material) {
@@ -115,34 +117,12 @@ public class Renderer {
         vec1 = Util.project2D(vec1);
         vec2 = Util.project2D(vec2);
 
-        rl.rasterize(vec1, vec2);
+       // rl.rasterize(vec1, vec2);
 
     }
 
     private void triangle(Vertex v1, Vertex v2, Vertex v3, Material material) {
-
-        //dehomogenizace
-        if (!isDehomogenizable(v1) || !isDehomogenizable(v2) || !isDehomogenizable(v3))
-            return;
-
-        Vertex vec1 = v1.dehomog();
-        Vertex vec2 = v2.dehomog();
-        Vertex vec3 = v3.dehomog();
-
-        // clip
-        if (!clipTest(vec1))
-            return;
-        if (!clipTest(vec2))
-            return;
-        if (!clipTest(vec3))
-            return;
-
-        // projekce do rastru
-        vec1 = Util.project2D(vec1);
-        vec2 = Util.project2D(vec2);
-        vec3 = Util.project2D(vec3);
-
-        rt.rasterize(vec1, vec2, vec3, material);
+        rasterizer.rasterize(v1, v2, v3);
 
     }
 

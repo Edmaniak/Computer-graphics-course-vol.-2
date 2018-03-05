@@ -1,20 +1,23 @@
-package schoolClasses;
+package renderer;
+
+import schoolClasses.Raster;
 
 import java.awt.image.BufferedImage;
 import java.util.Optional;
 
-public class Zbuffer implements Raster<Double> {
+public class ZBuffer2 implements Raster<Double> {
     private final int width;
     private final int height;
     private final double[][] zBuffer;
 
-    public Zbuffer(int width, int height) {
+    public ZBuffer2(int width, int height) {
         this.width = width;
         this.height = height;
         zBuffer = new double[width][height];
+        clear();
     }
 
-    public Zbuffer(BufferedImage img) {
+    public ZBuffer2(BufferedImage img) {
         this(img.getWidth(), img.getHeight());
     }
 
@@ -43,6 +46,14 @@ public class Zbuffer implements Raster<Double> {
 
     private boolean isPointValid(int x, int y) {
         return (x < width && x >= 0 && y < height && y >= 0);
+    }
+
+    public void clear() {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                zBuffer[i][j] = 1;
+            }
+        }
     }
 
 }

@@ -3,6 +3,7 @@ package model.objects;
 import material.Material;
 import model.Part;
 import model.Vertex;
+import transforms.Col;
 import transforms.Mat4;
 import transforms.Vec3D;
 
@@ -13,15 +14,15 @@ public class Cube extends Solid {
 
     private final Vertex[] vertex_definition = {
             // dolní podstava
-            new Vertex(0, 0, 0, Color.RED),
-            new Vertex(1, 0, 0, Color.RED),
-            new Vertex(1, 0, 1, Color.RED),
-            new Vertex(0, 0, 1, Color.RED),
+            new Vertex(0, 0, 0, new Col(255,0,0)),
+            new Vertex(1, 0, 0, new Col(255,0,0)),
+            new Vertex(1, 0, 1, new Col(255,0,0)),
+            new Vertex(0, 0, 1, new Col(255,0,0)),
             // horní podstava
-            new Vertex(0, 1, 0, Color.BLUE),
-            new Vertex(1, 1, 0, Color.BLUE),
-            new Vertex(1, 1, 1, Color.BLUE),
-            new Vertex(0, 1, 1, Color.BLUE)
+            new Vertex(0, 1, 0, new Col(0,0,255)),
+            new Vertex(1, 1, 0, new Col(0,0,255)),
+            new Vertex(1, 1, 1, new Col(0,0,255)),
+            new Vertex(0, 1, 1, new Col(0,0,255))
     };
     private final Integer[] index_definition = {
             // triangles

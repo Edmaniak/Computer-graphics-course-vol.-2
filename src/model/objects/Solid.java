@@ -3,6 +3,7 @@ package model.objects;
 import material.Material;
 import model.Part;
 import model.Vertex;
+import transforms.Col;
 import transforms.Vec3D;
 
 import java.awt.*;
@@ -63,7 +64,7 @@ public abstract class Solid extends SceneObject {
     public void randomizeColors() {
         Random r = new Random();
         for (Vertex v : vertexBuffer) {
-            v.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
+            v.setColor(new Col(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
         }
     }
 

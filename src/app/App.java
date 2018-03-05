@@ -5,8 +5,10 @@ import material.Material;
 import model.light.PointLight;
 import model.objects.*;
 import model.Scene;
+import renderer.Renderer;
 import transforms.Point3D;
 import transforms.Vec3D;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +38,7 @@ public class App {
             gui = new MainFrame(WIDTH, HEIGHT);
 
         // Scene init
-        scene = new Scene(Scene.Projection.PERSPECTIVE);
+        scene = new Scene(gui.getCanvas3D().getMainBuffer(),Scene.Projection.PERSPECTIVE);
 
         //Materials
         Material brass = new Material(Color.YELLOW, 0.3, 0.9, 0.6, 27);

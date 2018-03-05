@@ -3,6 +3,7 @@ package renderer.raster;
 
 
 import model.Vertex;
+import renderer.ImageBuffer;
 import renderer.ZBuffer;
 import java.awt.image.BufferedImage;
 
@@ -10,14 +11,9 @@ import java.awt.image.BufferedImage;
 
 public abstract class Rasterizer {
 
-    protected final BufferedImage img;
-    protected final ZBuffer zb;
 
 
-    public Rasterizer(BufferedImage img, ZBuffer zb) {
-        this.img = img;
-        this.zb = zb;
-    }
+
 
     protected Vertex[] sort(Vertex[] array) {
 

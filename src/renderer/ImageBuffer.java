@@ -1,5 +1,6 @@
-package schoolClasses;
+package renderer;
 
+import schoolClasses.Raster;
 import transforms.Col;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
@@ -41,6 +42,10 @@ public class ImageBuffer implements Raster<Col> {
 
     private boolean isPointValid(int x, int y) {
         return (x < width && x >= 0 && y < height && y >= 0);
+    }
+
+    public void clear() {
+
     }
 
 }

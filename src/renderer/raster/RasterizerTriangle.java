@@ -21,7 +21,7 @@ public class RasterizerTriangle extends Rasterizer {
     private AmbientLight ambientLight;
 
     public RasterizerTriangle(BufferedImage img, ZBuffer zb, List<PointLight> lights, AmbientLight ambientLight) {
-        super(img, zb);
+        super();
         this.lights = lights;
         this.ambientLight = ambientLight;
     }
@@ -90,12 +90,12 @@ public class RasterizerTriangle extends Rasterizer {
                     int red = r > 0 ? r : 0;
                     int blue = b > 0 ? b : 0;
                     int green = g > 0 ? g : 0;
-
+/*
                     if (zb.getDepth(x, y) >= z && z >= 0) {
 
                         img.setRGB(x, y, new Color(red, green, blue).hashCode());
                         zb.setDepth(x, y, z);
-                    }
+                    }*/
                 }
             }
         }

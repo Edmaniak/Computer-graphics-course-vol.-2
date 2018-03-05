@@ -12,7 +12,7 @@ import utilities.Util;
 public class RasterizerLine extends Rasterizer {
 
     public RasterizerLine(BufferedImage img, ZBuffer zb) {
-        super(img, zb);
+
     }
 
     public void rasterize(Vertex vec1, Vertex vec2) {
@@ -24,11 +24,11 @@ public class RasterizerLine extends Rasterizer {
 
             int x = Util.lerpInt(vertx[0].getX(), vertx[1].getX(), s1);
             double z = Util.lerpDouble(vertx[0].getZ(), vertx[1].getZ(), s1);
-
+/*
             if (zb.getDepth(x, y) >= z && z >= 0) {
                 img.setRGB(x, y, Color.BLACK.hashCode());
                 zb.setDepth(x, y, z);
-            }
+            }*/
         }
     }
 

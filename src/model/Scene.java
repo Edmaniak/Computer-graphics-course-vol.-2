@@ -5,6 +5,7 @@ import gui.Canvas;
 import model.light.AmbientLight;
 import model.light.PointLight;
 import model.objects.Solid;
+import renderer.ImageBuffer;
 import renderer.Renderer;
 import renderer.ZBuffer;
 import renderer.raster.RasterizerLine;
@@ -49,17 +50,17 @@ public class Scene {
 
     private AmbientLight ambientLight = new AmbientLight(Color.WHITE, 0.3);
 
-    public Scene(Projection projection) {
+    public Scene(BufferedImage img,Projection projection) {
         this.projection = projection;
         solids = new HashMap<>();
         lights = new ArrayList<>();
-        renderer = new Renderer(lights, ambientLight);
+        renderer = new Renderer(img,lights, ambientLight);
         setProjection(projection);
         camera = new Camera(INITIAL_CAMERA_POSITION, INITIAL_CAMERA_AZIMUTH, INITIAL_CAMERA_ZENITH, 1, true);
     }
 
-    public Scene(Projection projection, AmbientLight ambientLight) {
-        this(projection);
+    public Scene(BufferedImage img,Projection projection, AmbientLight ambientLight) {
+        this(img, projection);
         this.ambientLight = ambientLight;
     }
 

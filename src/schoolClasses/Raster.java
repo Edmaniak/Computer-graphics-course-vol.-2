@@ -8,6 +8,7 @@ public interface Raster<PixelType> {
 	int getHeight();
 	Optional<PixelType> getPixel(int x, int y);
 	void setPixel(PixelType pixel, int x, int y);
+	void clear();
 
 	
 }

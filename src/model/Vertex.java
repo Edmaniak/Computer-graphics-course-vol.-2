@@ -1,21 +1,18 @@
 package model;
 
-import transforms.Mat4;
-import transforms.Point2D;
-import transforms.Point3D;
-import transforms.Vec3D;
+import transforms.*;
 
 import java.awt.*;
 
 public class Vertex {
 
     private final Point3D position;
-    private Color color = Color.WHITE; //add final def.
+    private Col color;
     private Vec3D normal;
     private Point2D texUV;
     private double one;
 
-    public Vertex(Point3D position, Color color, Vec3D normal, Point2D texUV, double one) {
+    public Vertex(Point3D position, Col color, Vec3D normal, Point2D texUV, double one) {
         this.position = position;
         this.color = color;
         this.normal = normal;
@@ -23,12 +20,12 @@ public class Vertex {
         this.one = 1.0;
     }
 
-    public Vertex(Point3D position, Color color) {
+    public Vertex(Point3D position, Col color) {
         this.position = position;
         this.color = color;
     }
 
-    public Vertex(Vec3D position, Color color) {
+    public Vertex(Vec3D position, Col color) {
         this.position = new Point3D(position.getX(), position.getY(), position.getZ());
         this.color = color;
     }
@@ -37,7 +34,7 @@ public class Vertex {
         this.position = position;
     }
 
-    public Vertex(double x, double y, double z, Color color) {
+    public Vertex(double x, double y, double z, Col color) {
         this.position = new Point3D(x, y, z);
         this.color = color;
     }
@@ -63,16 +60,25 @@ public class Vertex {
         return new Vertex(position.mul(t), color.mul(t), normal.mul(t), texUV.mul(t), one * t);
     }
 
+    public Vertex add(Vertex v) {
+        return new Vertex(
+                position.add(v.getPosition()),
+                color.add(v.getColor()),
+                normal.add(v.getNormal()),
+                texUV.add(new Vec2D(v.getX(),v.getY())),
+                one + 1);
+    }
+
     public Vertex dehomog() {
         Vec3D pos = position.dehomog().get();
         return new Vertex(pos, this.color);
     }
 
-    public Color getColor() {
+    public Col getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(Col color) {
         this.color = color;
     }
 
@@ -100,4 +106,6 @@ public class Vertex {
     public Point2D getTexUV() {
         return texUV;
     }
+
+
 }
