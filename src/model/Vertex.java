@@ -17,7 +17,7 @@ public class Vertex {
         this.color = color;
         this.normal = normal;
         this.texUV = texUV;
-        this.one = 1.0;
+        this.one = one;
     }
 
     public Vertex(Point3D position, Col color) {
@@ -66,7 +66,7 @@ public class Vertex {
                 color.add(v.getColor()),
                 normal.add(v.getNormal()),
                 texUV.add(new Vec2D(v.getX(),v.getY())),
-                one + 1);
+                one + v.getOne());
     }
 
     public Vertex dehomog() {
@@ -101,6 +101,10 @@ public class Vertex {
 
     public Vec3D getNormal() {
         return normal;
+    }
+
+    public double getOne() {
+        return one;
     }
 
     public Point2D getTexUV() {

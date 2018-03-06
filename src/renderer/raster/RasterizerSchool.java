@@ -33,19 +33,19 @@ public class RasterizerSchool {
         Vertex vC = v3;
 
         // Sorting
-        if(vA.getY() > vB.getY()) {
+        if (vA.getY() > vB.getY()) {
             Vertex pom = vB;
             vB = vA;
             vA = pom;
         }
 
-        if(vA.getY() > vC.getY()) {
+        if (vA.getY() > vC.getY()) {
             Vertex pom = vC;
             vC = vA;
             vA = pom;
         }
 
-        if(vB.getY() > vC.getY()) {
+        if (vB.getY() > vC.getY()) {
             Vertex pom = vC;
             vC = vB;
             vB = pom;
@@ -57,21 +57,23 @@ public class RasterizerSchool {
         Vec3D c = project2D(v3.getPosition().dehomog().get());
 
         for (int y = (int) a.getY() + 1; y <= c.getY(); y++) {
+
             // TODO HLIDAT MEZE OBRAZOVKY
-            if(y > zTest.getHeight())
-                return;
+            if (y > zTest.getHeight() || y < 0)
+                continue;
 
             double s1 = (y - a.getY()) / (b.getY() - a.getY());
             double s2 = (y - a.getY()) / (c.getY() - a.getY());
 
+            // Zbytecne
             double x1 = a.getX() * (1 - s1) + a.getX() * s1;
             double x2 = a.getX() * (1 - s2) + c.getX() * s2;
 
             Vec3D vAB = a.mul(1 - s1).add(b.mul(s1));
             Vec3D vAC = a.mul(1 - s2).add(c.mul(s2));
 
-            Vertex vertexAB = vA.mul(1-s1).add(vB.mul(s1));
-            Vertex vertexAC = vA.mul(1-s2).add(vC.mul(s2));
+            Vertex vertexAB = vA.mul(1 - s1).add(vB.mul(s1));
+            Vertex vertexAC = vA.mul(1 - s2).add(vC.mul(s2));
 
             // Swaping x,z coordinates when we need to draw the line from the other end
             if (vAC.getX() < vAB.getX()) {
@@ -81,9 +83,9 @@ public class RasterizerSchool {
             }
 
             for (int x = (int) vAB.getX(); x < vAC.getX(); x++) {
-                double s3 = (x - x1) / (x2 - x1);
+                double s3 = (x - vAB.getX()) / (x2 - vAC.getX());
                 double z = vAB.getZ() * (1 - s3) + vAC.getZ() * s3;
-                Vertex vertexABC = vertexAB.mul(1-s3).add(vertexAC.mul(s3));
+                Vertex vertexABC = vertexAB.mul(1 - s3).add(vertexAC.mul(s3));
                 //zTest.test(x, y, z, shader.apply(vertexABC));
 
             }
