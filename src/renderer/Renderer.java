@@ -99,7 +99,10 @@ public class Renderer {
     }
 
     private void line(Vertex origin, Vertex end, Material material) {
-
+    	// orezat
+    	
+    	
+    	
         // dehomogenizace
         if (!isDehomogenizable(origin) || !isDehomogenizable(end))
             return;
