@@ -10,9 +10,9 @@ import java.util.function.Function;
 public class RasterizerSchool {
 
     private final ZTest zTest;
-    //private final Function<Vertex, Col> shader;
+    private final Function<Vertex, Col> shader;
 
-    public RasterizerSchool(ZTest zTest) {
+    public RasterizerSchool(ZTest zTest, Function<Vertex, Col> shader) {
         this.zTest = zTest;
     }
 
