@@ -59,11 +59,16 @@ public class Vertex {
     public Vertex mul(double t) {
         return new Vertex(position.mul(t), color.mul(t), normal.mul(t), texUV.mul(t), one * t);
     }
+    
+    public Optional<Vertex> dehomog() {
+    	if(this.getPosition())
+    	return Optional.of(this.mul(1/this.getPosition().getW()));
+    }
 
     public Vertex add(Vertex v) {
         return new Vertex(
                 position.add(v.getPosition()),
-                color.add(v.getColor()),
+                (color == null || v.getColor() == null) ? null : color.add(v.getColor()),
                 normal.add(v.getNormal()),
                 texUV.add(new Vec2D(v.getX(),v.getY())),
                 one + v.getOne());

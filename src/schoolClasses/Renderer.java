@@ -11,6 +11,8 @@ import transforms.Vec2D;
 import transforms.Vec3D;
 
 public class Renderer {
+	
+	// Jirka Kalous 
 
 	public static void main(String[] args) {
 		ZTest zTest = new ZTest(image);
