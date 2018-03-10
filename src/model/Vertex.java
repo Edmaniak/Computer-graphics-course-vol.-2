@@ -41,6 +41,14 @@ public class Vertex {
         this(x, y, z, new Col(0, 0, 0));
     }
 
+    public Vertex(double x, double y, double z, Point2D texUV) {
+        this(new Point3D(x, y, z), new Col(0, 0, 0), new Vec3D(0, 0, 0), texUV);
+    }
+
+    public Vertex(double x, double y, double z, Col color, Point2D texUV) {
+        this(new Point3D(x, y, z), color, new Vec3D(0, 0, 0), texUV);
+    }
+
     public Vertex normalize() {
         return new Vertex(new Point3D(new Vec3D(position).normalized().get()));
     }
@@ -71,11 +79,6 @@ public class Vertex {
                 texUV.add(new Vec2D(v.getX(), v.getY())),
                 one + v.getOne());
     }
-/*
-    public Vertex dehomog() {
-        Vec3D pos = position.dehomog().get();
-        return new Vertex(pos, this.color);
-    }*/
 
     public Col getColor() {
         return color;

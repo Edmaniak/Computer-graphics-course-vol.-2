@@ -128,6 +128,7 @@ public class RasterizerSchool {
             }
 
             for (int x = (int) vBC.getX() + 1; x <= vAC.getX(); x++) {
+
                 if (x > zTest.getWidth() || x < 0)
                     continue;
 
@@ -140,7 +141,44 @@ public class RasterizerSchool {
 
     }
 
-    private void rasterizeTriangle() {
+    public void rasterize(Vertex v1, Vertex v2) {
+
+        if (!v1.dehomog().isPresent())
+            return;
+
+        if (!v2.dehomog().isPresent())
+            return;
+
+        if(v1.getY() < v2.getY()) {
+            Vertex pom = v1;
+            v1 = v2;
+            v2 = pom;
+        }
+
+        Vertex vA = v1;
+        Vertex vB = v2;
+
+        Vec3D a = project2D(v1.getPosition().dehomog().get());
+        Vec3D b = project2D(v2.getPosition().dehomog().get());
+
+        if (b.getX() < a.getX()) {
+            Vec3D pom1 = b;
+            Vertex pom2 = vB;
+            b = a;
+            a = pom1;
+            vB = vA;
+            vA = pom2;
+        }
+
+        for (int y = (int) a.getY() ; y <= b.getY(); y++) {
+
+            double s1 = (y - a.getY()) / (b.getY() - a.getY());
+
+            Vec3D vAB = a.mul(1 - s1).add(b.mul(s1));
+            Vertex vertexAB = vA.mul(1 - s1).add(vB.mul(s1));
+
+            zTest.test(vAB.getX(), y, vAB.getZ(), shader.apply(vertexAB));
+        }
 
     }
 

@@ -27,6 +27,10 @@ public class ZTest {
         }
     }
 
+    public void test(double x, double y, double z, Col color) {
+        test((int) x, (int) y, (int) z, color);
+    }
+
     public int getWidth() {
         return zBuffer.getWidth();
     }

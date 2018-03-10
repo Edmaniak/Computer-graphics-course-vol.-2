@@ -5,7 +5,7 @@ import java.util.function.Function;
 import model.Vertex;
 import transforms.Col;
 
-public class MyShader implements Function<Vertex, Col> {
+public class ShaderColor implements Function<Vertex, Col> {
 
 	@Override
 	public Col apply(Vertex t) {

@@ -91,32 +91,12 @@ public class Renderer {
     }
 
     private void line(Vertex origin, Vertex end, Material material) {
-    	// orezat
-    	
-    	/*
-    	
-        // dehomogenizace
-        if (!isDehomogenizable(origin) || !isDehomogenizable(end))
-            return;
-
-        //Vertex vec1 = origin.dehomog();
-        //Vertex vec2 = end.dehomog();
-
-        // orez
-        if (!clipTest(vec1))
-            return;
-        if (!clipTest(vec2))
-            return;
-
-        // projekce do rastru
-        vec1 = Util.project2D(vec1);
-        vec2 = Util.project2D(vec2);
-
-       // rl.rasterize(vec1, vec2);*/
-
+    	// TODO orez
+        rasterizer.rasterize(origin, end);
     }
 
     private void triangle(Vertex v1, Vertex v2, Vertex v3, Material material) {
+        // TODO orez
         rasterizer.rasterize(v1, v2, v3);
     }
 

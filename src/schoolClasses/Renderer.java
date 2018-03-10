@@ -1,22 +1,12 @@
 package schoolClasses;
 
-import model.Vertex;
-import renderer.ZTest;
-import renderer.raster.MyShader;
-import renderer.raster.RasterizerSchool;
-import renderer.raster.RasterizerTriangle;
-import transforms.Col;
-import transforms.Point3D;
-import transforms.Vec2D;
-import transforms.Vec3D;
-
 public class Renderer {
 	
 	// Jirka Kalous 
 
 	public static void main(String[] args) {
 		/*ZTest zTest = new ZTest(image);
-		MyShader ms = MyShader(); 
+		ShaderColor ms = ShaderColor();
 
 		RasterizerSchool rt = new RasterizerSchool(zTest, t -> t.getColor().mul(1 / t.getOne()));
 

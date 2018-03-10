@@ -1,6 +1,7 @@
 package model.objects;
 
 import material.Material;
+import material.Texture;
 import model.Part;
 import model.Vertex;
 import transforms.Col;
@@ -19,9 +20,10 @@ public abstract class Solid extends SceneObject {
     private final List<Part> parts = new ArrayList<>();
 
     private Material material;
+    private Texture texture;
 
     private Solid(Vec3D pivotPoint, Vec3D initialPosition) {
-        super(pivotPoint,initialPosition);
+        super(pivotPoint, initialPosition);
     }
 
     public Solid(Material material, Vec3D pivotPoint, Vec3D initialPosition) {
@@ -37,6 +39,10 @@ public abstract class Solid extends SceneObject {
     public Solid(Color color, Vec3D initialPosition) {
         super(initialPosition);
         this.material = new Material(color);
+    }
+    public Solid(Texture tex, Vec3D initialPosition) {
+        super(initialPosition);
+        this.texture = tex;
     }
 
 
@@ -68,9 +74,21 @@ public abstract class Solid extends SceneObject {
         }
     }
 
+    public void randomizeColors(int consRed, int consGreen, int consBlue) {
+        Random r = new Random();
+        for (Vertex v : vertexBuffer) {
+            v.setColor(new Col(
+                    r.nextInt(consRed) ,
+                    r.nextInt(consGreen) ,
+                    r.nextInt(consBlue)
+            ));
+        }
+    }
+
     /**
      * We define solids in a very bad way. Since buffers are set as array fields :(
      * This function builds the child's specific geometry after super() call
+     *
      * @param vertexBuffer
      * @param indexBuffer
      * @param parts

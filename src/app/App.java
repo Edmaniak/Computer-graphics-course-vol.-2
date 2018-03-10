@@ -2,6 +2,7 @@ package app;
 
 import gui.MainFrame;
 import material.Material;
+import material.Texture;
 import model.light.PointLight;
 import model.objects.*;
 import model.Scene;
@@ -45,13 +46,16 @@ public class App {
         Material difuse = new Material(Color.RED, 0.3, 0, 0.7, 20);
 
         // Models
+        Texture bg = new Texture("res/fim.jpg");
         Plane plane = new Plane(difuse, new Vec3D());
-        TetraHedron tetraHedron = new TetraHedron(difuse, new Vec3D());
-        tetraHedron.randomizeColors();
+        plane.transform.rotate(Math.PI / 2,0,0);
+        plane.transform.translate(new Vec3D(0,0,2));
 
         Cube cube = new Cube(brass, new Vec3D(-1.9, -1.9, 0));
-        // IcoSphere icoSphere = new IcoSphere(Color.CYAN, new Vec3D(0, 0, 0), 1);
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
+
+        BicubicPlate plate = new BicubicPlate(Color.WHITE,new Vec3D(0,0,1),5);
+        plate.transform.translate(new Vec3D(0,0,-1));
 
 
         // Lights
@@ -60,21 +64,20 @@ public class App {
 
 
         cube.randomizeColors();
-        tetraHedron.randomizeColors();
 
-        //scene.addSolid("circle", circleCurve);
         scene.addSolid("plane", plane);
+
         scene.addSolid("axis", objectAxis);
-        scene.addSolid("tetrahedron", tetraHedron);
 
         scene.addSolid("cube", cube);
-        //scene.addSolid("icosphere", icoSphere);
+        scene.addSolid("bicubic",plate);
+
         scene.addLight(light1);
-        //scene.addSolid("bezier", bezierCurve);
 
-        setActiveSolid(tetraHedron);
 
-        // Protoze camera je v jinych souradnicich
+        setActiveSolid(cube);
+
+        // HACK Protoze camera je v jinych souradnicich
         resetToCamera();
         renderScene();
 
