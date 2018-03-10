@@ -37,7 +37,7 @@ public class Renderer {
     public Renderer(BufferedImage img,List<PointLight> lights, AmbientLight ambientLight) {
         this.zTest = new ZTest(img);
         //this.rl = new RasterizerLine(App.gui.getCanvas3D().getMainBuffer(), zb);
-        this.rasterizer = new RasterizerSchool(zTest);
+        this.rasterizer = new RasterizerSchool(zTest, v -> v.getColor().mul(1 / v.getOne()));
         this.lights = lights;
         this.ambientLight = ambientLight;
     }
@@ -64,7 +64,6 @@ public class Renderer {
                 }
 
                 case TRIANGLE: {
-                    System.out.println(sld);
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
                         triangle(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)),
                                 vb.get(sld.indexes().get(i + 2)), sld.getMaterial());
@@ -76,20 +75,13 @@ public class Renderer {
         vb.clear();
     }
 
-
-    public void renderVertex() {
-
-    }
-
     public void renderScene(Scene scene) {
 
         setView(new Mat4(scene.getCamera().getViewMatrix()));
-
         for (int i = 0; i < lights.size(); i++) {
             Mat4 matMVP = model.mul(view).mul(projection);
             Point3D position = new Point3D(lights.get(i).getPointPosition());
             lights.set(i, new PointLight(lights.get(i), new Vertex(new Point3D(position.mul(matMVP).dehomog().get()))));
-
         }
 
         for (Solid solid : scene.getSolids().values())
@@ -101,14 +93,14 @@ public class Renderer {
     private void line(Vertex origin, Vertex end, Material material) {
     	// orezat
     	
-    	
+    	/*
     	
         // dehomogenizace
         if (!isDehomogenizable(origin) || !isDehomogenizable(end))
             return;
 
-        Vertex vec1 = origin.dehomog();
-        Vertex vec2 = end.dehomog();
+        //Vertex vec1 = origin.dehomog();
+        //Vertex vec2 = end.dehomog();
 
         // orez
         if (!clipTest(vec1))
@@ -120,23 +112,13 @@ public class Renderer {
         vec1 = Util.project2D(vec1);
         vec2 = Util.project2D(vec2);
 
-       // rl.rasterize(vec1, vec2);
+       // rl.rasterize(vec1, vec2);*/
 
     }
 
     private void triangle(Vertex v1, Vertex v2, Vertex v3, Material material) {
         rasterizer.rasterize(v1, v2, v3);
-
     }
-
-    private boolean clipTest(Vertex v) {
-        return !(v.getX() < -1) && !(v.getX() > 1) && !(v.getY() < -1) && !(v.getY() > 1) && !(v.getZ() < 0) && !(v.getZ() > 1);
-    }
-
-    private boolean isDehomogenizable(Vertex v) {
-        return v.getPosition().dehomog().isPresent();
-    }
-
 
     private void setModel(Mat4 model) {
         this.model = model;

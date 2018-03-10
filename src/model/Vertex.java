@@ -3,13 +3,14 @@ package model;
 import transforms.*;
 
 import java.awt.*;
+import java.util.Optional;
 
 public class Vertex {
 
     private final Point3D position;
     private Col color;
-    private Vec3D normal;
-    private Point2D texUV;
+    private final Vec3D normal;
+    private final Point2D texUV;
     private double one;
 
     public Vertex(Point3D position, Col color, Vec3D normal, Point2D texUV, double one) {
@@ -20,28 +21,24 @@ public class Vertex {
         this.one = one;
     }
 
-    public Vertex(Point3D position, Col color) {
-        this.position = position;
-        this.color = color;
+    public Vertex(Point3D position, Col color, Vec3D normal, Point2D texUV) {
+        this(position, color, normal, texUV, 1);
     }
 
-    public Vertex(Vec3D position, Col color) {
-        this.position = new Point3D(position.getX(), position.getY(), position.getZ());
-        this.color = color;
+    public Vertex(Point3D position, Col color) {
+        this(position, color, new Vec3D(), new Point2D());
     }
 
     public Vertex(Point3D position) {
-        this.position = position;
+        this(position, new Col(0, 0, 0));
     }
 
     public Vertex(double x, double y, double z, Col color) {
-        this.position = new Point3D(x, y, z);
-        this.color = color;
+        this(new Point3D(x, y, z), color);
     }
 
     public Vertex(double x, double y, double z) {
-        this.position = new Point3D(x, y, z);
-        this.color = color;
+        this(x, y, z, new Col(0, 0, 0));
     }
 
     public Vertex normalize() {
@@ -53,16 +50,17 @@ public class Vertex {
     }
 
     public Vertex mul(Mat4 m) {
-        return new Vertex(new Point3D(position).mul(m));
+        return new Vertex(new Point3D(position).mul(m), color, normal, texUV, one);
     }
 
     public Vertex mul(double t) {
         return new Vertex(position.mul(t), color.mul(t), normal.mul(t), texUV.mul(t), one * t);
     }
-    
+
     public Optional<Vertex> dehomog() {
-    	if(this.getPosition())
-    	return Optional.of(this.mul(1/this.getPosition().getW()));
+        if (this.getPosition().dehomog().isPresent())
+            return Optional.of(this.mul(1 / this.getPosition().getW()));
+        return Optional.empty();
     }
 
     public Vertex add(Vertex v) {
@@ -70,14 +68,14 @@ public class Vertex {
                 position.add(v.getPosition()),
                 (color == null || v.getColor() == null) ? null : color.add(v.getColor()),
                 normal.add(v.getNormal()),
-                texUV.add(new Vec2D(v.getX(),v.getY())),
+                texUV.add(new Vec2D(v.getX(), v.getY())),
                 one + v.getOne());
     }
-
+/*
     public Vertex dehomog() {
         Vec3D pos = position.dehomog().get();
         return new Vertex(pos, this.color);
-    }
+    }*/
 
     public Col getColor() {
         return color;

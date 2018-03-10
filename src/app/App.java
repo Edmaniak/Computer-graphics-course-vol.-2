@@ -45,9 +45,10 @@ public class App {
         Material difuse = new Material(Color.RED, 0.3, 0, 0.7, 20);
 
         // Models
+        Plane plane = new Plane(difuse, new Vec3D());
         TetraHedron tetraHedron = new TetraHedron(difuse, new Vec3D());
         tetraHedron.randomizeColors();
-        Plane plane = new Plane(difuse, new Vec3D());
+
         Cube cube = new Cube(brass, new Vec3D(-1.9, -1.9, 0));
         // IcoSphere icoSphere = new IcoSphere(Color.CYAN, new Vec3D(0, 0, 0), 1);
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
@@ -62,11 +63,11 @@ public class App {
         tetraHedron.randomizeColors();
 
         //scene.addSolid("circle", circleCurve);
+        scene.addSolid("plane", plane);
         scene.addSolid("axis", objectAxis);
         scene.addSolid("tetrahedron", tetraHedron);
-        scene.addSolid("plane", plane);
+
         scene.addSolid("cube", cube);
-        scene.addSolid("lightCube", lightCube);
         //scene.addSolid("icosphere", icoSphere);
         scene.addLight(light1);
         //scene.addSolid("bezier", bezierCurve);

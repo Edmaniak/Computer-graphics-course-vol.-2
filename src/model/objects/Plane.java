@@ -3,6 +3,7 @@ package model.objects;
 import material.Material;
 import model.Part;
 import model.Vertex;
+import transforms.Col;
 import transforms.Vec3D;
 
 import java.awt.*;
@@ -12,10 +13,10 @@ public class Plane extends Solid {
 
     private final Vertex[] vertex_definition = {
             // two triangles
-            new Vertex(-2, 0, -2),
-            new Vertex(2, 0, -2),
-            new Vertex(-2, 0, 2),
-            new Vertex(2, 0, 2),
+            new Vertex(-2, 0, -2, new Col(255,0,0)),
+            new Vertex(2, 0, -2, new Col(255,255,0)),
+            new Vertex(-2, 0, 2, new Col(255,0,255)),
+            new Vertex(2, 0, 2, new Col(0,255,0)),
     };
 
     private final Integer[] index_definition = {
