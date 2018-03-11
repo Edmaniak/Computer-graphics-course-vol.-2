@@ -1,21 +1,18 @@
 package material;
 
+import transforms.Col;
+
 import java.awt.*;
 
 public class Material {
 
-    private Color color = Color.BLACK;
     private double ka = 0.5;
     private double ks = 0.5;
     private double kd = 0.5;
     private double h = 10;
 
     public Material() {
-        this(Color.BLACK);
-    }
 
-    public Material(Color color) {
-        this.color = color;
     }
 
     public Material(double ka, double ks, double kd, double h) {
@@ -23,19 +20,6 @@ public class Material {
         this.ks = ks;
         this.kd = kd;
         this.h = h;
-    }
-
-    public Material(Color color, double ka, double ks, double kd, double h) {
-        this(ka, ks, kd, h);
-        this.color = color;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public double getKa() {
@@ -70,15 +54,4 @@ public class Material {
         this.h = h;
     }
 
-    public int getIluminatedRed() {
-        return (int) (color.getRed() * ka);
-    }
-
-    public int getIluminatedBlue() {
-        return (int) (color.getBlue() * ka);
-    }
-
-    public int getIluminatedGreen() {
-        return (int) (color.getGreen() * ka);
-    }
 }

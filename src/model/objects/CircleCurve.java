@@ -2,6 +2,7 @@ package model.objects;
 
 import model.Part;
 import model.Vertex;
+import transforms.Col;
 import transforms.Point3D;
 import transforms.Vec3D;
 
@@ -9,7 +10,7 @@ import java.awt.*;
 
 public class CircleCurve extends Curve {
 
-    public CircleCurve(Color color, Vec3D initialPosition, Point3D center, double radius, int step) {
+    public CircleCurve(Col color, Vec3D initialPosition, Point3D center, double radius, int step) {
 
         super(color, new Vec3D(center), initialPosition, step);
 

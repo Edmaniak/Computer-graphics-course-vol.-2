@@ -7,6 +7,7 @@ import model.light.PointLight;
 import model.objects.*;
 import model.Scene;
 import renderer.Renderer;
+import transforms.Col;
 import transforms.Point3D;
 import transforms.Vec3D;
 
@@ -39,30 +40,31 @@ public class App {
             gui = new MainFrame(WIDTH, HEIGHT, this);
 
         // Scene init
-        scene = new Scene(gui.getCanvas3D().getMainBuffer(),Scene.Projection.PERSPECTIVE);
+        scene = new Scene(gui.getCanvas3D().getMainBuffer(), Scene.Projection.PERSPECTIVE);
 
         //Materials
-        Material brass = new Material(Color.YELLOW, 0.3, 0.9, 0.6, 27);
-        Material difuse = new Material(Color.RED, 0.3, 0, 0.7, 20);
+        Material brass = new Material(0.3, 0.9, 0.6, 27);
+        Material difuse = new Material(0.3, 0, 0.7, 20);
 
         // Models
         Texture bg = new Texture("res/fim.jpg");
         Plane plane = new Plane(bg, new Vec3D());
-        plane.transform.rotate(Math.PI / 2,0,0);
-        plane.transform.translate(new Vec3D(0,0,2));
+        plane.transform.rotate(Math.PI / 2, 0, 0);
+        plane.transform.translate(new Vec3D(0, 0, 2));
 
         Cube cube = new Cube(brass, new Vec3D(-1.9, -1.9, 0));
-        objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
+        objectAxis = new SceneObjectAxis(new Col(0, 255, 0), new Vec3D());
         cube.randomizeColors();
+        cube.setShaderType(Solid.ShaderType.LIGHTABLE);
 
-        BicubicPlate plate = new BicubicPlate(Color.WHITE,new Vec3D(0,0,1),5);
-        plate.transform.translate(new Vec3D(0,0,-1));
+        BicubicPlate plate = new BicubicPlate(new Col(255, 255, 255), new Vec3D(0, 0, 1), 5);
+        plate.transform.translate(new Vec3D(0, 0, -1));
+        plate.setShaderType(Solid.ShaderType.LIGHTABLE);
 
 
         // Lights
-        PointLight light1 = new PointLight(Color.WHITE, new Vec3D(0, 0, 2), 1);
+        PointLight light1 = new PointLight(new Col(255, 255, 255), new Vec3D(0, 0, 2), 1);
         Cube lightCube = new Cube(difuse, light1.getPosition());
-
 
 
         scene.addSolid("plane", plane);
@@ -70,7 +72,7 @@ public class App {
         scene.addSolid("axis", objectAxis);
 
         scene.addSolid("cube", cube);
-        scene.addSolid("bicubic",plate);
+        scene.addSolid("bicubic", plate);
 
         scene.addLight(light1);
 
@@ -98,7 +100,7 @@ public class App {
     }
 
     public void switchTo(String string) {
-        if(activeSolid != null)
+        if (activeSolid != null)
             setActiveSolid(scene.getSolid(string));
         renderScene();
     }

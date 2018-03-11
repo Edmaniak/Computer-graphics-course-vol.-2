@@ -2,16 +2,13 @@ package model.objects;
 
 import model.Part;
 import model.Vertex;
-import transforms.Bicubic;
-import transforms.Cubic;
-import transforms.Point3D;
-import transforms.Vec3D;
+import transforms.*;
 
 import java.awt.*;
 
 public class BicubicPlate extends Solid {
 
-    public BicubicPlate(Color color, Vec3D initialPosition, int step) {
+    public BicubicPlate(Col color, Vec3D initialPosition, int step) {
         super(color, initialPosition);
 
 
@@ -53,7 +50,7 @@ public class BicubicPlate extends Solid {
                 indexes().add((i * step) + (j + 1));
                 indexes().add((i + 1) * step + j);
 
-                //vrchni trojuhelnci
+                //vrchni trojuhelnici
                 indexes().add((i * step) + (j + 1));
                 indexes().add((i + 1) * step + j);
                 indexes().add((i + 1) * step + (j+1));

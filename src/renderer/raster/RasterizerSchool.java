@@ -175,16 +175,11 @@ public class RasterizerSchool {
         double dx = e.getX() - o.getX();
         double dy = e.getY() - o.getY();
 
-        BufferedImage img = zTest.getImgBuffer().getImg();
-        Graphics g = img.getGraphics();
-        g.drawLine((int)o.getX(),(int)o.getY(),(int)e.getX(),(int)e.getY());
-
-/*
         if (Math.abs(dy) <= Math.abs(dx)) {
             // one point line
-            if ((o.getX() == e.getX()) && (o.getY() == e.getY()))
+            if ((o.getX() == e.getX()) && (o.getY() == e.getY())) {
                 zTest.test(o.getX(), o.getY(), o.getZ(), new Col(255, 0, 0));
-            else if (e.getX() < o.getX()) {
+            } else if (e.getX() < o.getX()) {
                 Vec3D pom = o;
                 o = e;
                 e = pom;
@@ -195,7 +190,7 @@ public class RasterizerSchool {
 
             for (int x = (int) o.getX(); x <= e.getX(); x++) {
                 int y = (int) fy;
-                zTest.test(x, y, 0, new Col(255, 0, 0));
+                zTest.test(x, y, 0, new Col(255,0,0));
                 fy += k;
             }
 
@@ -215,7 +210,7 @@ public class RasterizerSchool {
                 fx += k;
             }
         }
-*/
+
             /*
         if (b.getX() < a.getX()) {
             Vec3D pom1 = b;
@@ -238,7 +233,7 @@ public class RasterizerSchool {
 */
     }
 
-    public void rasterizeWire(Vertex v1, Vertex v2, Vertex v3, Material material) {
+    public void rasterizeWire(Vertex v1, Vertex v2, Vertex v3, Col color) {
 
         if (!v1.dehomog().isPresent())
             return;
@@ -256,7 +251,7 @@ public class RasterizerSchool {
         BufferedImage img = zTest.getImgBuffer().getImg();
 
         Graphics g = img.getGraphics();
-        g.setColor(new Color(material.getColor().getRGB()));
+        g.setColor(new Color(color.getRGB()));
         g.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY());
         g.drawLine((int) b.getX(), (int) b.getY(), (int) c.getX(), (int) c.getY());
         g.drawLine((int) c.getX(), (int) c.getY(), (int) a.getX(), (int) a.getY());

@@ -13,6 +13,7 @@ public class MainFrame extends JFrame {
     private final Canvas3D canvas3D;
     private final JToolBar toolBar;
     private final App app;
+    private final JPanel panel;
 
 
     public MainFrame(int width, int height, App app) {
@@ -30,17 +31,32 @@ public class MainFrame extends JFrame {
         toolBar = new JToolBar(JToolBar.VERTICAL);
         toolBar.setFloatable(false);
         toolBar.setPreferredSize(new Dimension(30, 100));
+        panel = new JPanel();
 
         controlInit();
         initButtons();
+        initSliders();
 
         // Adding everything to the frame
         add(canvas3D, BorderLayout.CENTER);
         add(toolBar, BorderLayout.WEST);
+        add(panel, BorderLayout.SOUTH);
 
 
         pack();
         setVisible(true);
+    }
+
+    private void initSliders() {
+
+        JSlider ambientIntensity = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
+        ambientIntensity.addChangeListener(e -> {
+            app.getScene().getAmbientLight().setIntensity((double)ambientIntensity.getValue()/100);
+            app.renderScene();
+        });
+
+        panel.add(ambientIntensity);
+
     }
 
     public Canvas3D getCanvas3D() {
@@ -57,21 +73,27 @@ public class MainFrame extends JFrame {
 
         ToolButton projection = new ToolButton("res/per.png");
         projection.addActionListener(e -> {
-            App.app.getScene().switchProjection();
-            App.app.renderScene();
+            app.getScene().switchProjection();
+            app.renderScene();
         });
 
-        ToolButton wireModel = new ToolButton("res/per.png");
-        wireModel.addActionListener(e -> {
-            App.app.getScene().getRenderer().switchWire();
-            App.app.renderScene();
+        ToolButton wire = new ToolButton("res/per.png");
+        wire.addActionListener(e -> {
+            app.getScene().getRenderer().switchWire();
+            app.renderScene();
         });
 
+        ToolButton wireFull = new ToolButton("res/per.png");
+        wireFull.addActionListener(e -> {
+           app.getScene().getRenderer().swichtWireFull();
+           app.renderScene();
+        });
 
         toolBar.add(cube);
         toolBar.add(camera);
         toolBar.add(projection);
-        toolBar.add(wireModel);
+        toolBar.add(wire);
+        toolBar.add(wireFull);
 
     }
 
@@ -110,8 +132,8 @@ public class MainFrame extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_SHIFT)
                     App.app.getScene().tiltDown();
 
-                if(e.getKeyCode() == KeyEvent.VK_J)
-                    App.app.getScene().getLights().get(0).transform.translate(new Vec3D(-0.1,0,0));
+                if (e.getKeyCode() == KeyEvent.VK_J)
+                    App.app.getScene().getLights().get(0).transform.translate(new Vec3D(-0.1, 0, 0));
 
                 App.app.renderScene();
             }

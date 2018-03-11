@@ -27,7 +27,7 @@ public class Scene {
     }
 
     private final Map<String, Solid> solids;
-    private final List<PointLight> lights;
+    private final ArrayList<PointLight> lights;
     private final Renderer renderer;
     private Projection projection;
     private Camera camera;
@@ -48,7 +48,7 @@ public class Scene {
     private static final double INITIAL_CAMERA_AZIMUTH = -4.74;
     private static final double INITIAL_CAMERA_ZENITH = -0.2;
 
-    private AmbientLight ambientLight = new AmbientLight(Color.WHITE, 0.3);
+    private AmbientLight ambientLight = new AmbientLight(new Col(255,255,255), 0.3);
 
     public Scene(BufferedImage img,Projection projection) {
         this.projection = projection;

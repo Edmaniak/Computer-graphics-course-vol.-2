@@ -2,6 +2,7 @@ package model.objects;
 
 import model.Part;
 import model.Vertex;
+import transforms.Col;
 import transforms.Vec3D;
 
 import java.awt.*;
@@ -34,7 +35,7 @@ public class IcoSphere extends Solid {
 
     private final Part[] parts_definition = {new Part(Part.Type.TRIANGLE, 60, 0)};
 
-    public IcoSphere(Color color, Vec3D initialPosition, double size) {
+    public IcoSphere(Col color, Vec3D initialPosition, double size) {
         super(color, new Vec3D(0, 0, 0),initialPosition);
         double t = (1 + Math.sqrt(size)) / 2;
 

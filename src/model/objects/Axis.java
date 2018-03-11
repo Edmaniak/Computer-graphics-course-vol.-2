@@ -46,7 +46,7 @@ public class Axis extends Solid {
             // Lines
             0, 1,
             2, 3,
-            3, 4,
+            4, 5,
             // Triangles
             6, 7, 8,
             9, 10, 11,
@@ -63,7 +63,7 @@ public class Axis extends Solid {
         define(vertex_definition, index_definition, parts_definition);
     }
 
-    public Axis(Color color, Vec3D initialPosition) {
+    public Axis(Col color, Vec3D initialPosition) {
         super(color, new Vec3D(0, 0, 0), initialPosition);
         define(vertex_definition, index_definition, parts_definition);
     }

@@ -2,6 +2,7 @@ package model.objects;
 
 import model.Part;
 import model.Vertex;
+import transforms.Col;
 import transforms.Cubic;
 import transforms.Point3D;
 import transforms.Vec3D;
@@ -10,7 +11,7 @@ import java.awt.*;
 
 public class BezierCurve extends Curve {
 
-    public BezierCurve(Color color, Vec3D initialPosition, Point3D p1, Point3D p2, Point3D p3, Point3D p4, int step) {
+    public BezierCurve(Col color, Vec3D initialPosition, Point3D p1, Point3D p2, Point3D p3, Point3D p4, int step) {
         super(color, new Vec3D(0, 0, 0), initialPosition, step);
 
         Cubic cubic = new Cubic(Cubic.BEZIER, p1, p2, p3, p4);

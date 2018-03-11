@@ -7,6 +7,7 @@ import model.Vertex;
 import renderer.shader.Shader;
 import transforms.Col;
 import transforms.Vec3D;
+import utilities.Util;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,12 +22,13 @@ public abstract class Solid extends SceneObject {
     private final List<Part> parts = new ArrayList<>();
 
     public enum ShaderType {
-        COLOR, TEXTURE,
+        COLOR, TEXTURE, LIGHTABLE
     }
 
     private ShaderType shaderType = ShaderType.COLOR;
     private Material material = new Material();
     private Texture texture;
+    private Col editorColor = new Col(1, 1, 1);
 
     private Solid(Vec3D pivotPoint, Vec3D initialPosition) {
         super(pivotPoint, initialPosition);
@@ -37,15 +39,15 @@ public abstract class Solid extends SceneObject {
         this.material = material;
     }
 
-    public Solid(Color color, Vec3D pivotPoint, Vec3D initialPosition) {
+    public Solid(Col color, Vec3D pivotPoint, Vec3D initialPosition) {
         this(pivotPoint, initialPosition);
-        this.material = new Material(color);
+        this.editorColor = color;
         this.shaderType = ShaderType.COLOR;
     }
 
-    public Solid(Color color, Vec3D initialPosition) {
+    public Solid(Col color, Vec3D initialPosition) {
         super(initialPosition);
-        this.material = new Material(color);
+        this.editorColor = color;
         this.shaderType = ShaderType.COLOR;
     }
 
@@ -54,7 +56,6 @@ public abstract class Solid extends SceneObject {
         this.texture = tex;
         this.shaderType = ShaderType.TEXTURE;
     }
-
 
     public List<Vertex> vertices() {
         return vertexBuffer;
@@ -106,6 +107,53 @@ public abstract class Solid extends SceneObject {
         vertices().addAll(Arrays.asList(vertexBuffer));
         indexes().addAll(Arrays.asList(indexBuffer));
         parts().addAll(Arrays.asList(parts));
+        calculateNormals();
+    }
+
+    public void calculateNormals() {
+        for (Part p : parts) {
+            if (p.getType() == Part.Type.TRIANGLE) {
+                for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
+
+                    Vertex v1 = new Vertex(vertices().get(indexes().get(i)));
+                    Vertex v2 = new Vertex(vertices().get(indexes().get(i + 1)));
+                    Vertex v3 = new Vertex(vertices().get(indexes().get(i + 2)));
+
+                    // Sorting
+                    if (v1.getY() > v2.getY()) {
+                        Vertex pom = v1;
+                        v1 = v2;
+                        v2 = pom;
+                    }
+
+                    if (v2.getY() > v3.getY()) {
+                        Vertex pom = v2;
+                        v2 = v3;
+                        v3 = pom;
+                    }
+
+                    if (v1.getY() > v2.getY()) {
+                        Vertex pom = v1;
+                        v1 = v2;
+                        v2 = pom;
+                    }
+
+                    Vec3D AB = v2.getPositionVec().sub(v1.getPositionVec());
+                    Vec3D AC = v3.getPositionVec().sub(v1.getPositionVec());
+
+                    Vec3D normal = Util.crossProduct(AB, AC);
+
+                    Vec3D n1 = new Vec3D(v1.getNormal().add(normal)).normalized().get();
+                    Vec3D n2 = new Vec3D(v1.getNormal().add(normal)).normalized().get();
+                    Vec3D n3 = new Vec3D(v1.getNormal().add(normal)).normalized().get();
+
+                    vertices().set(indexes().get(i), new Vertex(v1, n1));
+                    vertices().set(indexes().get(i + 1), new Vertex(v2, n2));
+                    vertices().set(indexes().get(i + 2), new Vertex(v3, n3));
+                }
+            }
+        }
+
     }
 
     public Material getMaterial() {
@@ -120,7 +168,15 @@ public abstract class Solid extends SceneObject {
         return shaderType;
     }
 
+    public void setShaderType(ShaderType shaderType) {
+        this.shaderType = shaderType;
+    }
+
     public Texture getTexture() {
         return texture;
+    }
+
+    public Col getEditorColor() {
+        return editorColor;
     }
 }

@@ -82,7 +82,7 @@ public class RasterizerTriangle extends Rasterizer {
                     int b = (c1.getBlue() + c2.getBlue() + c3.getBlue());
 
 
-*/
+*//*
                     int r = Math.min(ambientLight.calculateRed(material) + lights.get(0).calculateRed(material, normal, App.app.getScene().getCamera().getViewVector()), 255);
                     int g = Math.min(ambientLight.calculateGreen(material) + lights.get(0).calculateGreen(material, normal, App.app.getScene().getCamera().getViewVector()), 255);
                     int b = Math.min(ambientLight.calculateBlue(material) + lights.get(0).calculateBlue(material, normal, App.app.getScene().getCamera().getViewVector()), 255);

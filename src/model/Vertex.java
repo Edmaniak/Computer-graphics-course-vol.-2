@@ -33,20 +33,35 @@ public class Vertex {
         this(position, new Col(0, 0, 0));
     }
 
+    public Vertex(Vertex v) {
+        this(v.getPosition(), v.getColor(), v.getNormal(), v.getTexUV(), v.getOne());
+    }
+
     public Vertex(double x, double y, double z, Col color) {
         this(new Point3D(x, y, z), color);
     }
 
     public Vertex(double x, double y, double z) {
-        this(x, y, z, new Col(0, 0, 0));
+        this(x, y, z, new Col());
     }
 
     public Vertex(double x, double y, double z, Point2D texUV) {
-        this(new Point3D(x, y, z), new Col(0, 0, 0), new Vec3D(0, 0, 0), texUV);
+        this(new Point3D(x, y, z), new Col(), new Vec3D(0), texUV);
     }
 
     public Vertex(double x, double y, double z, Col color, Point2D texUV) {
-        this(new Point3D(x, y, z), color, new Vec3D(0, 0, 0), texUV);
+        this(new Point3D(x, y, z), color, new Vec3D(), texUV);
+    }
+
+    /**
+     * Special constructor for setting normal vector in the
+     * solid function
+     *
+     * @param v
+     * @param normal
+     */
+    public Vertex(Vertex v, Vec3D normal) {
+        this(v.getPosition(), v.getColor(), normal, v.getTexUV(), v.getOne());
     }
 
     public Vertex normalize() {
@@ -55,6 +70,10 @@ public class Vertex {
 
     public Point3D getPosition() {
         return position;
+    }
+
+    public Vec3D getPositionVec() {
+        return new Vec3D(position);
     }
 
     public Vertex mul(Mat4 m) {
@@ -126,4 +145,7 @@ public class Vertex {
     }
 
 
+    public double getW() {
+        return position.getW();
+    }
 }
