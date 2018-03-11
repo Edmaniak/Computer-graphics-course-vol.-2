@@ -112,7 +112,6 @@ public class Renderer {
     private void line(Vertex origin, Vertex end, Material material) {
         // TODO orez
 
-
         rasterizer.rasterize(origin, end);
     }
 

@@ -2,6 +2,7 @@ package renderer.raster;
 
 import material.Material;
 import model.Vertex;
+import renderer.ImageBuffer;
 import renderer.ZTest;
 import renderer.shader.Shader;
 import transforms.Col;
@@ -72,7 +73,6 @@ public class RasterizerSchool {
             vA = vB;
             vB = pom2;
         }
-
 
 
         // Rasterizing triangle ABD
@@ -160,7 +160,7 @@ public class RasterizerSchool {
         if (!v2.dehomog().isPresent())
             return;
 
-        if (v1.getY() < v2.getY()) {
+        if (v1.getY() > v2.getY()) {
             Vertex pom = v1;
             v1 = v2;
             v2 = pom;
@@ -169,9 +169,54 @@ public class RasterizerSchool {
         Vertex vA = v1;
         Vertex vB = v2;
 
-        Vec3D a = project2D(v1.getPosition().dehomog().get());
-        Vec3D b = project2D(v2.getPosition().dehomog().get());
+        Vec3D o = project2D(v1.getPosition().dehomog().get());
+        Vec3D e = project2D(v2.getPosition().dehomog().get());
 
+        double dx = e.getX() - o.getX();
+        double dy = e.getY() - o.getY();
+
+        BufferedImage img = zTest.getImgBuffer().getImg();
+        Graphics g = img.getGraphics();
+        g.drawLine((int)o.getX(),(int)o.getY(),(int)e.getX(),(int)e.getY());
+
+/*
+        if (Math.abs(dy) <= Math.abs(dx)) {
+            // one point line
+            if ((o.getX() == e.getX()) && (o.getY() == e.getY()))
+                zTest.test(o.getX(), o.getY(), o.getZ(), new Col(255, 0, 0));
+            else if (e.getX() < o.getX()) {
+                Vec3D pom = o;
+                o = e;
+                e = pom;
+            }
+
+            double k = dy / dx;
+            double fy = o.getY();
+
+            for (int x = (int) o.getX(); x <= e.getX(); x++) {
+                int y = (int) fy;
+                zTest.test(x, y, 0, new Col(255, 0, 0));
+                fy += k;
+            }
+
+        } else {
+            if (e.getY() < o.getY()) {
+                Vec3D pom = o;
+                o = e;
+                e = pom;
+            }
+
+            double k = dx / dy;
+            double fx = o.getX();
+
+            for (int y = (int) o.getY(); y <= e.getY(); y++) {
+                int x = (int) fx;
+                zTest.test(x, y, 0, new Col(255, 0, 0));
+                fx += k;
+            }
+        }
+*/
+            /*
         if (b.getX() < a.getX()) {
             Vec3D pom1 = b;
             Vertex pom2 = vB;
@@ -181,7 +226,7 @@ public class RasterizerSchool {
             vA = pom2;
         }
 
-        for (int y = (int) a.getY(); y <= b.getY(); y++) {
+        for (int y = (int) a.getY() + 1; y <= b.getY(); y++) {
 
             double s1 = (y - a.getY()) / (b.getY() - a.getY());
 
@@ -190,7 +235,7 @@ public class RasterizerSchool {
 
             zTest.test(vAB.getX(), y, vAB.getZ(), shader.apply(vertexAB));
         }
-
+*/
     }
 
     public void rasterizeWire(Vertex v1, Vertex v2, Vertex v3, Material material) {
