@@ -4,11 +4,15 @@ import java.awt.*;
 
 public class Material {
 
-    private Color color;
+    private Color color = Color.BLACK;
     private double ka = 0.5;
     private double ks = 0.5;
     private double kd = 0.5;
     private double h = 10;
+
+    public Material() {
+        this(Color.BLACK);
+    }
 
     public Material(Color color) {
         this.color = color;

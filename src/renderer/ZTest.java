@@ -6,11 +6,11 @@ import java.util.Optional;
 import transforms.Col;
 
 public class ZTest {
-    private final ZBuffer2 zBuffer;
+    private final ZBuffer zBuffer;
     private final ImageBuffer imgBuffer;
 
     public ZTest(BufferedImage img) {
-        zBuffer = new ZBuffer2(img);
+        zBuffer = new ZBuffer(img);
         imgBuffer = new ImageBuffer(img);
     }
 
@@ -43,7 +43,7 @@ public class ZTest {
         return imgBuffer;
     }
 
-    public ZBuffer2 getzBuffer() {
+    public ZBuffer getzBuffer() {
         return zBuffer;
     }
 }

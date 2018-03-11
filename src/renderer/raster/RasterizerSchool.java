@@ -1,22 +1,25 @@
 package renderer.raster;
 
+import material.Material;
 import model.Vertex;
 import renderer.ZTest;
+import renderer.shader.Shader;
 import transforms.Col;
 import transforms.Vec3D;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.function.Function;
 
 public class RasterizerSchool {
 
     private final ZTest zTest;
-    private final Function<Vertex, Col> shader;
+    private Function<Vertex, Col> shader;
 
-    public RasterizerSchool(ZTest zTest, Function<Vertex, Col> shader) {
+    public RasterizerSchool(ZTest zTest, Shader shader) {
         this.zTest = zTest;
         this.shader = shader;
     }
-
 
     public void rasterize(Vertex v1, Vertex v2, Vertex v3) {
 
@@ -34,35 +37,42 @@ public class RasterizerSchool {
         Vertex vB = v2;
         Vertex vC = v3;
 
-        // Sorting
-        if (v1.getY() < v2.getY()) {
-            Vertex pom = v2;
-            v2 = v1;
-            vB = vA;
-            v1 = pom;
-            vA = pom;
-        }
-
-        if (v1.getY() < v3.getY()) {
-            Vertex pom = v3;
-            v3 = v1;
-            vC = vA;
-            v1 = pom;
-            vA = pom;
-        }
-
-        if (v2.getY() < v3.getY()) {
-            Vertex pom = v3;
-            v3 = v2;
-            vC = vB;
-            v2 = pom;
-            vB = pom;
-        }
-
-        // Dehomogeniace
         Vec3D a = project2D(v1.getPosition().dehomog().get());
         Vec3D b = project2D(v2.getPosition().dehomog().get());
         Vec3D c = project2D(v3.getPosition().dehomog().get());
+
+        // Sorting
+        if (a.getY() > b.getY()) {
+            Vec3D pom = a;
+            a = b;
+            b = pom;
+
+            Vertex pom2 = vA;
+            vA = vB;
+            vB = pom2;
+        }
+
+        if (b.getY() > c.getY()) {
+            Vec3D pom = b;
+            b = c;
+            c = pom;
+
+
+            Vertex pom2 = vB;
+            vB = vC;
+            vC = pom2;
+        }
+
+        if (a.getY() > b.getY()) {
+            Vec3D pom = a;
+            a = b;
+            b = pom;
+
+            Vertex pom2 = vA;
+            vA = vB;
+            vB = pom2;
+        }
+
 
 
         // Rasterizing triangle ABD
@@ -135,6 +145,7 @@ public class RasterizerSchool {
                 double s3 = (x - vBC.getX()) / (vAC.getX() - vBC.getX());
                 double z = vBC.getZ() * (1 - s3) + vAC.getZ() * s3;
                 Vertex vertexABC = vertexBC.mul(1 - s3).add(vertexAC.mul(s3));
+
                 zTest.test(x, y, z, shader.apply(vertexABC));
             }
         }
@@ -149,7 +160,7 @@ public class RasterizerSchool {
         if (!v2.dehomog().isPresent())
             return;
 
-        if(v1.getY() < v2.getY()) {
+        if (v1.getY() < v2.getY()) {
             Vertex pom = v1;
             v1 = v2;
             v2 = pom;
@@ -170,7 +181,7 @@ public class RasterizerSchool {
             vA = pom2;
         }
 
-        for (int y = (int) a.getY() ; y <= b.getY(); y++) {
+        for (int y = (int) a.getY(); y <= b.getY(); y++) {
 
             double s1 = (y - a.getY()) / (b.getY() - a.getY());
 
@@ -182,10 +193,39 @@ public class RasterizerSchool {
 
     }
 
+    public void rasterizeWire(Vertex v1, Vertex v2, Vertex v3, Material material) {
+
+        if (!v1.dehomog().isPresent())
+            return;
+
+        if (!v2.dehomog().isPresent())
+            return;
+
+        if (!v3.dehomog().isPresent())
+            return;
+
+        Vec3D a = project2D(v1.getPosition().dehomog().get());
+        Vec3D b = project2D(v2.getPosition().dehomog().get());
+        Vec3D c = project2D(v3.getPosition().dehomog().get());
+
+        BufferedImage img = zTest.getImgBuffer().getImg();
+
+        Graphics g = img.getGraphics();
+        g.setColor(new Color(material.getColor().getRGB()));
+        g.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY());
+        g.drawLine((int) b.getX(), (int) b.getY(), (int) c.getX(), (int) c.getY());
+        g.drawLine((int) c.getX(), (int) c.getY(), (int) a.getX(), (int) a.getY());
+
+
+    }
+
     private Vec3D project2D(Vec3D v) {
         double x = (v.getX() + 1) * zTest.getWidth() / 2;
         double y = (-v.getY() + 1) * zTest.getHeight() / 2;
         return new Vec3D(x, y, v.getZ());
     }
 
+    public void setShader(Shader shader) {
+        this.shader = shader;
+    }
 }

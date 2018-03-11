@@ -1,6 +1,7 @@
 package model.objects;
 
 import material.Material;
+import material.Texture;
 import model.Part;
 import model.Vertex;
 import transforms.Col;
@@ -37,6 +38,11 @@ public class Plane extends Solid {
 
     public Plane(Material material, Vec3D initialPosition) {
         super(material, new Vec3D(0, 0, 0), initialPosition);
+        define(vertex_definition, index_definition, parts_definition);
+    }
+
+    public Plane(Texture texture, Vec3D initialPosition) {
+        super(texture, initialPosition);
         define(vertex_definition, index_definition, parts_definition);
     }
 

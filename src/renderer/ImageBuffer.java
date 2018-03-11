@@ -48,4 +48,7 @@ public class ImageBuffer implements Raster<Col> {
 
     }
 
+    public BufferedImage getImg() {
+        return img;
+    }
 }

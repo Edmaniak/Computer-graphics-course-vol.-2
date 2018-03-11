@@ -6,6 +6,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 public class Texture {
 
@@ -23,8 +24,15 @@ public class Texture {
         }
     }
 
-    public Col getPixel(int x, int y) {
-        return new Col(img.getRGB(x, y));
+    public Optional<Col> getPixel(int x, int y) {
+
+        if (x < 0 || x >= width)
+            return Optional.empty();
+
+        if (y < 0 || y >= height)
+            return Optional.empty();
+
+        return Optional.of(new Col(img.getRGB(x, y)));
     }
 
     public int getHeight() {

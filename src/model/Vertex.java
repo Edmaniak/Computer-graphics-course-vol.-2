@@ -76,7 +76,7 @@ public class Vertex {
                 position.add(v.getPosition()),
                 (color == null || v.getColor() == null) ? null : color.add(v.getColor()),
                 normal.add(v.getNormal()),
-                texUV.add(new Vec2D(v.getX(), v.getY())),
+                texUV.add(new Vec2D(v.getU(), v.getV())),
                 one + v.getOne());
     }
 
@@ -103,6 +103,14 @@ public class Vertex {
 
     public double getZ() {
         return position.getZ();
+    }
+
+    public double getU() {
+        return texUV.getX();
+    }
+
+    public double getV() {
+        return texUV.getY();
     }
 
     public Vec3D getNormal() {

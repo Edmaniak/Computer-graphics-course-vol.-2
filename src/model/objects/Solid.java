@@ -4,6 +4,7 @@ import material.Material;
 import material.Texture;
 import model.Part;
 import model.Vertex;
+import renderer.shader.Shader;
 import transforms.Col;
 import transforms.Vec3D;
 
@@ -19,7 +20,12 @@ public abstract class Solid extends SceneObject {
     private final List<Integer> indexBuffer = new ArrayList<>();
     private final List<Part> parts = new ArrayList<>();
 
-    private Material material;
+    public enum ShaderType {
+        COLOR, TEXTURE,
+    }
+
+    private ShaderType shaderType = ShaderType.COLOR;
+    private Material material = new Material();
     private Texture texture;
 
     private Solid(Vec3D pivotPoint, Vec3D initialPosition) {
@@ -34,15 +40,19 @@ public abstract class Solid extends SceneObject {
     public Solid(Color color, Vec3D pivotPoint, Vec3D initialPosition) {
         this(pivotPoint, initialPosition);
         this.material = new Material(color);
+        this.shaderType = ShaderType.COLOR;
     }
 
     public Solid(Color color, Vec3D initialPosition) {
         super(initialPosition);
         this.material = new Material(color);
+        this.shaderType = ShaderType.COLOR;
     }
+
     public Solid(Texture tex, Vec3D initialPosition) {
         super(initialPosition);
         this.texture = tex;
+        this.shaderType = ShaderType.TEXTURE;
     }
 
 
@@ -58,15 +68,6 @@ public abstract class Solid extends SceneObject {
         return parts;
     }
 
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
     public void randomizeColors() {
         Random r = new Random();
         for (Vertex v : vertexBuffer) {
@@ -74,12 +75,20 @@ public abstract class Solid extends SceneObject {
         }
     }
 
+    /**
+     * Randomize vertex colors with constrains as the max values for
+     * individual color channels
+     *
+     * @param consRed
+     * @param consGreen
+     * @param consBlue
+     */
     public void randomizeColors(int consRed, int consGreen, int consBlue) {
         Random r = new Random();
         for (Vertex v : vertexBuffer) {
             v.setColor(new Col(
-                    r.nextInt(consRed) ,
-                    r.nextInt(consGreen) ,
+                    r.nextInt(consRed),
+                    r.nextInt(consGreen),
                     r.nextInt(consBlue)
             ));
         }
@@ -97,5 +106,21 @@ public abstract class Solid extends SceneObject {
         vertices().addAll(Arrays.asList(vertexBuffer));
         indexes().addAll(Arrays.asList(indexBuffer));
         parts().addAll(Arrays.asList(parts));
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    public ShaderType getShaderType() {
+        return shaderType;
+    }
+
+    public Texture getTexture() {
+        return texture;
     }
 }

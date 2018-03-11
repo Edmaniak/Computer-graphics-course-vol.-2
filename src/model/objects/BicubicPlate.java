@@ -48,12 +48,12 @@ public class BicubicPlate extends Solid {
         for (int i = 0; i < step - 1; i++) {
             for (int j = 0; j < step - 1; j++) {
 
-                //spodni trojuhelnik
+                //spodni trojuhelnici
                 indexes().add((i * step) + j);
                 indexes().add((i * step) + (j + 1));
                 indexes().add((i + 1) * step + j);
 
-                //vrchni trojuhelnik
+                //vrchni trojuhelnci
                 indexes().add((i * step) + (j + 1));
                 indexes().add((i + 1) * step + j);
                 indexes().add((i + 1) * step + (j+1));

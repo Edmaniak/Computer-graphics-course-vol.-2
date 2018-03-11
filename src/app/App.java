@@ -36,7 +36,7 @@ public class App {
         if (app == null)
             app = this;
         if (gui == null)
-            gui = new MainFrame(WIDTH, HEIGHT);
+            gui = new MainFrame(WIDTH, HEIGHT, this);
 
         // Scene init
         scene = new Scene(gui.getCanvas3D().getMainBuffer(),Scene.Projection.PERSPECTIVE);
@@ -47,12 +47,13 @@ public class App {
 
         // Models
         Texture bg = new Texture("res/fim.jpg");
-        Plane plane = new Plane(difuse, new Vec3D());
+        Plane plane = new Plane(bg, new Vec3D());
         plane.transform.rotate(Math.PI / 2,0,0);
         plane.transform.translate(new Vec3D(0,0,2));
 
         Cube cube = new Cube(brass, new Vec3D(-1.9, -1.9, 0));
         objectAxis = new SceneObjectAxis(Color.GREEN, new Vec3D());
+        cube.randomizeColors();
 
         BicubicPlate plate = new BicubicPlate(Color.WHITE,new Vec3D(0,0,1),5);
         plate.transform.translate(new Vec3D(0,0,-1));
@@ -63,7 +64,6 @@ public class App {
         Cube lightCube = new Cube(difuse, light1.getPosition());
 
 
-        cube.randomizeColors();
 
         scene.addSolid("plane", plane);
 
@@ -92,9 +92,14 @@ public class App {
     }
 
     public void switchTo(Solid solid) {
-        if (activeSolid != null) {
+        if (activeSolid != null)
             setActiveSolid(solid);
-        }
+        renderScene();
+    }
+
+    public void switchTo(String string) {
+        if(activeSolid != null)
+            setActiveSolid(scene.getSolid(string));
         renderScene();
     }
 

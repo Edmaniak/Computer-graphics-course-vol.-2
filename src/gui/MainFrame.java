@@ -1,6 +1,7 @@
 package gui;
 
 import app.App;
+import renderer.Renderer;
 import transforms.Vec3D;
 
 import javax.swing.*;
@@ -11,9 +12,12 @@ public class MainFrame extends JFrame {
 
     private final Canvas3D canvas3D;
     private final JToolBar toolBar;
+    private final App app;
 
 
-    public MainFrame(int width, int height) {
+    public MainFrame(int width, int height, App app) {
+
+        this.app = app;
 
         setLayout(new BorderLayout());
         setResizable(false);
@@ -44,17 +48,9 @@ public class MainFrame extends JFrame {
     }
 
     private void initButtons() {
-        ToolButton tetraHedron = new ToolButton("res/tetra.png");
-        tetraHedron.addActionListener(e -> App.app.switchTo(App.app.getSolid("tetrahedron")));
 
         ToolButton cube = new ToolButton("res/cube.png");
-        cube.addActionListener(e -> App.app.switchTo(App.app.getScene().getSolid("cube")));
-
-        ToolButton circle = new ToolButton("res/circle.png");
-        circle.addActionListener(e -> App.app.switchTo(App.app.getScene().getSolid("circle")));
-
-        ToolButton arc = new ToolButton("res/arc.png");
-        arc.addActionListener(e -> App.app.switchTo(App.app.getScene().getSolid("bezier")));
+        cube.addActionListener(e -> app.switchTo("cube"));
 
         ToolButton camera = new ToolButton("res/camera.png");
         camera.addActionListener(e -> canvas3D.switchCameraControl());
@@ -65,12 +61,17 @@ public class MainFrame extends JFrame {
             App.app.renderScene();
         });
 
-        toolBar.add(tetraHedron);
+        ToolButton wireModel = new ToolButton("res/per.png");
+        wireModel.addActionListener(e -> {
+            App.app.getScene().getRenderer().switchWire();
+            App.app.renderScene();
+        });
+
+
         toolBar.add(cube);
-        toolBar.add(circle);
-        toolBar.add(arc);
         toolBar.add(camera);
         toolBar.add(projection);
+        toolBar.add(wireModel);
 
     }
 
