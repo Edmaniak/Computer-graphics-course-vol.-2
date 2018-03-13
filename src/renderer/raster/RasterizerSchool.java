@@ -190,7 +190,9 @@ public class RasterizerSchool {
 
             for (int x = (int) o.getX(); x <= e.getX(); x++) {
                 int y = (int) fy;
-                zTest.test(x, y, 0, new Col(255,0,0));
+                double t = (x - o.getX()) / (e.getX() - o.getX());
+                double z = o.getZ() * (1 - t) + e.getZ() * t;
+                zTest.test(x, y, z, new Col(255, 0, 0));
                 fy += k;
             }
 
@@ -206,7 +208,9 @@ public class RasterizerSchool {
 
             for (int y = (int) o.getY(); y <= e.getY(); y++) {
                 int x = (int) fx;
-                zTest.test(x, y, 0, new Col(255, 0, 0));
+                double t = (y - o.getY()) / (e.getY() - o.getY());
+                double z = o.getZ() * (1 - t) + e.getZ() * t;
+                zTest.test(x, y, z, new Col(255, 0, 0));
                 fx += k;
             }
         }
