@@ -34,9 +34,9 @@ public class RasterizerSchool {
             return;
 
         // vertexy pro vypocet barvy
-        Vertex vA = v1;
-        Vertex vB = v2;
-        Vertex vC = v3;
+        Vertex vA = v1.mul(1/v1.getPosition().getW());
+        Vertex vB = v2.mul(1/v2.getPosition().getW());
+        Vertex vC = v3.mul(1/v3.getPosition().getW());;
 
         Vec3D a = project2D(v1.getPosition().dehomog().get());
         Vec3D b = project2D(v2.getPosition().dehomog().get());
