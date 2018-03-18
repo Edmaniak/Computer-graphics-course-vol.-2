@@ -28,7 +28,7 @@ public class ShaderLight extends Shader {
     public Col apply(Vertex v) {
         Col color = v.getColor().mul(1 / v.getOne());
         Col color2 = ambientLight.getContribution(material);
-        Col color3 =color.addna(color2);
+        Col color3 = color.addna(color2);
         for (Light light : lights) {
 
         }

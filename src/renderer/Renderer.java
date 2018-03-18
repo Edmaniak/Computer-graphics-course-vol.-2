@@ -1,28 +1,20 @@
 package renderer;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.App;
-import material.Material;
 import model.Part;
 import model.Scene;
 import model.Vertex;
 import model.light.AmbientLight;
-import model.light.Light;
 import model.light.PointLight;
 import model.objects.Solid;
 import renderer.raster.Rasterizer;
-import renderer.raster.RasterizerLine;
-import renderer.raster.RasterizerSchool;
-import renderer.raster.RasterizerTriangle;
 import renderer.shader.ShaderColor;
 import renderer.shader.ShaderLight;
 import renderer.shader.ShaderTexture;
 import transforms.*;
-import utilities.Util;
 
 public class Renderer {
 
@@ -32,7 +24,7 @@ public class Renderer {
     private Mat4 view;
     private Mat4 projection;
     // private final RasterizerLine rl;
-    private final RasterizerSchool rasterizer;
+    private final Rasterizer rasterizer;
     private final ZTest zTest;
     private final ArrayList<PointLight> lights;
     private AmbientLight ambientLight;
@@ -46,7 +38,7 @@ public class Renderer {
     public Renderer(BufferedImage img, ArrayList<PointLight> lights, AmbientLight ambientLight) {
         this.zTest = new ZTest(img);
         //this.rl = new RasterizerLine(App.gui.getCanvas3D().getMainBuffer(), zb);
-        this.rasterizer = new RasterizerSchool(zTest, new ShaderColor());
+        this.rasterizer = new Rasterizer(zTest, new ShaderColor());
         this.lights = lights;
         this.ambientLight = ambientLight;
     }
@@ -62,7 +54,7 @@ public class Renderer {
                 rasterizer.setShader(new ShaderTexture(sld.getTexture()));
                 break;
             case LIGHTABLE:
-                rasterizer.setShader(new ShaderLight(lights,new Vec3D(),ambientLight,sld.getMaterial()));
+                rasterizer.setShader(new ShaderLight(lights, new Vec3D(), ambientLight, sld.getMaterial()));
         }
 
         // Modelovaci transformace definovana vlastnostmi solidu
@@ -79,14 +71,14 @@ public class Renderer {
 
                 case LINE: {
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 2) {
-                        line(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)), sld.getEditorColor());
+                        line(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)));
                     }
                     break;
                 }
 
                 case TRIANGLE: {
                     for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
-                        triangle(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)),
+                        renderTriangle(vb.get(sld.indexes().get(i)), vb.get(sld.indexes().get(i + 1)),
                                 vb.get(sld.indexes().get(i + 2)), sld.getEditorColor());
                     }
                     break;
@@ -112,14 +104,59 @@ public class Renderer {
         zTest.getzBuffer().clear();
     }
 
-    private void line(Vertex origin, Vertex end, Col color) {
+    private void line(Vertex origin, Vertex end) {
         // TODO orez
 
         rasterizer.rasterize(origin, end);
     }
 
+    private void renderTriangle(Vertex v1, Vertex v2, Vertex v3, Col color) {
+
+        // Sorting
+        if (v1.getZ() < v2.getZ()) {
+            Vertex pom = v1;
+            v1 = v2;
+            v2 = pom;
+        }
+
+        if (v2.getZ() < v3.getZ()) {
+            Vertex pom = v2;
+            v2 = v3;
+            v3 = pom;
+        }
+
+        if (v1.getZ() < v2.getZ()) {
+            Vertex pom = v1;
+            v1 = v2;
+            v2 = pom;
+        }
+
+        if (v3.getZ() > 0) {
+            triangle(v1, v2, v3, color);
+            return;
+        }
+
+        if (v2.getZ() > 0) {
+            double t = (0 - v3.getZ() / v2.getZ() - v3.getZ());
+            Vertex d = v2.mul(1 - t).add(v3.mul(t));
+            double t1 = (0 - v3.getZ()) / v1.getZ() - v3.getZ();
+            Vertex e = v1.mul(1 - t1).add(v3.mul(t1));
+            triangle(v1, v2, d, color);
+            triangle(d, e, v1, color);
+            return;
+        }
+
+        if (v1.getZ() > 0) {
+            double t = (0 - v3.getZ()) / v1.getZ() - v3.getZ();
+            Vertex d = v1.mul(1 - t).add(v3.mul(t));
+            double t1 = (0 - v3.getZ()) / v1.getZ() - v3.getZ();
+            Vertex e = v1.mul(1 - t1).add(v3.mul(t1));
+            triangle(v1, d, e, color);
+        }
+
+    }
+
     private void triangle(Vertex v1, Vertex v2, Vertex v3, Col color) {
-        // TODO orez
 
         switch (renderQuality) {
             case WIRE:
@@ -129,7 +166,7 @@ public class Renderer {
                 rasterizer.rasterize(v1, v2, v3);
                 break;
             case WIRE_FULL:
-                rasterizer.rasterize(v1,v2,v3);
+                rasterizer.rasterize(v1, v2, v3);
                 rasterizer.rasterizeWire(v1, v2, v3, color);
                 break;
         }
