@@ -10,15 +10,11 @@ import java.util.Optional;
 
 public class Texture {
 
-    private int width;
-    private int height;
     private BufferedImage img;
 
     public Texture(String path) {
         try {
             this.img = ImageIO.read(new File(path));
-            this.width = img.getWidth();
-            this.height = img.getHeight();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -26,20 +22,13 @@ public class Texture {
 
     public Optional<Col> getPixel(int x, int y) {
 
-        if (x < 0 || x >= width)
+        if (x < 0 || x >= img.getWidth())
             return Optional.empty();
 
-        if (y < 0 || y >= height)
+        if (y < 0 || y >= img.getHeight())
             return Optional.empty();
 
         return Optional.of(new Col(img.getRGB(x, y)));
     }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
 }
+

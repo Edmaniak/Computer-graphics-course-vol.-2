@@ -31,8 +31,8 @@ public class Plane extends Solid {
             new Part(Part.Type.TRIANGLE, 6, 0)
     };
 
-    public Plane(Col color, Vec3D initialPosition) {
-        super(color, new Vec3D(0, 0, 0), initialPosition);
+    public Plane(Vec3D initialPosition) {
+        super(new Vec3D(0, 0, 0), initialPosition);
         define(vertex_definition, index_definition, parts_definition);
     }
 
@@ -46,4 +46,8 @@ public class Plane extends Solid {
         define(vertex_definition, index_definition, parts_definition);
     }
 
+    public Plane(Material material, Texture texture, Vec3D initialPosition) {
+        super(material, texture, initialPosition);
+        define(vertex_definition, index_definition, parts_definition);
+    }
 }

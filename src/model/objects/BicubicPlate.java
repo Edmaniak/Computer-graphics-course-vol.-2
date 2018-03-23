@@ -1,5 +1,6 @@
 package model.objects;
 
+import material.Material;
 import model.Part;
 import model.Vertex;
 import transforms.*;
@@ -8,8 +9,8 @@ import java.awt.*;
 
 public class BicubicPlate extends Solid {
 
-    public BicubicPlate(Col color, Vec3D initialPosition, int step) {
-        super(color, initialPosition);
+    public BicubicPlate(Vec3D initialPosition, int step) {
+        super(initialPosition);
 
 
         Point3D points[] = new Point3D[]{
@@ -60,5 +61,10 @@ public class BicubicPlate extends Solid {
         randomizeColors(50,100,1);
 
         parts().add(new Part(Part.Type.TRIANGLE, (int) Math.pow(step - 1, 2) * 6, 0));
+    }
+
+    public BicubicPlate(Material material, Vec3D initialPosition, int step) {
+        this(initialPosition,step);
+        setMaterial(material);
     }
 }

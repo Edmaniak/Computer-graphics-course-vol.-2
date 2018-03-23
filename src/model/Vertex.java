@@ -58,14 +58,10 @@ public class Vertex {
      * solid function
      *
      * @param v
-     * @param normal
+     * @param normala
      */
-    public Vertex(Vertex v, Vec3D normal) {
-        this(v.getPosition(), v.getColor(), normal, v.getTexUV(), v.getOne());
-    }
-
-    public Vertex normalize() {
-        return new Vertex(new Point3D(new Vec3D(position).normalized().get()));
+    public Vertex(Vertex v, Vec3D normala) {
+        this(v.getPosition(), v.getColor(), normala, v.getTexUV(), v.getOne());
     }
 
     public Point3D getPosition() {

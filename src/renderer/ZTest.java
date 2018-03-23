@@ -3,6 +3,8 @@ package renderer;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
 
+import renderer.buffer.ImageBuffer;
+import renderer.buffer.ZBuffer;
 import transforms.Col;
 
 public class ZTest {

@@ -63,8 +63,8 @@ public class Axis extends Solid {
         define(vertex_definition, index_definition, parts_definition);
     }
 
-    public Axis(Col color, Vec3D initialPosition) {
-        super(color, new Vec3D(0, 0, 0), initialPosition);
+    public Axis(Vec3D initialPosition) {
+        super(new Vec3D(0, 0, 0), initialPosition);
         define(vertex_definition, index_definition, parts_definition);
     }
 

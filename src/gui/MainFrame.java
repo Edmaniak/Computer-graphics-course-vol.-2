@@ -55,7 +55,17 @@ public class MainFrame extends JFrame {
             app.renderScene();
         });
 
+        JSlider lightIntensity = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
+        lightIntensity.addChangeListener(e -> {
+            app.getScene().getLights().get(0).setIntensity((double)lightIntensity.getValue()/100);
+            app.renderScene();
+        });
+
+        JLabel ambientLabel = new JLabel("Ambient intensity");
+
+        panel.add(ambientLabel);
         panel.add(ambientIntensity);
+        panel.add(lightIntensity);
 
     }
 
@@ -77,16 +87,23 @@ public class MainFrame extends JFrame {
             app.renderScene();
         });
 
-        ToolButton wire = new ToolButton("res/per.png");
+        ToolButton wire = new ToolButton("res/wire.png");
         wire.addActionListener(e -> {
             app.getScene().getRenderer().switchWire();
             app.renderScene();
         });
 
-        ToolButton wireFull = new ToolButton("res/per.png");
+        ToolButton wireFull = new ToolButton("res/wire-color.png");
         wireFull.addActionListener(e -> {
            app.getScene().getRenderer().swichtWireFull();
            app.renderScene();
+        });
+
+        ToolButton light = new ToolButton("res/wire-color.png");
+        light.addActionListener(e -> {
+            System.out.println("DDD");
+            app.switchTo("light1");
+
         });
 
         toolBar.add(cube);
@@ -94,6 +111,7 @@ public class MainFrame extends JFrame {
         toolBar.add(projection);
         toolBar.add(wire);
         toolBar.add(wireFull);
+        toolBar.add(light);
 
     }
 

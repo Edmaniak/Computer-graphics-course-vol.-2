@@ -22,32 +22,32 @@ public abstract class Solid extends SceneObject {
     private final List<Part> parts = new ArrayList<>();
 
     public enum ShaderType {
-        COLOR, TEXTURE, LIGHTABLE
+        COLOR, TEXTURE, TEX_LIGHTABLE, COL_LIGHTABLE, LIGHTABLE
     }
 
-    private ShaderType shaderType = ShaderType.COLOR;
+    private ShaderType shaderType;
     private Material material = new Material();
     private Texture texture;
-    private Col editorColor = new Col(1, 1, 1);
 
-    private Solid(Vec3D pivotPoint, Vec3D initialPosition) {
+    public Solid(Vec3D pivotPoint, Vec3D initialPosition) {
         super(pivotPoint, initialPosition);
+        this.shaderType = ShaderType.COLOR;
     }
 
     public Solid(Material material, Vec3D pivotPoint, Vec3D initialPosition) {
         this(pivotPoint, initialPosition);
         this.material = material;
+        this.shaderType = ShaderType.COL_LIGHTABLE;
     }
 
-    public Solid(Col color, Vec3D pivotPoint, Vec3D initialPosition) {
-        this(pivotPoint, initialPosition);
-        this.editorColor = color;
-        this.shaderType = ShaderType.COLOR;
+    public Solid(Material material, Texture texture, Vec3D initialPosition) {
+        this(texture, initialPosition);
+        this.material = material;
+        this.shaderType = ShaderType.TEX_LIGHTABLE;
     }
 
-    public Solid(Col color, Vec3D initialPosition) {
+    public Solid(Vec3D initialPosition) {
         super(initialPosition);
-        this.editorColor = color;
         this.shaderType = ShaderType.COLOR;
     }
 
@@ -111,6 +111,9 @@ public abstract class Solid extends SceneObject {
     }
 
     public void calculateNormals() {
+        Vec3D n1 = new Vec3D();
+        Vec3D n2 = new Vec3D();
+        Vec3D n3 = new Vec3D();
         for (Part p : parts) {
             if (p.getType() == Part.Type.TRIANGLE) {
                 for (int i = p.getStart(); i < (p.getCount() + p.getStart()); i += 3) {
@@ -143,9 +146,15 @@ public abstract class Solid extends SceneObject {
 
                     Vec3D normal = Util.crossProduct(AB, AC);
 
-                    Vec3D n1 = new Vec3D(v1.getNormal().add(normal)).normalized().get();
-                    Vec3D n2 = new Vec3D(v1.getNormal().add(normal)).normalized().get();
-                    Vec3D n3 = new Vec3D(v1.getNormal().add(normal)).normalized().get();
+                    if (v1.getNormal().add(normal).normalized().isPresent()) {
+                        n1 = new Vec3D(v1.getNormal().add(normal)).normalized().get();
+                    }
+                    if (v2.getNormal().add(normal).normalized().isPresent()) {
+                        n2 = new Vec3D(v2.getNormal().add(normal)).normalized().get();
+                    }
+                    if (v3.getNormal().add(normal).normalized().isPresent()) {
+                        n3 = new Vec3D(v3.getNormal().add(normal)).normalized().get();
+                    }
 
                     vertices().set(indexes().get(i), new Vertex(v1, n1));
                     vertices().set(indexes().get(i + 1), new Vertex(v2, n2));
@@ -176,7 +185,4 @@ public abstract class Solid extends SceneObject {
         return texture;
     }
 
-    public Col getEditorColor() {
-        return editorColor;
-    }
 }

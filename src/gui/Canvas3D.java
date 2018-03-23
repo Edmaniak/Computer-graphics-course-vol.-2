@@ -1,6 +1,7 @@
 package gui;
 
 import app.App;
+import model.objects.SceneObject;
 import model.objects.Solid;
 import transforms.Point2D;
 import transforms.Vec2D;
@@ -42,17 +43,17 @@ public class Canvas3D extends Canvas {
                 // Object moving
                 if (!cameraControl) {
                     if (SwingUtilities.isRightMouseButton(e)) {
-                        App.app.getActiveSolid().transform.rotate(delta.getY() * MOUSE_SPEED, delta.getX() * MOUSE_SPEED, 0);
+                        App.app.getActiveObject().transform.rotate(delta.getY() * MOUSE_SPEED, delta.getX() * MOUSE_SPEED, 0);
                         App.app.renderScene();
                     }
                     if (SwingUtilities.isLeftMouseButton(e)) {
                         Vec3D moveVector = new Vec3D(-delta.getX() * MOUSE_SPEED, delta.getY() * MOUSE_SPEED, 0);
-                        App.app.getActiveSolid().transform.translate(moveVector);
+                        App.app.getActiveObject().transform.translate(moveVector);
                         App.app.getObjectAxis().transform.translate(moveVector);
                         App.app.renderScene();
                     }
                     if (SwingUtilities.isMiddleMouseButton(e)) {
-                        App.app.getActiveSolid().transform.scale(delta.getY());
+                        App.app.getActiveObject().transform.scale(delta.getY());
                         App.app.renderScene();
                     }
                 }
@@ -77,12 +78,12 @@ public class Canvas3D extends Canvas {
         cameraControl = !cameraControl;
     }
 
-    public void debug(Solid activeSolid) {
+    public void debug(SceneObject sceneObject) {
         // modelovací
         drawString("Model transform matrix >", App.WIDTH - 170, 10);
-        drawString(activeSolid.transform.getModel().toString(), App.WIDTH - 125, 30);
+        drawString(sceneObject.transform.getModel().toString(), App.WIDTH - 125, 30);
         drawString("Model transform object >", 20, 10);
-        drawString(activeSolid.transform.toString(), 40, 30);
+        drawString(sceneObject.transform.toString(), 40, 30);
 
         // kamera
         drawString("Camera object >", 20, 90);

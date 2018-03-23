@@ -1,9 +1,12 @@
 package model.light;
 
+import material.Material;
+import model.Vertex;
 import model.objects.SceneObject;
 import transforms.Col;
 import transforms.Point3D;
 import transforms.Vec3D;
+import utilities.Util;
 
 import java.awt.*;
 
@@ -31,10 +34,6 @@ public abstract class Light extends SceneObject {
         this.intensity = intensity;
     }
 
-    public double getIntensity() {
-        return intensity;
-    }
-
     public void setIntensity(double intensity) {
         this.intensity = intensity;
     }
@@ -47,17 +46,21 @@ public abstract class Light extends SceneObject {
         this.color = color;
     }
 
-    public int getRed() {
-        return (int) (intensity * color.getR());
+
+    public Col getContribution(Material material, Vertex v) {
+        double kd = material.getKd();
+        //skalarni soucin normaloveho uhlu a uhlu dopadu
+        Vec3D l = getPosition().sub(v.getPositionVec().mul(1 / v.getOne())).normalized().get();
+        Vec3D n = v.getNormal().mul(1 / v.getOne()).normalized().get();
+        // Dot product 1 * n
+        double ln = Util.dotProduct(l, n);
+
+        Col clr = color.mulna(intensity * ln * kd);
+
+        return clr;
     }
 
-    public int getBlue() {
-        return (int) (intensity * color.getB());
+    public double getIntensity() {
+        return intensity;
     }
-
-    public int getGreen() {
-        return (int) (intensity * color.getG());
-    }
-
-
 }

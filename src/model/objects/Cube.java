@@ -53,8 +53,8 @@ public class Cube extends Solid {
         define(vertex_definition, index_definition, parts_definition);
     }
 
-    public Cube(Col color, Vec3D initialPosition) {
-        super(color, new Vec3D(0.5, 0.5, 0.5), initialPosition);
+    public Cube(Vec3D initialPosition) {
+        super(new Vec3D(0.5, 0.5, 0.5), initialPosition);
         define(vertex_definition, index_definition, parts_definition);
     }
 

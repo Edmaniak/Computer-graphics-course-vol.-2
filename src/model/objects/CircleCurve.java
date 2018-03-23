@@ -10,9 +10,9 @@ import java.awt.*;
 
 public class CircleCurve extends Curve {
 
-    public CircleCurve(Col color, Vec3D initialPosition, Point3D center, double radius, int step) {
+    public CircleCurve(Vec3D initialPosition, Point3D center, double radius, int step) {
 
-        super(color, new Vec3D(center), initialPosition, step);
+        super(new Vec3D(center), initialPosition, step);
 
         for (int i = 0; i <= step; i++) {
 

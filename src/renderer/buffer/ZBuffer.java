@@ -1,6 +1,4 @@
-package renderer;
-
-import schoolClasses.Raster;
+package renderer.buffer;
 
 import java.awt.image.BufferedImage;
 import java.util.Optional;

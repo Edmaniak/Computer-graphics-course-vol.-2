@@ -9,8 +9,8 @@ public abstract class Curve extends Solid {
 
     protected int step;
 
-    protected Curve(Col color, Vec3D pivotPoint, Vec3D initialPosition, int step) {
-        super(color, pivotPoint, initialPosition);
+    protected Curve(Vec3D pivotPoint, Vec3D initialPosition, int step) {
+        super(pivotPoint, initialPosition);
         this.step = step;
     }
 }

@@ -1,8 +1,6 @@
 package renderer.raster;
 
-import material.Material;
 import model.Vertex;
-import renderer.ImageBuffer;
 import renderer.ZTest;
 import renderer.shader.Shader;
 import transforms.Col;
@@ -217,52 +215,12 @@ public class Rasterizer {
             }
         }
 
-            /*
-        if (b.getX() < a.getX()) {
-            Vec3D pom1 = b;
-            Vertex pom2 = vB;
-            b = a;
-            a = pom1;
-            vB = vA;
-            vA = pom2;
-        }
-
-        for (int y = (int) a.getY() + 1; y <= b.getY(); y++) {
-
-            double s1 = (y - a.getY()) / (b.getY() - a.getY());
-
-            Vec3D vAB = a.mul(1 - s1).add(b.mul(s1));
-            Vertex vertexAB = vA.mul(1 - s1).add(vB.mul(s1));
-
-            zTest.test(vAB.getX(), y, vAB.getZ(), shader.apply(vertexAB));
-        }
-*/
     }
 
-    public void rasterizeWire(Vertex v1, Vertex v2, Vertex v3, Col color) {
-
-        if (!v1.dehomog().isPresent())
-            return;
-
-        if (!v2.dehomog().isPresent())
-            return;
-
-        if (!v3.dehomog().isPresent())
-            return;
-
-        Vec3D a = project2D(v1.getPosition().dehomog().get());
-        Vec3D b = project2D(v2.getPosition().dehomog().get());
-        Vec3D c = project2D(v3.getPosition().dehomog().get());
-
-        BufferedImage img = zTest.getImgBuffer().getImg();
-
-        Graphics g = img.getGraphics();
-        g.setColor(new Color(color.getRGB()));
-        g.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY());
-        g.drawLine((int) b.getX(), (int) b.getY(), (int) c.getX(), (int) c.getY());
-        g.drawLine((int) c.getX(), (int) c.getY(), (int) a.getX(), (int) a.getY());
-
-
+    public void rasterizeWire(Vertex v1, Vertex v2, Vertex v3) {
+        rasterize(v1,v2);
+        rasterize(v1,v3);
+        rasterize(v2,v3);
     }
 
     private Vec3D project2D(Vec3D v) {

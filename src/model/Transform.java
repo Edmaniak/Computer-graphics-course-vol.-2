@@ -12,7 +12,6 @@ public class Transform {
     private double rotZ = 0;
     private double scale = 1;
     private Vec3D pivot;
-    private static double SCALE_FACTOR = 0.01;
     private Mat4 model = new Mat4Identity();
 
 
@@ -47,6 +46,7 @@ public class Transform {
 
     public void scale(double s) {
         if (s != 0) {
+            double SCALE_FACTOR = 0.01;
             s = SCALE_FACTOR * Math.signum(s);
             scale += s;
             Vec3D p = getWorldPosition();

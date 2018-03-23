@@ -6,9 +6,7 @@ import material.Texture;
 import model.light.PointLight;
 import model.objects.*;
 import model.Scene;
-import renderer.Renderer;
 import transforms.Col;
-import transforms.Point3D;
 import transforms.Vec3D;
 
 
@@ -18,16 +16,14 @@ import java.awt.*;
 public class App {
 
     public static final String title = "D 3D TABLE";
-    private static final Color ACTIVE_COLOR = Color.RED;
-    private static final Color IDLE_COLOR = Color.WHITE;
     public static final int WIDTH = 1055;
     public static final int HEIGHT = 800;
     public static final int RATIO = WIDTH / HEIGHT;
 
-    public static MainFrame gui;
+    private static MainFrame gui;
     public static App app;
     private final SceneObjectAxis objectAxis;
-    private Solid activeSolid;
+    private SceneObject activeObject;
 
     private final Scene scene;
 
@@ -48,36 +44,33 @@ public class App {
 
         // Models
         Texture bg = new Texture("res/fim.jpg");
-        Plane plane = new Plane(bg, new Vec3D());
+        Plane plane = new Plane(brass, bg, new Vec3D());
         plane.transform.rotate(Math.PI / 2, 0, 0);
         plane.transform.translate(new Vec3D(0, 0, 2));
 
         Cube cube = new Cube(brass, new Vec3D(-1.9, -1.9, 0));
         objectAxis = new SceneObjectAxis(new Col(0, 255, 0), new Vec3D());
         cube.randomizeColors();
-        cube.setShaderType(Solid.ShaderType.LIGHTABLE);
 
-        BicubicPlate plate = new BicubicPlate(new Col(255, 255, 255), new Vec3D(0, 0, 1), 5);
+        BicubicPlate plate = new BicubicPlate(brass,new Vec3D(0, 0, 1), 5);
         plate.transform.translate(new Vec3D(0, 0, -1));
-        plate.setShaderType(Solid.ShaderType.LIGHTABLE);
+        plate.setShaderType(Solid.ShaderType.COL_LIGHTABLE);
 
 
         // Lights
-        PointLight light1 = new PointLight(new Col(255, 255, 255), new Vec3D(0, 0, 2), 1);
+        PointLight light1 = new PointLight(new Col(0, 255, 0), new Vec3D(0, -1, 1), 0.2);
         Cube lightCube = new Cube(difuse, light1.getPosition());
 
 
         scene.addSolid("plane", plane);
-
         scene.addSolid("axis", objectAxis);
-
         scene.addSolid("cube", cube);
         scene.addSolid("bicubic", plate);
 
-        scene.addLight(light1);
+        scene.addLight("light1", light1);
 
 
-        setActiveSolid(cube);
+        setActiveObject(cube);
 
         // HACK Protoze camera je v jinych souradnicich
         resetToCamera();
@@ -89,31 +82,31 @@ public class App {
         SwingUtilities.invokeLater(() -> new App());
     }
 
-    public Solid getActiveSolid() {
-        return activeSolid;
+    public SceneObject getActiveObject() {
+        return activeObject;
     }
 
-    public void switchTo(Solid solid) {
-        if (activeSolid != null)
-            setActiveSolid(solid);
+    public void switchTo(SceneObject solid) {
+        if (activeObject != null)
+            setActiveObject(solid);
         renderScene();
     }
 
     public void switchTo(String string) {
-        if (activeSolid != null)
-            setActiveSolid(scene.getSolid(string));
+        if (activeObject != null)
+            setActiveObject(scene.getSceneObject(string));
         renderScene();
     }
 
     public void renderScene() {
         gui.getCanvas3D().clear();
         scene.render();
-        gui.getCanvas3D().debug(activeSolid);
+        gui.getCanvas3D().debug(activeObject);
     }
 
-    private void setActiveSolid(Solid activeSolid) {
-        this.activeSolid = activeSolid;
-        objectAxis.alignFor(activeSolid);
+    private void setActiveObject(SceneObject activeObject) {
+        this.activeObject = activeObject;
+        objectAxis.alignFor(activeObject);
     }
 
     public SceneObjectAxis getObjectAxis() {
@@ -125,7 +118,7 @@ public class App {
     }
 
     private void resetToCamera() {
-        for (Solid s : scene.getSolids().values()) {
+        for (SceneObject s : scene.getSceneObjects().values()) {
             s.transform.rotate(Math.PI / 2, 0, 0);
         }
     }
@@ -138,7 +131,4 @@ public class App {
         gui.requestFocusInWindow();
     }
 
-    public Solid getSolid(String name) {
-        return scene.getSolid(name);
-    }
 }

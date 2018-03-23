@@ -8,10 +8,10 @@ import java.awt.*;
 public class SceneObjectAxis extends Axis {
 
     public SceneObjectAxis(Col color, Vec3D initialPosition) {
-        super(color, initialPosition);
+        super(initialPosition);
     }
 
-    public void alignFor(Solid solid) {
-        transform.setWorldPosition(solid.transform.getWorldPosition());
+    public void alignFor(SceneObject object) {
+        transform.setWorldPosition(object.transform.getWorldPosition());
     }
 }

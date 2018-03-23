@@ -1,18 +1,13 @@
 package model;
 
 import app.App;
-import gui.Canvas;
 import model.light.AmbientLight;
 import model.light.PointLight;
+import model.objects.SceneObject;
 import model.objects.Solid;
-import renderer.ImageBuffer;
 import renderer.Renderer;
-import renderer.ZBuffer;
-import renderer.raster.RasterizerLine;
-import renderer.raster.RasterizerTriangle;
 import transforms.*;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +22,7 @@ public class Scene {
     }
 
     private final Map<String, Solid> solids;
+    private final Map<String, SceneObject> sceneObjects;
     private final ArrayList<PointLight> lights;
     private final Renderer renderer;
     private Projection projection;
@@ -48,18 +44,19 @@ public class Scene {
     private static final double INITIAL_CAMERA_AZIMUTH = -4.74;
     private static final double INITIAL_CAMERA_ZENITH = -0.2;
 
-    private AmbientLight ambientLight = new AmbientLight(new Col(255,255,255), 0.3);
+    private AmbientLight ambientLight = new AmbientLight(new Col(255, 255, 255), 0.3);
 
-    public Scene(BufferedImage img,Projection projection) {
+    public Scene(BufferedImage img, Projection projection) {
         this.projection = projection;
         solids = new HashMap<>();
+        sceneObjects = new HashMap<>();
         lights = new ArrayList<>();
-        renderer = new Renderer(img,lights, ambientLight);
+        renderer = new Renderer(img, lights, ambientLight);
         setProjection(projection);
         camera = new Camera(INITIAL_CAMERA_POSITION, INITIAL_CAMERA_AZIMUTH, INITIAL_CAMERA_ZENITH, 1, true);
     }
 
-    public Scene(BufferedImage img,Projection projection, AmbientLight ambientLight) {
+    public Scene(BufferedImage img, Projection projection, AmbientLight ambientLight) {
         this(img, projection);
         this.ambientLight = ambientLight;
     }
@@ -70,10 +67,16 @@ public class Scene {
 
     public void addSolid(String name, Solid solid) {
         solids.put(name, solid);
+        addSceneObject(name, solid);
     }
 
-    public void addLight(PointLight light) {
+    public void addSceneObject(String name, SceneObject object) {
+        sceneObjects.put(name, object);
+    }
+
+    public void addLight(String name, PointLight light) {
         lights.add(light);
+        sceneObjects.put(name, light);
     }
 
     private void setProjection(Projection projection) {
@@ -88,8 +91,8 @@ public class Scene {
         }
     }
 
-    public Solid getSolid(String name) {
-        return solids.get(name);
+    public SceneObject getSceneObject(String name) {
+        return sceneObjects.get(name);
     }
 
 
@@ -179,5 +182,9 @@ public class Scene {
 
     public void setAmbientLight(AmbientLight ambientLight) {
         this.ambientLight = ambientLight;
+    }
+
+    public Map<String,SceneObject> getSceneObjects() {
+        return sceneObjects;
     }
 }

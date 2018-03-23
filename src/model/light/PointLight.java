@@ -22,8 +22,8 @@ public class PointLight extends Light {
         this.intensity = Math.min(intensity, 1 / intensity);
     }
 
-    public PointLight(PointLight light, Vertex position) {
-        super(light.color, light.intensity, new Vec3D(position.getPosition()));
+    public PointLight(PointLight light, Vec3D position) {
+        super(light.color, light.intensity, position);
     }
 
     public int calculateRed(Material material, Vec3D normal, Vec3D viewVector) {
