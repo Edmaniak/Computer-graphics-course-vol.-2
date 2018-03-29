@@ -12,7 +12,6 @@ public class ToolButton extends JButton {
         setFocusPainted(false);
         setContentAreaFilled(false);
         setIcon(new ImageIcon(path));
-
         addActionListener(e -> App.resetFocus());
     }
 

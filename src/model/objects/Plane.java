@@ -24,7 +24,7 @@ public class Plane extends Solid {
     private final Integer[] index_definition = {
             // Triangles
             0, 1, 2,
-            2, 3, 1,
+            2, 1, 3,
     };
 
     private final Part[] parts_definition = {

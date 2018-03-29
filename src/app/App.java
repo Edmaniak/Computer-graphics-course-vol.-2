@@ -39,8 +39,7 @@ public class App {
         scene = new Scene(gui.getCanvas3D().getMainBuffer(), Scene.Projection.PERSPECTIVE);
 
         //Materials
-        Material brass = new Material(0.3, 0.9, 0.6, 27);
-        Material difuse = new Material(0.3, 0, 0.7, 20);
+        Material brass = new Material(0.7, 0.9, 0.6, 27);
 
         // Models
         Texture bg = new Texture("res/fim.jpg");
@@ -57,18 +56,18 @@ public class App {
         plate.setShaderType(Solid.ShaderType.COL_LIGHTABLE);
 
 
+        TetraHedron tetraHedron = new TetraHedron(brass,new Vec3D());
+        tetraHedron.transform.translate(new Vec3D(-1.2,-1.5,0));
         // Lights
-        PointLight light1 = new PointLight(new Col(0, 255, 0), new Vec3D(0, -1, 1), 0.2);
-        Cube lightCube = new Cube(difuse, light1.getPosition());
-
+        PointLight light1 = new PointLight(new Col(0, 255, 0), new Vec3D(0, -1, 1), 0.5);
 
         scene.addSolid("plane", plane);
         scene.addSolid("axis", objectAxis);
+        scene.addSolid("tetrahedron", tetraHedron);
         scene.addSolid("cube", cube);
         scene.addSolid("bicubic", plate);
 
         scene.addLight("light1", light1);
-
 
         setActiveObject(cube);
 

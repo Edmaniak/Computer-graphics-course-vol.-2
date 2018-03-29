@@ -46,20 +46,6 @@ public abstract class Light extends SceneObject {
         this.color = color;
     }
 
-
-    public Col getContribution(Material material, Vertex v) {
-        double kd = material.getKd();
-        //skalarni soucin normaloveho uhlu a uhlu dopadu
-        Vec3D l = getPosition().sub(v.getPositionVec().mul(1 / v.getOne())).normalized().get();
-        Vec3D n = v.getNormal().mul(1 / v.getOne()).normalized().get();
-        // Dot product 1 * n
-        double ln = Util.dotProduct(l, n);
-
-        Col clr = color.mulna(intensity * ln * kd);
-
-        return clr;
-    }
-
     public double getIntensity() {
         return intensity;
     }

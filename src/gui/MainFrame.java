@@ -1,6 +1,7 @@
 package gui;
 
 import app.App;
+import com.sun.deploy.panel.ExceptionListDialog;
 import renderer.Renderer;
 import transforms.Vec3D;
 
@@ -42,7 +43,6 @@ public class MainFrame extends JFrame {
         add(toolBar, BorderLayout.WEST);
         add(panel, BorderLayout.SOUTH);
 
-
         pack();
         setVisible(true);
     }
@@ -51,13 +51,7 @@ public class MainFrame extends JFrame {
 
         JSlider ambientIntensity = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
         ambientIntensity.addChangeListener(e -> {
-            app.getScene().getAmbientLight().setIntensity((double)ambientIntensity.getValue()/100);
-            app.renderScene();
-        });
-
-        JSlider lightIntensity = new JSlider(JSlider.HORIZONTAL, 0, 100, 1);
-        lightIntensity.addChangeListener(e -> {
-            app.getScene().getLights().get(0).setIntensity((double)lightIntensity.getValue()/100);
+            app.getScene().getAmbientLight().setIntensity((double) ambientIntensity.getValue() / 100);
             app.renderScene();
         });
 
@@ -65,7 +59,6 @@ public class MainFrame extends JFrame {
 
         panel.add(ambientLabel);
         panel.add(ambientIntensity);
-        panel.add(lightIntensity);
 
     }
 
@@ -95,15 +88,21 @@ public class MainFrame extends JFrame {
 
         ToolButton wireFull = new ToolButton("res/wire-color.png");
         wireFull.addActionListener(e -> {
-           app.getScene().getRenderer().swichtWireFull();
-           app.renderScene();
+            app.getScene().getRenderer().swichtWireFull();
+            app.renderScene();
         });
 
-        ToolButton light = new ToolButton("res/wire-color.png");
-        light.addActionListener(e -> {
-            System.out.println("DDD");
-            app.switchTo("light1");
+        JButton control = new JButton("OVLÁDÁNÍ");
+        ProcessBuilder pb = new ProcessBuilder("Notepad.exe", "poznamka.txt");
+        control.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    pb.start();
+                } catch (Exception ex) {
 
+                }
+            }
         });
 
         toolBar.add(cube);
@@ -111,7 +110,8 @@ public class MainFrame extends JFrame {
         toolBar.add(projection);
         toolBar.add(wire);
         toolBar.add(wireFull);
-        toolBar.add(light);
+
+        panel.add(control);
 
     }
 

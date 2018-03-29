@@ -13,16 +13,19 @@ public class TetraHedron extends Solid {
 
 
     private final Vertex[] vertex_definition = {
-            new Vertex(0, 0, 0),
-            new Vertex(0.5, 0, 1),
-            new Vertex(1, 0, 0),
-            new Vertex(0.5, 1, 0.5)
+            new Vertex(0, 0, 0, new Col(255, 0, 0)),
+            new Vertex(0.5, 0, 1, new Col(255, 0, 0)),
+            new Vertex(1, 0, 0, new Col(255, 0, 0)),
+            new Vertex(0.5, 3, 0.5, new Col(255, 0, 0)),
+            new Vertex(0.5, 0, 1, new Col(200, 100, 100)),
+            new Vertex(1, 0, 0, new Col(200, 100, 100)),
+            new Vertex(0.5, 3, 0.5, new Col(200, 100, 100)),
     };
     private final Integer[] indexes_definiton = {
-            0, 1, 2,
+            0, 2, 1,
             0, 3, 2,
             0, 3, 1,
-            1, 2, 3
+            4, 5, 6,
     };
     private final Part[] parts_definition = {new Part(Part.Type.TRIANGLE, 12, 0)};
 

@@ -44,7 +44,7 @@ public class Scene {
     private static final double INITIAL_CAMERA_AZIMUTH = -4.74;
     private static final double INITIAL_CAMERA_ZENITH = -0.2;
 
-    private AmbientLight ambientLight = new AmbientLight(new Col(255, 255, 255), 0.3);
+    private AmbientLight ambientLight = new AmbientLight(new Col(255, 255, 0), 0.8);
 
     public Scene(BufferedImage img, Projection projection) {
         this.projection = projection;

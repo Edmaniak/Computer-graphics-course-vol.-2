@@ -17,6 +17,6 @@ public class ShaderColorLight extends Shader {
     public Col apply(Vertex vertex) {
         Col lightContr = sl.apply(vertex);
         Col colContr = sc.apply(vertex);
-        return lightContr.mul(colContr);
+        return colContr.mul(lightContr).saturate();
     }
 }

@@ -10,5 +10,4 @@ public interface Raster<PixelType> {
     void setPixel(PixelType pixel, int x, int y);
     void clear();
 
-
 } 

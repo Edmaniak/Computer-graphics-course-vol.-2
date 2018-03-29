@@ -51,7 +51,7 @@ public class BicubicPlate extends Solid {
                 indexes().add((i * step) + (j + 1));
                 indexes().add((i + 1) * step + j);
 
-                //vrchni trojuhelnici
+                //horni trojuhelnici
                 indexes().add((i * step) + (j + 1));
                 indexes().add((i + 1) * step + j);
                 indexes().add((i + 1) * step + (j+1));

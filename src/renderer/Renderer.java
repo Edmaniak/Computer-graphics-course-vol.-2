@@ -124,8 +124,6 @@ public class Renderer {
     }
 
     private void line(Vertex origin, Vertex end) {
-        // TODO orez
-
         rasterizer.rasterize(origin, end);
     }
 
@@ -156,20 +154,20 @@ public class Renderer {
         }
 
         if (v2.getZ() > 0) {
-            double t = (0 - v2.getZ() / v2.getZ() - v3.getZ());
-            double t1 = (0 - v1.getZ()) / v1.getZ() - v3.getZ();
-            Vertex d = v2.mul(1 - t1).add(v3.mul(t1));
-            Vertex e = v1.mul(1 - t).add(v3.mul(t));
+            double t = (0 - v3.getZ() / v2.getZ() - v3.getZ());
+            double t1 = (0 - v3.getZ()) / v1.getZ() - v3.getZ();
+            Vertex d = v2.mul(1 - t1).add(v3.mul(t));
+            Vertex e = v1.mul(1 - t).add(v3.mul(t1));
             triangle(v1, v2, d);
             triangle(d, e, v1);
             return;
         }
 
         if (v1.getZ() > 0) {
-            double t = (0 - v1.getZ()) / v1.getZ() - v3.getZ();
-            Vertex d = v1.mul(1 - t).add(v3.mul(t));
-            double t1 = (0 - v1.getZ()) / v1.getZ() - v2.getZ();
-            Vertex e = v1.mul(1 - t1).add(v2.mul(t1));
+            double t = (0 - v2.getZ()) / v2.getZ() - v1.getZ();
+            double t1 = (0 - v3.getZ()) / v1.getZ() - v3.getZ();
+            Vertex d = v1.mul(1 - t).add(v2.mul(t));
+            Vertex e = v1.mul(1 - t1).add(v3.mul(t1));
             triangle(v1, d, e);
         }
     }
@@ -193,7 +191,7 @@ public class Renderer {
 
     /**
      * Switch render quality
-     * Mainly intended for gui button
+     * Mainly intended for gui buttons
      */
     public void switchWire() {
         if (renderQuality == RenderQuality.WIRE)

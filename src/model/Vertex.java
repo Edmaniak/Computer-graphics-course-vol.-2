@@ -140,7 +140,6 @@ public class Vertex {
         return texUV;
     }
 
-
     public double getW() {
         return position.getW();
     }

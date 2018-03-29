@@ -28,14 +28,7 @@ public class ShaderLight extends Shader {
 
     @Override
     public Col apply(Vertex v) {
-        Col color = v.getColor().mul(1 / v.getOne());
         Col color2 = ambientLight.getContribution(material);
-        Col color3 = color.mul(color2);
-        Col clr = new Col();
-        /*for (Light light : lights) {
-             clr = light.getContribution(material, v);
-        }
-*/
-        return ambientLight.getContribution(material);
+        return color2.saturate();
     }
 }

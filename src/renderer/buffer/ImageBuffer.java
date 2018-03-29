@@ -45,7 +45,11 @@ public class ImageBuffer implements Raster<Col> {
     }
 
     public void clear() {
-
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                img.setRGB(i,j,0);
+            }
+        }
     }
 
     public BufferedImage getImg() {

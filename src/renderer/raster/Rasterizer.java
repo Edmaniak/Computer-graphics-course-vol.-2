@@ -32,9 +32,9 @@ public class Rasterizer {
             return;
 
         // vertexy pro vypocet barvy
-        Vertex vA = v1.mul(1/v1.getPosition().getW());
-        Vertex vB = v2.mul(1/v2.getPosition().getW());
-        Vertex vC = v3.mul(1/v3.getPosition().getW());
+        Vertex vA = v1.mul(1 / v1.getPosition().getW());
+        Vertex vB = v2.mul(1 / v2.getPosition().getW());
+        Vertex vC = v3.mul(1 / v3.getPosition().getW());
 
         Vec3D a = project2D(v1.getPosition().dehomog().get());
         Vec3D b = project2D(v2.getPosition().dehomog().get());
@@ -71,7 +71,6 @@ public class Rasterizer {
             vA = vB;
             vB = pom2;
         }
-
 
         // Rasterizing triangle ABD
         for (int y = (int) a.getY() + 1; y <= b.getY(); y++) {
@@ -164,8 +163,8 @@ public class Rasterizer {
             v2 = pom;
         }
 
-        Vertex vA = v1.mul(1/v1.getPosition().getW());
-        Vertex vB = v2.mul(1/v2.getPosition().getW());
+        Vertex vA = v1.mul(1 / v1.getPosition().getW());
+        Vertex vB = v2.mul(1 / v2.getPosition().getW());
 
         Vec3D o = project2D(v1.getPosition().dehomog().get());
         Vec3D e = project2D(v2.getPosition().dehomog().get());
@@ -176,7 +175,7 @@ public class Rasterizer {
         if (Math.abs(dy) <= Math.abs(dx)) {
             // one point line
             if ((o.getX() == e.getX()) && (o.getY() == e.getY())) {
-                zTest.test(o.getX(), o.getY(), o.getZ(), new Col(255, 0, 0));
+                zTest.test(o.getX(), o.getY(), o.getZ(), shader.apply(vA));
             } else if (e.getX() < o.getX()) {
                 Vec3D pom = o;
                 o = e;
@@ -190,7 +189,7 @@ public class Rasterizer {
                 int y = (int) fy;
                 double t = (x - o.getX()) / (e.getX() - o.getX());
                 double z = o.getZ() * (1 - t) + e.getZ() * t;
-                Vertex v = vA.mul(1-t).add(vB.mul(t));
+                Vertex v = vA.mul(1 - t).add(vB.mul(t));
                 zTest.test(x, y, z, shader.apply(v));
                 fy += k;
             }
@@ -209,7 +208,7 @@ public class Rasterizer {
                 int x = (int) fx;
                 double t = (y - o.getY()) / (e.getY() - o.getY());
                 double z = o.getZ() * (1 - t) + e.getZ() * t;
-                Vertex v = vA.mul(1-t).add(vB.mul(t));
+                Vertex v = vA.mul(1 - t).add(vB.mul(t));
                 zTest.test(x, y, z, shader.apply(v));
                 fx += k;
             }
@@ -218,9 +217,9 @@ public class Rasterizer {
     }
 
     public void rasterizeWire(Vertex v1, Vertex v2, Vertex v3) {
-        rasterize(v1,v2);
-        rasterize(v1,v3);
-        rasterize(v2,v3);
+        rasterize(v1, v2);
+        rasterize(v1, v3);
+        rasterize(v2, v3);
     }
 
     private Vec3D project2D(Vec3D v) {

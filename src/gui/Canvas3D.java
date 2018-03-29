@@ -71,7 +71,6 @@ public class Canvas3D extends Canvas {
             }
 
         });
-
     }
 
     public void switchCameraControl() {
@@ -79,6 +78,7 @@ public class Canvas3D extends Canvas {
     }
 
     public void debug(SceneObject sceneObject) {
+
         // modelovací
         drawString("Model transform matrix >", App.WIDTH - 170, 10);
         drawString(sceneObject.transform.getModel().toString(), App.WIDTH - 125, 30);
@@ -92,5 +92,8 @@ public class Canvas3D extends Canvas {
         // Pipeline matrices
         drawString("View matrix >", App.WIDTH - 170, 110);
         drawString(App.app.getScene().getRenderer().getView().toString(), App.WIDTH - 125, 130);
+
+        //autor
+        drawString("Adam Ouhrabka PGRF ", App.WIDTH - 150, App.HEIGHT - 50);
     }
 }
