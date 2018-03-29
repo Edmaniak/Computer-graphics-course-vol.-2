@@ -148,27 +148,31 @@ public class Renderer {
             v2 = pom;
         }
 
+        Vertex a = new Vertex(v1);
+        Vertex b = new Vertex(v2);
+        Vertex c = new Vertex(v3);
+
         if (v3.getZ() > 0) {
-            triangle(v1, v2, v3);
+            triangle(a, b, c);
             return;
         }
 
         if (v2.getZ() > 0) {
-            double t = (0 - v3.getZ() / v2.getZ() - v3.getZ());
-            double t1 = (0 - v3.getZ()) / v1.getZ() - v3.getZ();
-            Vertex d = v2.mul(1 - t1).add(v3.mul(t));
-            Vertex e = v1.mul(1 - t).add(v3.mul(t1));
-            triangle(v1, v2, d);
-            triangle(d, e, v1);
+            double t = (0 - v3.getZ() / (v2.getZ() - v3.getZ()));
+            double t1 = (0 - v3.getZ()) / (v1.getZ() - v3.getZ());
+            Vertex e = v3.mul(1 - t1).add(v1.mul(t1));
+            Vertex d = v3.mul(1 - t).add(v2.mul(t));
+            triangle(a, b, d);
+            triangle(d, e, a);
             return;
         }
 
         if (v1.getZ() > 0) {
-            double t = (0 - v2.getZ()) / v2.getZ() - v1.getZ();
-            double t1 = (0 - v3.getZ()) / v1.getZ() - v3.getZ();
-            Vertex d = v1.mul(1 - t).add(v2.mul(t));
-            Vertex e = v1.mul(1 - t1).add(v3.mul(t1));
-            triangle(v1, d, e);
+            double t = (0 - v2.getZ()) / (v1.getZ() - v2.getZ());
+            double t1 = (0 - v3.getZ()) / (v1.getZ() - v3.getZ());
+            Vertex d = v2.mul(1 - t).add(v1.mul(t));
+            Vertex e = v3.mul(1 - t1).add(v1.mul(t1));
+            triangle(a, d, e);
         }
     }
 
